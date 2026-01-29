@@ -40,6 +40,77 @@ Agentic AI, Autonomous Agents, Spatial Intelligence, Spatial Reasoning, Geospati
 
 THE RISE of autonomous systems marks a pivotal moment in the evolution of Artificial Intelligence (AI). We are witnessing a paradigm shift from specialized models that excel at narrow tasks to goal-oriented, self-directed agents capable of complex decision-making in dynamic environments. This field, which we term **Agentic AI**, represents a significant leap towards creating machines that can operate with a higher degree of autonomy and intelligence. Concurrently, the ability for these agents to perceive, comprehend, and act within the physical world—a capability we define as **Spatial Intelligence**—has become a primary bottleneck and a critical area of research. The convergence of these two domains is essential for developing AI systems that can effectively and safely navigate real-world complexities, from autonomous vehicles and robotic assistants to large-scale urban planning and disaster response systems.
 
+Despite the rapid progress in both agentic systems and spatial reasoning, the research landscape remains fragmented. Numerous surveys have independently covered topics such as Large Language Model (LLM) agents \cite{wang2024survey}, embodied AI \cite{driess2023palme}, and geospatial analysis \cite{jiang2024crom}. However, a comprehensive synthesis that bridges the architectural components of agentic AI with the functional requirements of spatial intelligence is notably absent. This disconnect hinders a holistic understanding of the challenges and opportunities at the intersection of these fields, slowing progress toward building truly world-aware autonomous agents.
+
+This survey aims to fill this critical gap. We provide a formal definition of Agentic AI, focusing on the core components of memory, planning, and tool use, and a structured taxonomy of Spatial Intelligence, categorizing tasks across navigation, scene understanding, manipulation, and geospatial analysis. Our primary contributions are threefold:
+
+\begin{enumerate}
+    \item A novel, unified taxonomy that connects agentic architectures with spatial intelligence tasks, providing a structured framework for understanding and categorizing research in this interdisciplinary area.
+    \item A comprehensive review of the state-of-the-art methods, evaluation benchmarks, and real-world applications, synthesizing findings from previously disparate fields.
+    \item A forward-looking analysis of the open challenges and a research roadmap to guide future work in developing more capable, robust, and safe spatially-aware agentic systems.
+\end{enumerate}
+
+By providing this synthesis, we aim to create a foundational reference for researchers, developers, and policymakers, fostering a more integrated approach to building the next generation of autonomous intelligence.
+
+\section{A Taxonomy of Spatial Intelligence}
+
+We define Spatial Intelligence as an agent's ability to perceive, reason about, and interact with the physical world. We propose a taxonomy that categorizes spatial tasks into four key domains:
+
+\begin{itemize}
+    \item \textbf{Navigation:} The ability to plan and execute paths in a physical environment. This includes tasks like point-to-point navigation \cite{savva2019habitat}, vision-language navigation \cite{anderson2018vln}, and exploration \cite{wang2023voyager}.
+    \item \textbf{Scene Understanding:} The ability to perceive and reason about the objects, relationships, and context of a 3D scene. This includes tasks like 3D object detection, semantic segmentation \cite{dai2017scannet}, and spatial relationship understanding \cite{hudson2019gqa}.
+    \item \textbf{Manipulation:} The ability to interact with and modify objects in the environment. This includes tasks like object rearrangement, tool use, and assembly.
+    \item \textbf{Geospatial Analysis:} The ability to reason about and analyze large-scale geographic data. This includes tasks like land use classification \cite{jakubik2023prithvi}, change detection, and urban planning \cite{urbanplanning2025}.
+\end{itemize}
+
+\section{Core Components of Agentic AI}
+
+Agentic AI systems are characterized by their ability to act autonomously to achieve goals. We identify three core components that enable this autonomy:
+
+\begin{itemize}
+    \item \textbf{Memory:} The ability to store and retrieve information from past experiences. This includes short-term memory for in-context learning and long-term memory for retaining knowledge and skills \cite{park2023generative}.
+    \item \textbf{Planning:} The ability to decompose a high-level goal into a sequence of executable actions. This includes techniques like chain-of-thought reasoning \cite{wei2022chain}, tree-of-thought search \cite{yao2023tree}, and hierarchical planning.
+    \item \textbf{Tool Use:} The ability to leverage external tools to extend the agent's capabilities. This includes using APIs for information retrieval \cite{schick2023toolformer}, invoking specialized models for specific tasks, and interacting with physical actuators.
+\end{itemize}
+
+\section{Embodied AI and Spatial Planning}
+
+Embodied AI focuses on creating agents that can learn and act in physical or simulated environments. These agents are critical for spatial planning tasks, as they can directly perceive and interact with the world. Key research areas include:
+
+\begin{itemize}
+    \item \textbf{Vision-Language Navigation (VLN):} Agents that follow natural language instructions to navigate real-world environments \cite{anderson2018vln}.
+    \item \textbf{Embodied Question Answering (EQA):} Agents that must explore an environment to find the answer to a question \cite{das2018eqa}.
+    \item \textbf{Robotic Manipulation:} Agents that can manipulate objects to achieve goals, often involving complex spatial reasoning and planning \cite{ahn2022saycan}.
+\end{itemize}
+
+\section{Benchmarks for Spatial AI Agents}
+
+A critical aspect of advancing spatial AI is the development of robust benchmarks to evaluate agent capabilities. We categorize existing benchmarks into:
+
+\begin{itemize}
+    \item \textbf{Navigation Benchmarks:} Datasets like R2R \cite{anderson2018vln} and Habitat \cite{savva2019habitat} evaluate navigation capabilities.
+    \item \textbf{Manipulation Benchmarks:} Environments like ALFWorld \cite{yao2021alfworld} and BEHAVIOR \cite{srivastava2021behavior} test object manipulation and task completion.
+    \item \textbf{Spatial Reasoning Benchmarks:} Datasets like CLEVR \cite{johnson2017clevr} and GQA \cite{hudson2019gqa} assess compositional spatial reasoning.
+    \item \textbf{Integrated Agent Benchmarks:} Recent benchmarks like AgentBench \cite{liu2023agentbench}, EmbodiedBench \cite{yang2025embodiedbench}, and REM \cite{thompson2025rem} evaluate multiple agent capabilities in complex environments.
+\end{itemize}
+
+\section{Open Challenges and Future Directions}
+
+Despite significant progress, several key challenges remain:
+
+\begin{itemize}
+    \item \textbf{Robust Spatial Representation:} Developing representations that capture the complexity of 3D environments and generalize across different scenes.
+    \item \textbf{Hierarchical Planning:} Creating agents that can plan over long horizons and decompose complex spatial tasks into manageable sub-goals.
+    \item \textbf{Safe and Reliable Tool Use:} Ensuring that agents can use tools safely and effectively, especially in safety-critical applications.
+    \item \textbf{Sim-to-Real Transfer:} Bridging the gap between simulation and the real world to enable the deployment of embodied agents in real-world applications.
+\end{itemize}
+
+\section{Conclusion}
+
+This survey has provided a comprehensive overview of the intersection of Agentic AI and Spatial Intelligence. We have proposed a unified taxonomy, reviewed the state-of-the-art, and identified key challenges and future directions. We believe that by fostering a more integrated approach to research in this area, we can accelerate the development of truly intelligent autonomous systems that can understand and interact with the physical world.
+
+THE RISE of autonomous systems marks a pivotal moment in the evolution of Artificial Intelligence (AI). We are witnessing a paradigm shift from specialized models that excel at narrow tasks to goal-oriented, self-directed agents capable of complex decision-making in dynamic environments. This field, which we term **Agentic AI**, represents a significant leap towards creating machines that can operate with a higher degree of autonomy and intelligence. Concurrently, the ability for these agents to perceive, comprehend, and act within the physical world—a capability we define as **Spatial Intelligence**—has become a primary bottleneck and a critical area of research. The convergence of these two domains is essential for developing AI systems that can effectively and safely navigate real-world complexities, from autonomous vehicles and robotic assistants to large-scale urban planning and disaster response systems.
+
 Despite the rapid progress in both agentic systems and spatial reasoning, the research landscape remains fragmented. Numerous surveys have independently covered topics such as Large Language Model (LLM) agents \cite{wang2024survey}, embodied AI \cite{driess2023palm}, and geospatial analysis \cite{jiang2024crom}. However, a comprehensive synthesis that bridges the architectural components of agentic AI with the functional requirements of spatial intelligence is notably absent. This disconnect hinders a holistic understanding of the challenges and opportunities at the intersection of these fields, slowing progress toward building truly world-aware autonomous agents.
 
 This survey aims to fill this critical gap. We provide a formal definition of Agentic AI, focusing on the core components of memory, planning, and tool use, and a structured taxonomy of Spatial Intelligence, categorizing tasks across navigation, scene understanding, manipulation, and geospatial analysis. Our primary contributions are threefold:
