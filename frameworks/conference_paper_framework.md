@@ -223,3 +223,14 @@ Ours & \textbf{95.2} & \textbf{0.94} \\
 | 3.0 | Jan 29, 2026 | Added ABT storytelling |
 | 4.0 | Jan 29, 2026 | Added golden abstracts |
 | 5.0 | Jan 29, 2026 | **A+++:** Added rejection analysis, rebuttal framework, 50+ point checklist, LaTeX patterns |
+
+
+---
+
+## Appendix: Paper Type Definitions
+
+| Paper Type | Primary Goal | Audience | Key Characteristics |
+|------------|--------------|----------|---------------------|
+| **Survey Paper** | Synthesize and organize existing research | Researchers, students, practitioners | Comprehensive literature review, novel taxonomy, trend analysis, future directions |
+| **Method Paper** | Propose a new algorithm or technique | Researchers in a specific subfield | Novel method, experimental validation, ablation studies, comparison to baselines |
+| **Technical Report** | Document internal research and development | Internal engineering and leadership teams | Implementation details, system architecture, safety analysis, financial models, risk assessment |

@@ -197,3 +197,13 @@ async def generate(request: InferenceRequest):
 | 3.0 | Jan 29, 2026 | Added Claude/Gemini analysis |
 | 4.0 | Jan 29, 2026 | Added full TOC, code patterns |
 | 5.0 | Jan 29, 2026 | **A+++:** Added risk, finance, compliance, project planning, and stakeholder management |
+
+---
+
+## Appendix: Paper Type Definitions
+
+| Paper Type | Primary Goal | Audience | Key Characteristics |
+|------------|--------------|----------|---------------------|
+| **Survey Paper** | Synthesize and organize existing research | Researchers, students, practitioners | Comprehensive literature review, novel taxonomy, trend analysis, future directions |
+| **Method Paper** | Propose a new algorithm or technique | Researchers in a specific subfield | Novel method, experimental validation, ablation studies, comparison to baselines |
+| **Technical Report** | Document internal research and development | Internal engineering and leadership teams | Implementation details, system architecture, safety analysis, financial models, risk assessment |
