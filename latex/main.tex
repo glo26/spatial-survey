@@ -1,165 +1,231 @@
-\documentclass{article}
+\documentclass[10pt]{article}
+
+% ===================================================================
+% PACKAGES
+% ===================================================================
 
 \usepackage[utf8]{inputenc}
-\usepackage[hidelinks]{hyperref}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
 \usepackage{url}
 \usepackage{booktabs}
 \usepackage{amsfonts}
-\usepackage{amsmath}
 \usepackage{nicefrac}
+% \usepackage{microtype} % Removed due to font issues
 \usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{authblk}
+\usepackage{geometry}
 \usepackage{natbib}
-\usepackage[margin=1in]{geometry}
+
+% ===================================================================
+% FORMATTING
+% ===================================================================
+
+\geometry{a4paper, margin=1in}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=black,
+    urlcolor=blue,
+    citecolor=black,
+    hidelinks % Hide the green boxes
+}
+
+\renewcommand\Authfont{\bfseries}
+\setlength{\affilsep}{1em}
+
+\title{\bfseries\Large Autonomous Spatial Intelligence: A Survey of Agentic AI Methods and Evaluation}
+
+\author[1]{Gloria Felicia}
+\author[2]{Nolan Bryant}
+\author[3]{Handi Putra}
+\author[4]{Ayaan Gazali}
+\author[5]{Eliel Lobo}
+\author[6]{Esteban Rojas}
+
+\affil[1]{gloria.felicia@atlaspro.ai}
+\affil[2]{nolan.bryant@atlaspro.ai}
+\affil[3]{handi.putra@atlaspro.ai}
+\affil[4]{ayaan.gazali@atlaspro.ai}
+\affil[5]{eliel.lobo@atlaspro.ai}
+\affil[6]{esteban.rojas@atlaspro.ai}
+
+\affil[1,2,3,4,5,6]{AtlasPro AI}
+
+\date{January 29, 2026}
+
+% ===================================================================
+% DOCUMENT START
+% ===================================================================
 
 \begin{document}
 
-% Title with horizontal rules (matching Attention Is All You Need)
-\begin{center}
-\rule{\textwidth}{1.5pt}
-\vspace{0.3cm}
+\maketitle
 
-{\LARGE \bf Autonomous Spatial Intelligence: A Survey of Agentic AI Methods and Evaluation}
+% ===================================================================
+% ABSTRACT
+% ===================================================================
 
-\vspace{0.3cm}
-\rule{\textwidth}{0.5pt}
-\vspace{0.8cm}
+\begin{abstract}
+\noindent The convergence of Agentic Artificial Intelligence and Spatial Intelligence marks a pivotal frontier in the development of autonomous systems that can perceive, reason, and act within the physical world. While agentic systems demonstrate increasingly sophisticated capabilities in planning and tool use, their ability to navigate and manipulate complex spatial environments remains a significant research challenge. This comprehensive survey of over 1000 papers provides a unified taxonomy that systematically connects the architectural components of agentic AI with the functional requirements of Spatial Intelligence. We review the landscape of spatial tasks, including navigation, scene understanding, manipulation, and geospatial analysis, and connect them to the core agentic components of memory, planning, and tool use. We then provide an in-depth analysis of state-of-the-art methods, including embodied AI, Vision-Language-Action (VLA) models, and spatio-temporal graph neural networks, and evaluate the current capabilities and limitations of these systems. By synthesizing these disparate research areas and outlining a forward-looking research roadmap, this paper aims to accelerate the development of robust, safe, and effective spatially-aware autonomous systems.
+\end{abstract}
 
-% Authors in grid layout (matching Attention Is All You Need style)
-\begin{tabular}{ccc}
-\textbf{Gloria Felicia} & \textbf{Nolan Bryant} & \textbf{Handi Putra} \\
-AtlasPro AI & AtlasPro AI & AtlasPro AI \\
-gloria.felicia@atlaspro.ai & nolan.bryant@atlaspro.ai & handi.putra@atlaspro.ai \\
-\end{tabular}
-
-\vspace{0.5cm}
-
-\begin{tabular}{ccc}
-\textbf{Ayaan Gazali} & \textbf{Eliel Lobo} & \textbf{Esteban Rojas} \\
-AtlasPro AI & AtlasPro AI & AtlasPro AI \\
-ayaan.gazali@atlaspro.ai & eliel.lobo@atlaspro.ai & esteban.rojas@atlaspro.ai \\
-\end{tabular}
-
-\vspace{1cm}
-
-% Abstract
-{\large \bf Abstract}
-\end{center}
-
-\vspace{0.3cm}
-
-\begin{quote}
-The convergence of Agentic Artificial Intelligence and Spatial Intelligence marks a pivotal frontier in the pursuit of creating machines that can autonomously operate in the physical world. While agentic systems demonstrate increasingly sophisticated capabilities in planning and tool use, their ability to perceive, reason about, and interact with complex spatial environments remains a significant bottleneck. This survey addresses a critical gap in the existing literature by providing a unified taxonomy that systematically connects the architectural components of agentic AI with the functional requirements of spatial intelligence. We review the foundational concepts of agentic systems, including memory, planning, and tool use, and categorize the diverse landscape of spatial tasks, including navigation, scene understanding, manipulation, and large-scale geospatial analysis. Through a comprehensive analysis of state-of-the-art methods, including embodied agents, multimodal large language models, and geometric graph neural networks, we evaluate the current capabilities and limitations of these systems. We further analyze the fragmented landscape of evaluation benchmarks, highlighting the urgent need for more integrated and holistic frameworks. By synthesizing these disparate research areas and outlining a forward-looking research roadmap, this paper aims to accelerate the development of robust, safe, and effective spatially-aware autonomous systems.
-\end{quote}
+% ===================================================================
+% INTRODUCTION
+% ===================================================================
 
 \section{Introduction}
 
-The evolution of Artificial Intelligence is marked by a paradigm shift from specialized models to goal-oriented, self-directed agents capable of complex decision-making in dynamic environments. This field, which we term \textbf{Agentic AI}, represents a significant leap towards creating machines that can operate with a higher degree of autonomy. Concurrently, the ability for these agents to perceive, comprehend, and act within the physical world, a capability we define as \textbf{Spatial Intelligence}, has become a primary bottleneck and a critical area of research. The convergence of these two domains is essential for developing AI systems that can effectively and safely navigate real-world complexities, from autonomous vehicles and robotic assistants to large-scale urban planning and disaster response systems.
-
-Despite rapid progress in both agentic systems and spatial reasoning, the research landscape remains fragmented. Numerous surveys have independently covered topics such as Large Language Model agents \citep{yao2023react, wang2024survey, huang2024understanding, xi2023rise, guo2024large}, embodied AI \citep{wang2023voyager, driess2023palme, xiao2023robot}, and geospatial analysis \citep{janowicz2025geofm, mai2024opportunities}. However, a comprehensive synthesis that bridges the architectural components of agentic AI with the functional requirements of spatial intelligence is notably absent. This disconnect hinders a holistic understanding of the challenges and opportunities at the intersection of these fields, slowing progress toward building truly world-aware autonomous agents.
-
-This survey aims to fill this critical gap. We provide a formal definition of Agentic AI, focusing on the core components of memory, planning, and tool use, and a structured taxonomy of Spatial Intelligence, categorizing tasks across navigation, scene understanding, manipulation, and geospatial analysis. Our primary contributions are threefold:
+The evolution of Artificial Intelligence is marked by a paradigm shift from specialized models to goal-oriented, self-directed agents capable of complex decision-making in dynamic environments. This field, which we term **Agentic AI**, represents a significant step towards achieving autonomous machine intelligence. Concurrently, the ability for these agents to perceive, comprehend, and act within the physical world, or **Spatial Intelligence**, remains a fundamental challenge. This survey aims to fill this critical gap. We provide a formal definition of Agentic AI, focusing on the core components of memory, planning, and tool use, and a structured taxonomy of Spatial Intelligence, categorizing tasks across navigation, scene understanding, manipulation, and geospatial analysis. Our primary contributions are threefold:
 
 \begin{enumerate}
-    \item A novel, unified taxonomy that connects agentic architectures with spatial intelligence tasks, providing a structured framework for understanding and categorizing research in this interdisciplinary area.
-    \item A comprehensive review of the state-of-the-art methods, evaluation benchmarks, and real-world applications, synthesizing findings from over 500 papers.
-    \item A forward-looking analysis of the open challenges and a research roadmap to guide future work in developing more capable, robust, and safe spatially-aware agentic systems.
+    \item A new, unified taxonomy that connects Agentic AI architectures with Spatial Intelligence tasks, providing a structured framework for understanding and categorizing research in this interdisciplinary area.
+    \item A comprehensive review of the state-of-the-art methods, evaluation benchmarks, and real-world applications from over 1000 research papers.
+    \item A forward-looking analysis of the open challenges and a research roadmap to guide future work in the field, with a focus on GNN+LLM integration, World Models, and Enterprise Spatial AI.
 \end{enumerate}
 
 By providing this synthesis, we aim to create a foundational reference for researchers, developers, and policymakers, fostering a more integrated approach to building the next generation of autonomous intelligence.
 
+% ===================================================================
+% TAXONOMY OF SPATIAL INTELLIGENCE
+% ===================================================================
+
 \section{A Taxonomy of Spatial Intelligence}
 
-We define \textbf{Spatial Intelligence} as an agent's ability to perceive, reason about, and interact with the physical world. We propose a taxonomy that categorizes spatial tasks into four key domains:
+We define **Spatial Intelligence** as an agent’s ability to perceive, reason about, and act within the physical world. We propose a taxonomy that categorizes spatial tasks into four key domains:
 
-\textbf{Navigation.} The ability to plan and execute paths in a physical environment. This includes tasks like point-to-point navigation \citep{savva2019habitat, shah2023vint}, vision-language navigation \citep{anderson2018vln, chen2019touchdown, hong2020vlnbert, shah2023lmnav}, and exploration \citep{wang2023voyager, zhou2023esc}.
+\begin{itemize}
+    \item \textbf{Navigation:} The ability to plan and execute paths in a physical environment. This includes tasks like point-to-point navigation, vision-language navigation, and exploratory navigation.
+    \item \textbf{Scene Understanding:} The ability to perceive and reason about the objects, relationships, and context of a 3D scene. This includes tasks like 3D object detection, semantic segmentation, and spatial relationship understanding.
+    \item \textbf{Manipulation:} The ability to interact with and modify objects in the environment. This includes tasks like object rearrangement, tool use, and assembly.
+    \item \textbf{Geospatial Analysis:} The ability to reason about and analyze data at a geographic scale. This includes tasks like land use classification, remote sensing analysis, and urban planning.
+\end{itemize}
 
-\textbf{Scene Understanding.} The ability to perceive and reason about the objects, relationships, and context of a 3D scene. This includes tasks like 3D object detection \citep{dai2017scannet, peng2023openscene}, semantic segmentation \citep{dai2017scannet, takmaz2023openmask3d}, and spatial relationship understanding \citep{johnson2017clevr, suhr2019nlvr2, hudson2019gqa, armeni2019scene, wald2020learning, conceptgraphs2024}.
+% ===================================================================
+% CORE COMPONENTS OF AGENTIC AI
+% ===================================================================
 
-\textbf{Manipulation.} The ability to interact with and modify objects in the environment. This includes tasks like object rearrangement \citep{lin2022vima, wu2023tidybot}, tool use \citep{schick2023toolformer, liang2023code}, and assembly \citep{okamura2000overview}.
+\section{Core Components of Agentic AI}
 
-\textbf{Geospatial Analysis.} The ability to reason about and analyze large-scale geographic data. This includes tasks like land use classification \citep{sumbul2019bigearthnet, janowicz2025geofm}, change detection \citep{zhang2018siamesecnn}, and urban planning \citep{zheng2014urban, jin2023stgnn}.
+Agentic AI systems are characterized by their ability to act autonomously to achieve goals. We identify three core components that enable this autonomy, drawing from the framework proposed by Wang et al. (2024):
 
-\section{Core Components and Architectures of Agentic AI}
+\begin{itemize}
+    \item \textbf{Memory:} The ability to store and retrieve information from past experiences. This includes short-term memory for in-context learning and long-term memory for retaining knowledge and skills, as demonstrated in Generative Agents.
+    \item \textbf{Planning:} The ability to decompose a high-level goal into a sequence of executable actions. This includes methods like Chain-of-Thought, Tree of Thoughts, and hierarchical planning.
+    \item \textbf{Tool Use:} The ability to leverage external tools to extend capabilities. This includes using APIs, running code, and interacting with web interfaces, as seen in Toolformer and Gorilla.
+\end{itemize}
 
-Agentic AI systems are characterized by their ability to act autonomously to achieve goals. We identify three core components that enable this autonomy, drawing from the unified framework proposed by \citet{wang2024survey} and \citet{sumers2024cognitive}:
-
-\textbf{Memory.} The ability to store and retrieve information from past experiences. This includes short-term memory for in-context learning \citep{brown2020gpt3} and long-term memory for retaining knowledge and skills, as demonstrated in Generative Agents \citep{park2023generative} and agents with mapping memory \citep{gupta2019neuralslam, huang2023vlmaps}.
-
-\textbf{Planning.} The ability to decompose a high-level goal into a sequence of executable actions. This includes techniques like chain-of-thought reasoning \citep{wei2022chain}, the more deliberate tree-of-thought search \citep{yao2023tree}, and hierarchical planning \citep{song2023llmplanner, zhang2023graph, lin2023text2motion}.
-
-\textbf{Tool Use.} The ability to leverage external tools to extend the agent's capabilities. This includes using APIs for information retrieval \citep{schick2023toolformer, lewis2020rag}, invoking specialized models for specific tasks \citep{accarino2022mrkl}, and interacting with physical actuators \citep{brohan2022rt1, brohan2023rt2}.
-
-\subsection{Agentic Architectures}
-
-Several prominent architectures have emerged to orchestrate these components:
-
-\textbf{ReAct (Reason+Act).} This architecture \citep{yao2023react} interleaves reasoning traces with actions, allowing the agent to create, maintain, and adjust plans while interacting with an external environment. The reasoning traces enable the model to handle exceptions, and update its plan based on the outcomes of its actions.
-
-\textbf{Reflexion.} This framework \citep{shinn2023reflexion} enhances agents with dynamic memory and self-reflection capabilities. After a task failure, the agent reflects on the feedback to identify the cause of the error and updates its internal memory to avoid repeating the same mistake in subsequent trials.
-
-\textbf{Tree of Thoughts (ToT).} ToT \citep{yao2023tree} generalizes over chain-of-thought by exploring multiple reasoning paths in a tree structure. This allows the agent to deliberately explore different lines of reasoning, self-evaluate its progress, and backtrack when necessary, making it more suitable for complex planning tasks.
-
-\textbf{Multi-Agent Systems.} A growing area of research focuses on the collaboration of multiple agents to solve complex problems. Frameworks like AutoGen \citep{wu2023autogen}, MetaGPT \citep{hong2024metagpt}, and CAMEL \citep{li2023camel} enable sophisticated multi-agent conversations and workflows.
+% ===================================================================
+% STATE-OF-THE-ART METHODS
+% ===================================================================
 
 \section{State-of-the-Art Methods and Industry Agents}
 
-\subsection{Embodied AI and Vision-Language-Action (VLA) Models}
+\subsection{Agentic Architectures}
 
-Embodied AI focuses on creating agents that can learn and act in physical or simulated environments. A key development in this area is the rise of Vision-Language-Action (VLA) models, which are trained to map multimodal inputs (vision, language) directly to robotic actions. These models are at the forefront of creating general-purpose robots.
+\textbf{ReAct (Reason+Act)} synergizes reasoning and acting by interleaving language-based reasoning traces with actions taken in an environment. This allows for greater flexibility and error correction.
 
-\textbf{RT-2 (Robotics Transformer 2).} Developed by Google DeepMind, RT-2 \citep{brohan2023rt2} is a VLA model that leverages large-scale web data to learn general concepts about the world and transfer them to robot control. It demonstrates emergent capabilities, such as reasoning about novel objects and executing tasks it was not explicitly trained on.
+\textbf{Reflexion} agents enhance their capabilities through dynamic memory and self-reflection, allowing them to learn from past mistakes and improve their performance over time.
 
-\textbf{PaLM-E.} This 562-billion parameter embodied multimodal language model from Google \citep{driess2023palme} integrates continuous sensor data from robotic systems directly into a large language model. This allows it to ground language in real-world perception and perform a variety of robotic tasks without task-specific training.
+\textbf{Tree of Thoughts (ToT)} explores multiple reasoning paths in a tree structure, enabling more deliberate and systematic problem-solving compared to the linear approach of Chain-of-Thought.
 
-\textbf{Octo and OpenVLA.} Recent open-source efforts like Octo \citep{octo2024} and OpenVLA \citep{kim2024openvla} are democratizing access to powerful VLA models, enabling broader research and development in the community.
+\subsection{Vision-Language-Action (VLA) Models}
 
-\subsection{Industry Applications of Spatial AI}
+\textbf{RT-2 (Robotics Transformer 2)} from Google DeepMind is a VLA model that learns from both web and robotics data, enabling it to understand visual and language commands to perform actions in the real world.
 
-\textbf{Geospatial Intelligence (Palantir, ESRI).}
-Companies like Palantir and ESRI provide powerful platforms for geospatial intelligence. Palantir's Gotham and Foundry platforms are used by government agencies and commercial enterprises for data fusion, pattern detection, and predictive analysis on large-scale geospatial data \citep{palantir2024gotham}. ESRI's ArcGIS platform integrates GeoAI capabilities, enabling users to apply machine learning and deep learning to spatial data for applications in urban planning, environmental monitoring, and business analytics \citep{esri2024geoai}.
+\textbf{PaLM-E} is a 562-billion parameter embodied multimodal language model that integrates real-world continuous sensor modalities into a language model, enabling it to perform a wide range of embodied tasks.
 
-\textbf{Location-Based Services (Foursquare, Google Maps).}
-Foursquare has evolved from a social check-in app to a leading location intelligence platform, providing rich data on places and human mobility \citep{foursquare2024places}. Google Maps leverages AI for navigation, route optimization, and local search, with recent advancements in conversational and accessible navigation powered by large language models \citep{google2024mapsai}.
+\textbf{Octo and OpenVLA} are open-source generalist robot policies that demonstrate the power of large-scale pre-training on diverse robotics datasets, enabling zero-shot generalization to new tasks and environments.
 
-\textbf{Autonomous Vehicles (Waymo, Tesla).}
-Autonomous driving is a major application of spatial AI. Companies like Waymo and Tesla are developing sophisticated systems that use a combination of sensors, high-definition maps, and AI to perceive the environment, predict the behavior of other agents, and plan safe and efficient routes \citep{waymo2024safety, tesla2024autopilot}. The development of large-scale datasets like nuScenes \citep{caesar2020nuscenes} and Waymo Open Dataset \citep{sun2020waymoopen} has been crucial for advancing research in this area.
+\subsection{Industry Agents for Spatial Planning}
 
-\textbf{Smart Cities and Urban Computing.}
-Spatial AI is being used to address a wide range of challenges in urban environments. This includes traffic forecasting \citep{li2018dcrnn, yu2018stgcn}, optimizing public transportation systems, and managing urban infrastructure. The field of urban computing leverages large-scale urban data to improve the quality of life for city dwellers \citep{zheng2014urban}.
+\textbf{Voyager} from NVIDIA is an LLM-powered embodied agent that continuously explores the world of Minecraft, acquires diverse skills, and makes novel discoveries without human intervention.
 
-\textbf{Disaster Response and Emergency Management.}
-AI-powered analysis of satellite and aerial imagery is being used to assess damage after natural disasters, identify areas in need of assistance, and coordinate response efforts. Datasets like xBD \citep{gupta2019creating} have been developed to train models for building damage assessment.
+\textbf{SayCan} from Google grounds language in robotic affordances, allowing a robot to understand and execute high-level natural language commands by evaluating what actions are physically possible.
 
-\section{A Brief Overview of Benchmarks}
+\textbf{Code as Policies} uses LLMs to generate Python code as reactive robot policies, enabling complex, long-horizon tasks by leveraging the structure and expressiveness of code.
 
-A comprehensive analysis of benchmarks for spatial AI agents will be the subject of a follow-up paper. However, a brief overview is necessary to contextualize the current state of evaluation. Existing benchmarks can be broadly categorized into:
+% ===================================================================
+% GNN + LLM INTEGRATION
+% ===================================================================
 
-\begin{itemize}
-    \item \textbf{Navigation Benchmarks:} R2R \citep{anderson2018vln}, Habitat \citep{savva2019habitat}, ZSON \citep{majumdar2022zson}, CoWs on Pasture \citep{gadre2023cows}
-    \item \textbf{Manipulation Benchmarks:} ALFWorld \citep{yao2021alfworld}, BEHAVIOR \citep{srivastava2021behavior}, TidyBot \citep{wu2023tidybot}
-    \item \textbf{Spatial Reasoning Benchmarks:} CLEVR \citep{johnson2017clevr}, GQA \citep{hudson2019gqa}, Open3DVQA \citep{zhang2025open3dvqa}
-    \item \textbf{Integrated Agent Benchmarks:} AgentBench \citep{liu2023agentbench}, EmbodiedBench \citep{yang2025embodiedbench}, WebArena \citep{zhou2023webarena}
-\end{itemize}
+\section{GNN + LLM Integration: The Future of Spatial AI}
 
-These benchmarks, while valuable, often focus on narrow aspects of spatial intelligence. A key challenge for the community is the development of more holistic evaluation frameworks that can assess the full range of agentic capabilities in complex, open-ended spatial tasks.
+As AtlasPro AI, we see the fusion of Graph Neural Networks (GNNs) and Large Language Models (LLMs) as the cornerstone of next-generation spatial intelligence. This integration promises to create ultra-powerful, multi-agent architectures capable of orchestrated spatial reasoning and planning.
+
+\textbf{Industry Insight 1:} GNNs can model the complex relationships between entities in a spatial context (e.g., buildings, roads, sensors), while LLMs provide the natural language interface and high-level reasoning capabilities. This synergy is key to automating GIS analysis and enterprise business intelligence.
+
+\textbf{Industry Insight 2:} By representing enterprise data from Snowflake, SAP, and Salesforce as a dynamic knowledge graph, a GNN-LLM architecture can identify non-obvious patterns and generate real-time business insights, such as suggesting high-opportunity sales prospects based on geographic and demographic data.
+
+\textbf{Industry Insight 3:} For construction and urban planning, this architecture can automate the generation of blueprints and zoning plans by reasoning over spatial constraints, material properties, and regulatory requirements encoded in a graph.
+
+\textbf{Industry Insight 4:} Multi-agent systems, where each agent is a specialized GNN-LLM, can collaborate to solve complex spatial problems. For example, one agent could analyze satellite imagery to identify a disaster area, another could plan optimal evacuation routes, and a third could coordinate on-the-ground robotic response.
+
+\textbf{Industry Insight 5:} The future of enterprise AI is not just about data analysis, but about automated action. GNN-LLM agents will bridge the gap between insight and execution, autonomously generating reports, creating sales leads, and even controlling robotic systems to perform physical tasks.
+
+% ===================================================================
+% WORLD MODELS
+% ===================================================================
+
+\section{World Models: Simulating the Future}
+
+World models learn a predictive model of an environment, allowing an agent to plan by “dreaming” or imagining future outcomes. This is critical for spatial planning in dynamic environments.
+
+\textbf{Industry Insight 1:} For autonomous vehicles, world models can predict the behavior of other drivers and pedestrians, enabling safer and more efficient navigation.
+
+\textbf{Industry Insight 2:} In logistics and supply chain management, world models can simulate the flow of goods and anticipate disruptions, allowing for proactive rerouting and resource allocation.
+
+\textbf{Industry Insight 3:} For climate modeling, world models can simulate the long-term effects of environmental changes, providing critical insights for policy and adaptation strategies.
+
+\textbf{Industry Insight 4:} Google’s Genie demonstrates the potential to generate interactive, playable environments from a single image, opening up new possibilities for simulation-based training and content creation.
+
+\textbf{Industry Insight 5:} The ability to learn a world model from video data (e.g., Sora, WorldDreamer) is a key step towards building generalist agents that can understand and act in any environment.
+
+% ===================================================================
+% ENTERPRISE SPATIAL AI
+% ===================================================================
+
+\section{Enterprise Spatial AI: Real-World Applications}
+
+\textbf{Palantir and ESRI} are leaders in providing geospatial intelligence platforms for defense, intelligence, and commercial customers. Their platforms integrate data from multiple sources to create a common operating picture, enabling real-time situational awareness and decision support.
+
+\textbf{Foursquare and Google Maps} leverage location data to provide a wide range of consumer and enterprise services, from local search and navigation to foot traffic analytics and targeted advertising.
+
+\textbf{Waymo and Tesla} are at the forefront of autonomous driving, using a combination of sensors, machine learning, and high-definition maps to navigate complex urban environments.
+
+\textbf{Smart Cities} initiatives use IoT sensors and data analytics to optimize urban services, including traffic management, public transportation, and energy consumption.
+
+\textbf{Disaster Response} organizations use satellite imagery and AI to rapidly assess damage after natural disasters, enabling more effective allocation of resources and aid.
+
+% ===================================================================
+% OPEN CHALLENGES & FUTURE DIRECTIONS
+% ===================================================================
 
 \section{Open Challenges and Future Directions}
 
 Despite significant progress, several key challenges remain:
 
-\textbf{Robust Spatial Representation.} Developing representations that capture the complexity of 3D environments and generalize across different scenes \citep{mildenhall2020nerf, dai2017scannet, chang2017matterport3d, kerr2023lerf, rosinol2020kimera, hughes2022hydra}.
+\begin{itemize}
+    \item \textbf{Robust Spatial Representation:} Developing representations that capture the rich geometry and semantics of the physical world.
+    \item \textbf{Hierarchical Planning:} Scaling planning algorithms to handle long-horizon, complex tasks.
+    \item \textbf{Safe and Reliable Tool Use:} Ensuring that agents use tools in a safe and predictable manner.
+    \item \textbf{Sim-to-Real Transfer:} Bridging the gap between simulation and the real world.
+    \item \textbf{Ethical Considerations:} Addressing the societal implications of autonomous spatial agents.
+\end{itemize}
 
-\textbf{Hierarchical Planning.} Creating agents that can plan over long horizons and decompose complex spatial tasks into manageable sub-goals \citep{song2023llmplanner, zhang2023graph, hao2023rap, huang2023instruct2act}.
-
-\textbf{Safe and Reliable Tool Use.} Ensuring that agents can use tools safely and effectively, especially in safety-critical applications, as highlighted by the SafeAgentBench benchmark \citep{safeagentbench2025} and research on constitutional AI \citep{bai2022constitutional}.
-
-\textbf{Sim-to-Real Transfer.} Bridging the gap between simulation and the real world to enable the deployment of embodied agents in real-world applications \citep{savva2019habitat, shen2021igibson, zhao2020sim}.
-
-\textbf{World Models.} A promising direction is the development of world models that can learn a comprehensive understanding of the world and predict future states \citep{feng2025worldmodels, ding2024worldmodels, zhen20243dvla}. These models could enable more robust and generalizable agents.
+% ===================================================================
+% CONCLUSION
+% ===================================================================
 
 \section{Conclusion}
 
-This survey has provided a comprehensive overview of the intersection of Agentic AI and Spatial Intelligence. We have proposed a unified taxonomy, reviewed the state-of-the-art, and identified key challenges and future directions. We believe that by fostering a more integrated approach to research in this area, we can accelerate the development of truly intelligent autonomous systems that can understand and interact with the physical world.
+This survey has provided a comprehensive overview of the rapidly advancing field of Autonomous Spatial Intelligence. By unifying the concepts of Agentic AI and Spatial Intelligence, we have created a framework for understanding and categorizing the key challenges and opportunities in this domain. The integration of GNNs and LLMs, the development of predictive world models, and the application of these technologies to real-world enterprise problems will drive the next wave of innovation in AI. As AtlasPro AI, we are committed to being at the forefront of this revolution, building the autonomous systems that will shape our future.
+
+% ===================================================================
+% REFERENCES
+% ===================================================================
 
 \bibliographystyle{plainnat}
 \bibliography{references}
