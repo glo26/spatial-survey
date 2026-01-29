@@ -44,13 +44,15 @@ This repository is organized as follows:
 
 ```
 spatial-survey/
-├── latex/                # LaTeX source code for the paper
-│   ├── main.tex
-│   ├── references.bib
-│   └── ...
-├── figures/              # Source files for figures and diagrams
-├── notes/                # Supplementary research notes and summaries
-└── README.md             # This file
+├── latex/
+│   ├── main.tex          # LaTeX source file
+│   ├── main.pdf          # Compiled PDF (8 pages)
+│   └── references.bib    # Bibliography with 100+ references
+├── Comprehensive_Spatial_AI_Survey.md   # Full survey in Markdown format
+├── paper_insights.md     # Detailed research notes from key papers
+├── survey_framework.md   # A+ framework for survey writing
+├── LICENSE
+└── README.md
 ```
 
 ### How to Compile the Paper
