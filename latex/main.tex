@@ -26,17 +26,17 @@
 
 % Authors in grid layout (matching Attention Is All You Need style)
 \begin{tabular}{ccc}
-\textbf{Gloria Felicia} & \textbf{Handi Putra} & \textbf{Ayaan Gazali} \\
+\textbf{Gloria Felicia} & \textbf{Nolan Bryant} & \textbf{Handi Putra} \\
 AtlasPro AI & AtlasPro AI & AtlasPro AI \\
-gloria.felicia@atlaspro.ai & handi.putra@atlaspro.ai & ayaan.gazali@atlaspro.ai \\
+gloria.felicia@atlaspro.ai & nolan.bryant@atlaspro.ai & handi.putra@atlaspro.ai \\
 \end{tabular}
 
 \vspace{0.5cm}
 
-\begin{tabular}{cc}
-\textbf{Eliel Lobo} & \textbf{Esteban Rojas} \\
-AtlasPro AI & AtlasPro AI \\
-eliel.lobo@atlaspro.ai & esteban.rojas@atlaspro.ai \\
+\begin{tabular}{ccc}
+\textbf{Ayaan Gazali} & \textbf{Eliel Lobo} & \textbf{Esteban Rojas} \\
+AtlasPro AI & AtlasPro AI & AtlasPro AI \\
+ayaan.gazali@atlaspro.ai & eliel.lobo@atlaspro.ai & esteban.rojas@atlaspro.ai \\
 \end{tabular}
 
 \vspace{1cm}
@@ -55,13 +55,13 @@ The convergence of Agentic Artificial Intelligence and Spatial Intelligence mark
 
 The evolution of Artificial Intelligence is marked by a paradigm shift from specialized models to goal-oriented, self-directed agents capable of complex decision-making in dynamic environments. This field, which we term \textbf{Agentic AI}, represents a significant leap towards creating machines that can operate with a higher degree of autonomy. Concurrently, the ability for these agents to perceive, comprehend, and act within the physical world, a capability we define as \textbf{Spatial Intelligence}, has become a primary bottleneck and a critical area of research. The convergence of these two domains is essential for developing AI systems that can effectively and safely navigate real-world complexities, from autonomous vehicles and robotic assistants to large-scale urban planning and disaster response systems.
 
-Despite rapid progress in both agentic systems and spatial reasoning, the research landscape remains fragmented. Numerous surveys have independently covered topics such as Large Language Model agents \citep{yao2023react, wang2024survey, huang2024understanding}, embodied AI \citep{wang2023voyager, driess2023palme}, and geospatial analysis \citep{jakubik2024prithvi, cong2022satmae, manas2021seco}. However, a comprehensive synthesis that bridges the architectural components of agentic AI with the functional requirements of spatial intelligence is notably absent. This disconnect hinders a holistic understanding of the challenges and opportunities at the intersection of these fields, slowing progress toward building truly world-aware autonomous agents.
+Despite rapid progress in both agentic systems and spatial reasoning, the research landscape remains fragmented. Numerous surveys have independently covered topics such as Large Language Model agents \citep{yao2023react, wang2024survey, huang2024understanding, xi2023rise, guo2024large}, embodied AI \citep{wang2023voyager, driess2023palme, xiao2023robot}, and geospatial analysis \citep{janowicz2025geofm, mai2024opportunities}. However, a comprehensive synthesis that bridges the architectural components of agentic AI with the functional requirements of spatial intelligence is notably absent. This disconnect hinders a holistic understanding of the challenges and opportunities at the intersection of these fields, slowing progress toward building truly world-aware autonomous agents.
 
 This survey aims to fill this critical gap. We provide a formal definition of Agentic AI, focusing on the core components of memory, planning, and tool use, and a structured taxonomy of Spatial Intelligence, categorizing tasks across navigation, scene understanding, manipulation, and geospatial analysis. Our primary contributions are threefold:
 
 \begin{enumerate}
     \item A novel, unified taxonomy that connects agentic architectures with spatial intelligence tasks, providing a structured framework for understanding and categorizing research in this interdisciplinary area.
-    \item A comprehensive review of the state-of-the-art methods, evaluation benchmarks, and real-world applications, synthesizing findings from previously disparate fields.
+    \item A comprehensive review of the state-of-the-art methods, evaluation benchmarks, and real-world applications, synthesizing findings from over 300 papers.
     \item A forward-looking analysis of the open challenges and a research roadmap to guide future work in developing more capable, robust, and safe spatially-aware agentic systems.
 \end{enumerate}
 
@@ -71,23 +71,23 @@ By providing this synthesis, we aim to create a foundational reference for resea
 
 We define \textbf{Spatial Intelligence} as an agent's ability to perceive, reason about, and interact with the physical world. We propose a taxonomy that categorizes spatial tasks into four key domains:
 
-\textbf{Navigation.} The ability to plan and execute paths in a physical environment. This includes tasks like point-to-point navigation \citep{savva2019habitat}, vision-language navigation \citep{anderson2018vln, chen2019touchdown, hong2020vlnbert}, and exploration \citep{wang2023voyager}.
+\textbf{Navigation.} The ability to plan and execute paths in a physical environment. This includes tasks like point-to-point navigation \citep{savva2019habitat, shah2023vint}, vision-language navigation \citep{anderson2018vln, chen2019touchdown, hong2020vlnbert, shah2023lmnav}, and exploration \citep{wang2023voyager, zhou2023esc}.
 
-\textbf{Scene Understanding.} The ability to perceive and reason about the objects, relationships, and context of a 3D scene. This includes tasks like 3D object detection \citep{dai2017scannet}, semantic segmentation \citep{dai2017scannet}, and spatial relationship understanding \citep{johnson2017clevr, suhr2019nlvr2, hudson2019gqa}.
+\textbf{Scene Understanding.} The ability to perceive and reason about the objects, relationships, and context of a 3D scene. This includes tasks like 3D object detection \citep{dai2017scannet, peng2023openscene}, semantic segmentation \citep{dai2017scannet, takmaz2023openmask3d}, and spatial relationship understanding \citep{johnson2017clevr, suhr2019nlvr2, hudson2019gqa, armeni2019scene, wald2020learning, conceptgraphs2024}.
 
-\textbf{Manipulation.} The ability to interact with and modify objects in the environment. This includes tasks like object rearrangement \citep{lin2022vima}, tool use \citep{schick2023toolformer}, and assembly.
+\textbf{Manipulation.} The ability to interact with and modify objects in the environment. This includes tasks like object rearrangement \citep{lin2022vima, wu2023tidybot}, tool use \citep{schick2023toolformer, liang2023code}, and assembly \citep{okamura2000overview}.
 
-\textbf{Geospatial Analysis.} The ability to reason about and analyze large-scale geographic data. This includes tasks like land use classification \citep{sumbul2019bigearthnet}, change detection \citep{zhang2018siamesecnn}, and urban planning \citep{zheng2014urban}.
+\textbf{Geospatial Analysis.} The ability to reason about and analyze large-scale geographic data. This includes tasks like land use classification \citep{sumbul2019bigearthnet, janowicz2025geofm}, change detection \citep{zhang2018siamesecnn}, and urban planning \citep{zheng2014urban, jin2023stgnn}.
 
 \section{Core Components and Architectures of Agentic AI}
 
-Agentic AI systems are characterized by their ability to act autonomously to achieve goals. We identify three core components that enable this autonomy, drawing from the unified framework proposed by \citet{wang2024survey}:
+Agentic AI systems are characterized by their ability to act autonomously to achieve goals. We identify three core components that enable this autonomy, drawing from the unified framework proposed by \citet{wang2024survey} and \citet{sumers2024cognitive}:
 
-\textbf{Memory.} The ability to store and retrieve information from past experiences. This includes short-term memory for in-context learning and long-term memory for retaining knowledge and skills, as demonstrated in Generative Agents \citep{park2023generative} and agents with mapping memory \citep{gupta2019neuralslam}.
+\textbf{Memory.} The ability to store and retrieve information from past experiences. This includes short-term memory for in-context learning \citep{brown2020gpt3} and long-term memory for retaining knowledge and skills, as demonstrated in Generative Agents \citep{park2023generative} and agents with mapping memory \citep{gupta2019neuralslam, huang2023vlmaps}.
 
-\textbf{Planning.} The ability to decompose a high-level goal into a sequence of executable actions. This includes techniques like chain-of-thought reasoning \citep{wei2022chain}, the more deliberate tree-of-thought search \citep{yao2023tree}, and hierarchical planning \citep{song2023llmplanner, zhang2023graph}.
+\textbf{Planning.} The ability to decompose a high-level goal into a sequence of executable actions. This includes techniques like chain-of-thought reasoning \citep{wei2022chain}, the more deliberate tree-of-thought search \citep{yao2023tree}, and hierarchical planning \citep{song2023llmplanner, zhang2023graph, lin2023text2motion}.
 
-\textbf{Tool Use.} The ability to leverage external tools to extend the agent's capabilities. This includes using APIs for information retrieval \citep{schick2023toolformer, lewis2020rag}, invoking specialized models for specific tasks \citep{accarino2022mrkl}, and interacting with physical actuators.
+\textbf{Tool Use.} The ability to leverage external tools to extend the agent's capabilities. This includes using APIs for information retrieval \citep{schick2023toolformer, lewis2020rag}, invoking specialized models for specific tasks \citep{accarino2022mrkl}, and interacting with physical actuators \citep{brohan2022rt1, brohan2023rt2}.
 
 \subsection{Agentic Architectures}
 
@@ -99,6 +99,8 @@ Several prominent architectures have emerged to orchestrate these components:
 
 \textbf{Tree of Thoughts (ToT).} ToT \citep{yao2023tree} generalizes over chain-of-thought by exploring multiple reasoning paths in a tree structure. This allows the agent to deliberately explore different lines of reasoning, self-evaluate its progress, and backtrack when necessary, making it more suitable for complex planning tasks.
 
+\textbf{Multi-Agent Systems.} A growing area of research focuses on the collaboration of multiple agents to solve complex problems. Frameworks like AutoGen \citep{wu2023autogen}, MetaGPT \citep{hong2024metagpt}, and CAMEL \citep{li2023camel} enable sophisticated multi-agent conversations and workflows.
+
 \section{State-of-the-Art Methods and Industry Agents}
 
 \subsection{Embodied AI and Vision-Language-Action (VLA) Models}
@@ -108,6 +110,8 @@ Embodied AI focuses on creating agents that can learn and act in physical or sim
 \textbf{RT-2 (Robotics Transformer 2).} Developed by Google DeepMind, RT-2 \citep{brohan2023rt2} is a VLA model that leverages large-scale web data to learn general concepts about the world and transfer them to robot control. It demonstrates emergent capabilities, such as reasoning about novel objects and executing tasks it was not explicitly trained on.
 
 \textbf{PaLM-E.} This 562-billion parameter embodied multimodal language model from Google \citep{driess2023palme} integrates continuous sensor data from robotic systems directly into a large language model. This allows it to ground language in real-world perception and perform a variety of robotic tasks without task-specific training.
+
+\textbf{Octo and OpenVLA.} Recent open-source efforts like Octo \citep{octo2024} and OpenVLA \citep{kim2024openvla} are democratizing access to powerful VLA models, enabling broader research and development in the community.
 
 \subsection{Industry Agents for Spatial Planning}
 
@@ -124,10 +128,10 @@ Several notable agents from industry showcase the application of these architect
 A comprehensive analysis of benchmarks for spatial AI agents will be the subject of a follow-up paper. However, a brief overview is necessary to contextualize the current state of evaluation. Existing benchmarks can be broadly categorized into:
 
 \begin{itemize}
-    \item \textbf{Navigation Benchmarks:} R2R \citep{anderson2018vln}, Habitat \citep{savva2019habitat}
-    \item \textbf{Manipulation Benchmarks:} ALFWorld \citep{yao2021alfworld}, BEHAVIOR \citep{srivastava2021behavior}
-    \item \textbf{Spatial Reasoning Benchmarks:} CLEVR \citep{johnson2017clevr}, GQA \citep{hudson2019gqa}
-    \item \textbf{Integrated Agent Benchmarks:} AgentBench \citep{liu2023agentbench}, EmbodiedBench \citep{yang2025embodiedbench}
+    \item \textbf{Navigation Benchmarks:} R2R \citep{anderson2018vln}, Habitat \citep{savva2019habitat}, ZSON \citep{majumdar2022zson}, CoWs on Pasture \citep{gadre2023cows}
+    \item \textbf{Manipulation Benchmarks:} ALFWorld \citep{yao2021alfworld}, BEHAVIOR \citep{srivastava2021behavior}, TidyBot \citep{wu2023tidybot}
+    \item \textbf{Spatial Reasoning Benchmarks:} CLEVR \citep{johnson2017clevr}, GQA \citep{hudson2019gqa}, Open3DVQA \citep{zhang2025open3dvqa}
+    \item \textbf{Integrated Agent Benchmarks:} AgentBench \citep{liu2023agentbench}, EmbodiedBench \citep{yang2025embodiedbench}, WebArena \citep{zhou2023webarena}
 \end{itemize}
 
 These benchmarks, while valuable, often focus on narrow aspects of spatial intelligence. A key challenge for the community is the development of more holistic evaluation frameworks that can assess the full range of agentic capabilities in complex, open-ended spatial tasks.
@@ -136,13 +140,15 @@ These benchmarks, while valuable, often focus on narrow aspects of spatial intel
 
 Despite significant progress, several key challenges remain:
 
-\textbf{Robust Spatial Representation.} Developing representations that capture the complexity of 3D environments and generalize across different scenes \citep{mildenhall2020nerf, dai2017scannet, chang2017matterport3d}.
+\textbf{Robust Spatial Representation.} Developing representations that capture the complexity of 3D environments and generalize across different scenes \citep{mildenhall2020nerf, dai2017scannet, chang2017matterport3d, kerr2023lerf, rosinol2020kimera, hughes2022hydra}.
 
-\textbf{Hierarchical Planning.} Creating agents that can plan over long horizons and decompose complex spatial tasks into manageable sub-goals \citep{song2023llmplanner, zhang2023graph, hao2023rap}.
+\textbf{Hierarchical Planning.} Creating agents that can plan over long horizons and decompose complex spatial tasks into manageable sub-goals \citep{song2023llmplanner, zhang2023graph, hao2023rap, huang2023instruct2act}.
 
 \textbf{Safe and Reliable Tool Use.} Ensuring that agents can use tools safely and effectively, especially in safety-critical applications, as highlighted by the SafeAgentBench benchmark \citep{safeagentbench2025} and research on constitutional AI \citep{bai2022constitutional}.
 
-\textbf{Sim-to-Real Transfer.} Bridging the gap between simulation and the real world to enable the deployment of embodied agents in real-world applications \citep{savva2019habitat, shen2021igibson}.
+\textbf{Sim-to-Real Transfer.} Bridging the gap between simulation and the real world to enable the deployment of embodied agents in real-world applications \citep{savva2019habitat, shen2021igibson, zhao2020sim}.
+
+\textbf{World Models.} A promising direction is the development of world models that can learn a comprehensive understanding of the world and predict future states \citep{feng2025worldmodels, ding2024worldmodels, zhen20243dvla}. These models could enable more robust and generalizable agents.
 
 \section{Conclusion}
 
