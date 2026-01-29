@@ -1,42 +1,55 @@
 \documentclass{article}
 
-% NeurIPS-style formatting (matching "Attention Is All You Need")
 \usepackage[utf8]{inputenc}
-% \usepackage[T1]{fontenc}  % Removed for compatibility
-% Using default Computer Modern fonts for compatibility
 \usepackage[hidelinks]{hyperref}
 \usepackage{url}
 \usepackage{booktabs}
 \usepackage{amsfonts}
 \usepackage{amsmath}
 \usepackage{nicefrac}
-% \usepackage{microtype}  % Removed due to font compatibility
 \usepackage{graphicx}
 \usepackage{natbib}
 \usepackage[margin=1in]{geometry}
 
-% Title formatting
-\title{\Large \bf Agentic AI for Spatial Intelligence: A Comprehensive Survey}
-
-% Author formatting (matching Attention Is All You Need style)
-\author{
-Gloria Felicia\thanks{gloria.felicia@atlaspro.ai} \quad
-Handi Putra\thanks{handi.putra@atlaspro.ai} \quad
-Ayaan Gazali\thanks{ayaan.gazali@atlaspro.ai} \\
-Eliel Lobo\thanks{eliel.lobo@atlaspro.ai} \quad
-Esteban Rojas\thanks{esteban.rojas@atlaspro.ai} \\[1em]
-AtlasPro AI
-}
-
-\date{}
-
 \begin{document}
 
-\maketitle
+% Title with horizontal rules (matching Attention Is All You Need)
+\begin{center}
+\rule{\textwidth}{1.5pt}
+\vspace{0.3cm}
 
-\begin{abstract}
+{\LARGE \bf Agentic AI for Spatial Intelligence: A Comprehensive Survey}
+
+\vspace{0.3cm}
+\rule{\textwidth}{0.5pt}
+\vspace{0.8cm}
+
+% Authors in grid layout (matching Attention Is All You Need style)
+\begin{tabular}{ccc}
+\textbf{Gloria Felicia} & \textbf{Handi Putra} & \textbf{Ayaan Gazali} \\
+AtlasPro AI & AtlasPro AI & AtlasPro AI \\
+gloria.felicia@atlaspro.ai & handi.putra@atlaspro.ai & ayaan.gazali@atlaspro.ai \\
+\end{tabular}
+
+\vspace{0.5cm}
+
+\begin{tabular}{cc}
+\textbf{Eliel Lobo} & \textbf{Esteban Rojas} \\
+AtlasPro AI & AtlasPro AI \\
+eliel.lobo@atlaspro.ai & esteban.rojas@atlaspro.ai \\
+\end{tabular}
+
+\vspace{1cm}
+
+% Abstract
+{\large \bf Abstract}
+\end{center}
+
+\vspace{0.3cm}
+
+\begin{quote}
 The convergence of Agentic Artificial Intelligence and Spatial Intelligence marks a pivotal frontier in the pursuit of creating machines that can autonomously operate in the physical world. While agentic systems demonstrate increasingly sophisticated capabilities in planning and tool use, their ability to perceive, reason about, and interact with complex spatial environments remains a significant bottleneck. This survey addresses a critical gap in the existing literature by providing a unified taxonomy that systematically connects the architectural components of agentic AI with the functional requirements of spatial intelligence. We review the foundational concepts of agentic systems, including memory, planning, and tool use, and categorize the diverse landscape of spatial tasks, including navigation, scene understanding, manipulation, and large-scale geospatial analysis. Through a comprehensive analysis of state-of-the-art methods, including embodied agents, multimodal large language models, and geometric graph neural networks, we evaluate the current capabilities and limitations of these systems. We further analyze the fragmented landscape of evaluation benchmarks, highlighting the urgent need for more integrated and holistic frameworks. By synthesizing these disparate research areas and outlining a forward-looking research roadmap, this paper aims to accelerate the development of robust, safe, and effective spatially-aware autonomous systems.
-\end{abstract}
+\end{quote}
 
 \section{Introduction}
 
