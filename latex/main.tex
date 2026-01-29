@@ -61,7 +61,7 @@ This survey aims to fill this critical gap. We provide a formal definition of Ag
 
 \begin{enumerate}
     \item A novel, unified taxonomy that connects agentic architectures with spatial intelligence tasks, providing a structured framework for understanding and categorizing research in this interdisciplinary area.
-    \item A comprehensive review of the state-of-the-art methods, evaluation benchmarks, and real-world applications, synthesizing findings from over 300 papers.
+    \item A comprehensive review of the state-of-the-art methods, evaluation benchmarks, and real-world applications, synthesizing findings from over 500 papers.
     \item A forward-looking analysis of the open challenges and a research roadmap to guide future work in developing more capable, robust, and safe spatially-aware agentic systems.
 \end{enumerate}
 
@@ -113,15 +113,22 @@ Embodied AI focuses on creating agents that can learn and act in physical or sim
 
 \textbf{Octo and OpenVLA.} Recent open-source efforts like Octo \citep{octo2024} and OpenVLA \citep{kim2024openvla} are democratizing access to powerful VLA models, enabling broader research and development in the community.
 
-\subsection{Industry Agents for Spatial Planning}
+\subsection{Industry Applications of Spatial AI}
 
-Several notable agents from industry showcase the application of these architectures to complex spatial planning tasks:
+\textbf{Geospatial Intelligence (Palantir, ESRI).}
+Companies like Palantir and ESRI provide powerful platforms for geospatial intelligence. Palantir's Gotham and Foundry platforms are used by government agencies and commercial enterprises for data fusion, pattern detection, and predictive analysis on large-scale geospatial data \citep{palantir2024gotham}. ESRI's ArcGIS platform integrates GeoAI capabilities, enabling users to apply machine learning and deep learning to spatial data for applications in urban planning, environmental monitoring, and business analytics \citep{esri2024geoai}.
 
-\textbf{Voyager.} Developed by NVIDIA, Voyager \citep{wang2023voyager} is an LLM-powered embodied agent that excels at open-ended exploration and skill acquisition in Minecraft. It uses GPT-4 to generate a curriculum, write code for new skills, and store them in a skill library for long-term use.
+\textbf{Location-Based Services (Foursquare, Google Maps).}
+Foursquare has evolved from a social check-in app to a leading location intelligence platform, providing rich data on places and human mobility \citep{foursquare2024places}. Google Maps leverages AI for navigation, route optimization, and local search, with recent advancements in conversational and accessible navigation powered by large language models \citep{google2024mapsai}.
 
-\textbf{SayCan.} This Google project \citep{ahn2022saycan} grounds language models in robotic affordances. It uses an LLM to determine high-level actions and a learned value function to assess the feasibility of those actions for a given robot, effectively bridging the gap between abstract reasoning and physical capability.
+\textbf{Autonomous Vehicles (Waymo, Tesla).}
+Autonomous driving is a major application of spatial AI. Companies like Waymo and Tesla are developing sophisticated systems that use a combination of sensors, high-definition maps, and AI to perceive the environment, predict the behavior of other agents, and plan safe and efficient routes \citep{waymo2024safety, tesla2024autopilot}. The development of large-scale datasets like nuScenes \citep{caesar2020nuscenes} and Waymo Open Dataset \citep{sun2020waymoopen} has been crucial for advancing research in this area.
 
-\textbf{Code as Policies.} This approach \citep{liang2023code} uses LLMs to generate Python code that serves as a reactive policy for a robot. This allows for more complex and dynamic behaviors than direct action prediction and leverages the extensive knowledge of programming and logic embedded in LLMs.
+\textbf{Smart Cities and Urban Computing.}
+Spatial AI is being used to address a wide range of challenges in urban environments. This includes traffic forecasting \citep{li2018dcrnn, yu2018stgcn}, optimizing public transportation systems, and managing urban infrastructure. The field of urban computing leverages large-scale urban data to improve the quality of life for city dwellers \citep{zheng2014urban}.
+
+\textbf{Disaster Response and Emergency Management.}
+AI-powered analysis of satellite and aerial imagery is being used to assess damage after natural disasters, identify areas in need of assistance, and coordinate response efforts. Datasets like xBD \citep{gupta2019creating} have been developed to train models for building damage assessment.
 
 \section{A Brief Overview of Benchmarks}
 
