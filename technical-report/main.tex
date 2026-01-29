@@ -15,13 +15,6 @@
 \usepackage{colortbl}
 \usepackage{longtable}
 \usepackage{array}
-\usepackage{listings}
-
-\lstset{
-    basicstyle=\ttfamily\small,
-    breaklines=true,
-    frame=single
-}
 
 \begin{document}
 
@@ -156,7 +149,7 @@ Memory is the foundation of intelligent behavior. For spatial agents, we identif
 
 \subsubsection{Short-Term Memory: Context Management}
 
-Short-term memory operates within the LLM\'s context window. Engineering considerations include:
+Short-term memory operates within the LLM's context window. Engineering considerations include:
 
 \textbf{Context Window Management.} Modern LLMs have context windows ranging from 8K to 128K+ tokens \citep{openai2023gpt4, anthropic2024claude}. For spatial tasks, we must efficiently encode:
 \begin{itemize}
@@ -204,206 +197,1345 @@ Long-term memory extends agent knowledge beyond the context window through exter
 \begin{itemize}
     \item Fixed-size chunks (e.g., 512 tokens): Simple but may split semantic units
     \item Semantic chunking: Preserves meaning but more complex
+    \item Hierarchical chunking: Enables multi-granularity retrieval
 \end{itemize}
 
-\subsubsection{Spatial Memory: Cognitive Maps and Scene Graphs}
+\textbf{Retrieval Algorithms.} Beyond simple similarity search:
+\begin{itemize}
+    \item Maximal Marginal Relevance (MMR): Balances relevance and diversity
+    \item Hybrid search: Combines dense and sparse retrieval
+    \item Re-ranking: Uses cross-encoders for improved precision
+\end{itemize}
 
-Spatial memory explicitly represents the geometric and semantic structure of the environment.
+\subsubsection{Spatial Memory: Cognitive Maps}
 
-\textbf{Cognitive Maps.} These are topological or metric representations of the environment used for navigation \citep{chaplot2020neural, gupta2019neuralslam}. They can be implemented as 2D occupancy grids or 3D point clouds.
+For embodied agents, spatial memory is critical. Key approaches include:
 
-\textbf{Scene Graphs.} These represent objects and their relationships in a graph structure \citep{krishna2017visual, armeni2019scene}. They are critical for semantic reasoning and task planning.
+\textbf{Metric Maps.} Neural SLAM \citep{gupta2019neuralslam, chaplot2020neural} builds metric representations of environments. Implementation requires:
+\begin{itemize}
+    \item Depth estimation from RGB images
+    \item Pose estimation and tracking
+    \item Map fusion and update
+\end{itemize}
 
-\subsection{Planning and Reasoning Systems}
+\textbf{Semantic Maps.} VLMaps \citep{huang2023vlmaps} adds language-grounded understanding:
+\begin{itemize}
+    \item CLIP feature extraction for each location
+    \item 3D feature volume construction
+    \item Natural language querying of spatial locations
+\end{itemize}
 
-\subsubsection{LLM-Based Planning}
+\textbf{Episodic Memory.} Generative Agents \citep{park2023generative} demonstrated memory streams for social agents. For spatial agents, we can adapt this to store:
+\begin{itemize}
+    \item Past navigation experiences
+    \item Object interaction history
+    \item Task completion records
+\end{itemize}
 
-LLMs can serve as high-level planners, decomposing complex goals into simpler sub-tasks.
+\subsection{Planning Systems Architecture}
 
-\textbf{Chain-of-Thought (CoT).} CoT prompting \citep{wei2022chain} elicits step-by-step reasoning, improving planning performance.
+Planning enables agents to decompose goals into executable actions.
 
-\textbf{Tree-of-Thought (ToT).} ToT \citep{yao2023tree} explores multiple reasoning paths, enabling more robust planning.
+\subsubsection{Chain-of-Thought Planning}
 
-\textbf{ReAct Framework.} The ReAct architecture \citep{yao2023react} interleaves reasoning and action, allowing the agent to update its plan based on environmental feedback.
+CoT prompting \citep{wei2022chain} elicits step-by-step reasoning:
 
-\subsubsection{GNN-LLM Integration Patterns}
+\textbf{Implementation Pattern.}
+\begin{verbatim}
+System: You are a spatial planning agent. Think step by step.
+User: Navigate to the kitchen and pick up the red cup.
+Assistant: Let me break this down:
+1. First, I need to locate the kitchen...
+2. Then, I need to navigate there...
+3. Once in the kitchen, I need to find the red cup...
+4. Finally, I need to pick up the cup...
+\end{verbatim}
 
-Combining GNNs for structural reasoning with LLMs for semantic understanding is a powerful paradigm.
+\textbf{Zero-Shot CoT.} Simply adding "Let's think step by step" improves reasoning \citep{kojima2022large}.
 
-\textbf{Pattern 1: GNN-RAG.} Use a GNN to retrieve relevant subgraphs from a knowledge base, which are then fed into an LLM for reasoning \citep{wang2024gnnrag}.
+\textbf{Self-Consistency.} Sampling multiple reasoning paths and aggregating improves robustness \citep{wang2022self}.
 
-\textbf{Pattern 2: GNN-to-Text.} Use a GNN to encode graph structure into a textual representation that an LLM can process.
+\subsubsection{Tree-Based Planning}
 
-\textbf{Pattern 3: LLM-as-Controller.} Use an LLM to generate graph operations, effectively using the GNN as a tool.
+Tree of Thoughts \citep{yao2023tree} explores multiple solution paths:
 
-\subsection{Action and Tool Use}
+\textbf{Algorithm Structure.}
+\begin{enumerate}
+    \item Generate multiple candidate next steps
+    \item Evaluate each candidate
+    \item Select promising candidates for expansion
+    \item Backtrack if necessary
+\end{enumerate}
+
+\textbf{Engineering Considerations.}
+\begin{itemize}
+    \item State management for each tree node
+    \item Evaluation function design
+    \item Search strategy (BFS, DFS, beam search)
+    \item Computational cost management
+\end{itemize}
+
+\subsubsection{Hierarchical Planning}
+
+For complex spatial tasks, hierarchical planning is essential \citep{song2023llmplanner, huang2022inner}:
+
+\textbf{High-Level Planning.} LLM generates abstract task decomposition:
+\begin{itemize}
+    \item "Go to kitchen" $\rightarrow$ "Find cup" $\rightarrow$ "Pick up cup"
+\end{itemize}
+
+\textbf{Low-Level Planning.} Specialized planners handle execution:
+\begin{itemize}
+    \item Navigation: A* or RRT for path planning
+    \item Manipulation: Motion planning with MoveIt or similar
+\end{itemize}
+
+\textbf{Grounding.} SayCan \citep{ahn2022saycan} grounds high-level plans in robot affordances by combining LLM probabilities with learned value functions.
+
+\subsubsection{Classical Planning Integration}
+
+Recent work explores combining LLMs with classical planners \citep{valmeekam2023large, guan2023leveraging, liu2023llmp}:
+
+\textbf{LLM as Heuristic.} Use LLM to guide search in classical planners.
+
+\textbf{LLM as Translator.} Convert natural language to PDDL for classical planning.
+
+\textbf{Hybrid Approaches.} Combine neural and symbolic planning for robustness.
+
+\subsection{Tool Use and Action Systems}
+
+Tool use extends agent capabilities through external interfaces.
 
 \subsubsection{API Integration}
 
-Agents can extend their capabilities by calling external APIs \citep{schick2023toolformer, patil2023gorilla}.
+\textbf{Tool Definition.} Tools should be defined with clear schemas:
+\begin{verbatim}
+{
+  "name": "navigate_to",
+  "description": "Navigate the robot to a specified location",
+  "parameters": {
+    "location": {"type": "string", "description": "Target location name"},
+    "speed": {"type": "number", "description": "Movement speed (0-1)"}
+  }
+}
+\end{verbatim}
 
-\textbf{Tool Selection.} The agent must learn to select the appropriate tool for a given task.
+\textbf{Tool Selection.} Models like Toolformer \citep{schick2023toolformer} and Gorilla \citep{patil2023gorilla} learn when and how to use tools.
 
-\textbf{Argument Generation.} The agent must generate valid arguments for the selected tool.
+\textbf{Error Handling.} Robust error handling is critical:
+\begin{itemize}
+    \item Retry logic with exponential backoff
+    \item Fallback strategies for tool failures
+    \item Clear error messages for debugging
+\end{itemize}
 
 \subsubsection{Code Generation}
 
-Generating code provides a flexible action space \citep{gao2023pal, liang2023code}.
+Code as Policies \citep{liang2023code} generates executable robot code:
 
-\textbf{Code as Policies.} The agent generates Python code to be executed by a robot, enabling complex action sequences.
-
-\section{Safety Engineering (10+ Pages)}
-
-Ensuring the safety and reliability of autonomous systems is paramount, especially in physical deployments. This section follows the structure of the LLaMA 2 safety evaluation \citep{touvron2023llama2}, which dedicates 34\% of its content to safety.
-
-\subsection{Red Teaming Methodology}
-
-Red teaming is a structured process of adversarially testing a model to identify and mitigate potential harms.
-
-\subsubsection{Phase 1: Scoping}
-
-Define the scope of red teaming efforts, focusing on high-risk applications for spatial agents (e.g., physical harm, property damage, surveillance).
-
-\subsubsection{Phase 2: Team Formation}
-
-Assemble a diverse red team with expertise in AI safety, robotics, cybersecurity, and ethics.
-
-\subsubsection{Phase 3: Attack Development}
-
-Develop a suite of adversarial attacks, including:
+\textbf{Advantages.}
 \begin{itemize}
-    \item \textbf{Jailbreaking Prompts:} Crafting prompts to bypass safety filters.
-    \item \textbf{Adversarial Environments:} Creating simulation scenarios that trigger unsafe behavior.
-    \item \textbf{Physical Perturbations:} Testing robustness to real-world sensor noise and physical disturbances.
+    \item Flexible and expressive
+    \item Enables complex control flow
+    \item Supports variables and state
 \end{itemize}
 
-\subsubsection{Phase 4: Execution and Logging}
-
-Systematically execute attacks and log all model responses, environmental states, and outcomes.
-
-\subsubsection{Phase 5: Analysis and Mitigation}
-
-Analyze failures, identify root causes, and implement mitigations through data augmentation, model fine-tuning, or architectural changes.
-
-\subsection{Constitutional AI}
-
-Constitutional AI \citep{bai2022constitutional} provides a framework for aligning agent behavior with a set of ethical principles (a "constitution").
-
-\subsubsection{Principle Design}
-
-Develop a constitution for spatial agents, including principles like:
+\textbf{Safety Considerations.}
 \begin{itemize}
-    \item Do not cause physical harm to humans.
-    \item Respect private property.
-    \item Avoid surveillance of individuals.
-    \item Operate within legal and ethical boundaries.
+    \item Sandboxed execution environment
+    \item Code review before execution
+    \item Resource limits (CPU, memory, time)
 \end{itemize}
 
-\subsubsection{Implementation}
+\subsubsection{ReAct Architecture}
 
-Implement the constitution through a two-phase process:
+ReAct \citep{yao2023react} interleaves reasoning and action:
+
+\textbf{Loop Structure.}
 \begin{enumerate}
-    \item \textbf{Supervised Learning Phase:} Fine-tune the model on prompts that ask it to critique and revise its own responses based on the constitution.
-    \item \textbf{Reinforcement Learning Phase:} Use reinforcement learning to train a preference model that scores responses based on their alignment with the constitution.
+    \item \textbf{Thought:} Agent reasons about current state
+    \item \textbf{Action:} Agent selects and executes action
+    \item \textbf{Observation:} Environment provides feedback
+    \item \textbf{Repeat:} Until goal achieved or failure
 \end{enumerate}
 
-\subsection{Bias and Fairness Analysis}
+\textbf{Implementation.}
+\begin{verbatim}
+while not done:
+    thought = llm.generate(prompt + history)
+    action = parse_action(thought)
+    observation = execute_action(action)
+    history.append((thought, action, observation))
+    done = check_completion(observation)
+\end{verbatim}
 
-Evaluate the model for potential biases in perception, reasoning, and action.
+\section{Vision-Language-Action Models: Implementation Guide}
 
-\subsubsection{Data Bias}
+\subsection{Architecture Overview}
 
-Analyze training data for demographic, geographic, or other biases.
+VLA models map visual observations and language instructions directly to robot actions \citep{brohan2022rt1, brohan2023rt2, team2024octo, kim2024openvla}.
 
-\subsubsection{Algorithmic Bias}
+\textbf{Components.}
+\begin{itemize}
+    \item \textbf{Vision Encoder:} Processes camera images (ViT, ResNet)
+    \item \textbf{Language Encoder:} Processes text instructions (BERT, T5)
+    \item \textbf{Fusion Module:} Combines vision and language features
+    \item \textbf{Action Head:} Predicts robot actions
+\end{itemize}
 
-Test the model for performance disparities across different demographic groups or environmental conditions.
+\subsection{RT-1 and RT-2}
 
-\subsubsection{Mitigation Strategies}
+\textbf{RT-1} \citep{brohan2022rt1} demonstrated large-scale robot learning:
+\begin{itemize}
+    \item Trained on 130K robot demonstrations
+    \item Transformer architecture with tokenized actions
+    \item Strong generalization to new objects and instructions
+\end{itemize}
 
-Implement bias mitigation techniques, including data re-sampling, algorithmic debiasing, and fairness-aware training.
+\textbf{RT-2} \citep{brohan2023rt2} co-trained on web data:
+\begin{itemize}
+    \item 55B parameter PaLI-X backbone
+    \item Actions represented as text tokens
+    \item Emergent capabilities (reasoning about novel objects)
+\end{itemize}
 
-\section{Risk and Compliance}
+\subsection{Open-Source VLA Models}
 
-\subsection{NIST AI Risk Management Framework}
+\textbf{Octo} \citep{team2024octo}:
+\begin{itemize}
+    \item Trained on Open X-Embodiment dataset \citep{open_x_embodiment_rt_x_2023}
+    \item Supports multiple robot embodiments
+    \item Apache 2.0 license
+    \item Good baseline for fine-tuning
+\end{itemize}
 
-We adopt the NIST AI Risk Management Framework (RMF) \citep{nist2023ai} to govern, map, measure, and manage risks.
+\textbf{OpenVLA} \citep{kim2024openvla}:
+\begin{itemize}
+    \item 7B parameter model
+    \item Built on Llama 2 backbone
+    \item Competitive with proprietary models
+    \item Easier to fine-tune than larger models
+\end{itemize}
+
+\subsection{Training Pipeline}
+
+\textbf{Data Preparation.}
+\begin{enumerate}
+    \item Collect robot demonstrations (teleoperation, scripted policies)
+    \item Annotate with language instructions
+    \item Normalize action spaces across robots
+    \item Apply data augmentation
+\end{enumerate}
+
+\textbf{Training Configuration.}
+\begin{itemize}
+    \item Batch size: 256-1024 (depends on GPU memory)
+    \item Learning rate: 1e-4 to 1e-5 with warmup
+    \item Optimizer: AdamW with weight decay
+    \item Training time: Days to weeks on 8+ GPUs
+\end{itemize}
+
+\textbf{Evaluation.}
+\begin{itemize}
+    \item Success rate on held-out tasks
+    \item Generalization to new objects/instructions
+    \item Real-world deployment testing
+\end{itemize}
+
+\subsection{Deployment Considerations}
+
+\textbf{Latency Requirements.}
+\begin{itemize}
+    \item Real-time control: <50ms inference
+    \item Requires model optimization (quantization, pruning)
+    \item Consider edge deployment (Jetson, TPU)
+\end{itemize}
+
+\textbf{Safety.}
+\begin{itemize}
+    \item Hardware e-stops
+    \item Workspace limits
+    \item Force/torque monitoring
+    \item Human detection and avoidance
+\end{itemize}
+
+\section{Graph Neural Networks for Spatial Intelligence}
+
+\subsection{Foundational GNN Architectures}
+
+\subsubsection{Graph Convolutional Networks (GCN)}
+
+GCN \citep{kipf2017gcn} performs spectral convolution on graphs:
+
+\textbf{Layer Update.}
+\begin{equation}
+H^{(l+1)} = \sigma(\tilde{D}^{-1/2}\tilde{A}\tilde{D}^{-1/2}H^{(l)}W^{(l)})
+\end{equation}
+
+where $\tilde{A} = A + I$ is the adjacency matrix with self-loops.
+
+\textbf{Implementation (PyTorch Geometric).}
+\begin{verbatim}
+from torch_geometric.nn import GCNConv
+
+class GCN(torch.nn.Module):
+    def __init__(self, in_channels, hidden_channels, out_channels):
+        super().__init__()
+        self.conv1 = GCNConv(in_channels, hidden_channels)
+        self.conv2 = GCNConv(hidden_channels, out_channels)
+    
+    def forward(self, x, edge_index):
+        x = self.conv1(x, edge_index).relu()
+        x = self.conv2(x, edge_index)
+        return x
+\end{verbatim}
+
+\subsubsection{Graph Attention Networks (GAT)}
+
+GAT \citep{velickovic2018gat} uses attention for adaptive aggregation:
+
+\textbf{Attention Mechanism.}
+\begin{equation}
+\alpha_{ij} = \frac{\exp(\text{LeakyReLU}(a^T[Wh_i || Wh_j]))}{\sum_{k \in \mathcal{N}(i)} \exp(\text{LeakyReLU}(a^T[Wh_i || Wh_k]))}
+\end{equation}
+
+\textbf{Advantages.}
+\begin{itemize}
+    \item Learns importance of different neighbors
+    \item Multi-head attention for stability
+    \item Better for heterogeneous graphs
+\end{itemize}
+
+\subsubsection{GraphSAGE}
+
+GraphSAGE \citep{hamilton2017graphsage} enables inductive learning:
+
+\textbf{Sampling Strategy.}
+\begin{itemize}
+    \item Sample fixed-size neighborhood
+    \item Enables mini-batch training
+    \item Scales to large graphs
+\end{itemize}
+
+\textbf{Aggregators.}
+\begin{itemize}
+    \item Mean aggregator
+    \item LSTM aggregator
+    \item Pooling aggregator
+\end{itemize}
+
+\subsection{Spatio-Temporal GNNs}
+
+For time-varying spatial data (traffic, weather, urban dynamics):
+
+\subsubsection{DCRNN}
+
+Diffusion Convolutional Recurrent Neural Network \citep{li2018dcrnn}:
+\begin{itemize}
+    \item Models traffic as diffusion on road graph
+    \item Bidirectional random walks
+    \item GRU for temporal modeling
+\end{itemize}
+
+\subsubsection{STGCN}
+
+Spatio-Temporal Graph Convolutional Network \citep{yu2018stgcn}:
+\begin{itemize}
+    \item Separates spatial and temporal convolutions
+    \item More efficient than RNN-based approaches
+    \item Gated temporal convolution
+\end{itemize}
+
+\subsubsection{Graph WaveNet}
+
+\citep{wu2019graphwavenet}:
+\begin{itemize}
+    \item Learns adaptive adjacency matrix
+    \item Dilated causal convolutions for temporal modeling
+    \item State-of-the-art traffic prediction
+\end{itemize}
+
+\subsection{GNN-LLM Integration Patterns}
+
+\subsubsection{Pattern 1: GNN as Encoder}
+
+Use GNN to encode graph structure, pass to LLM:
+
+\textbf{Architecture.}
+\begin{enumerate}
+    \item GNN encodes graph $\rightarrow$ node embeddings
+    \item Project embeddings to LLM token space
+    \item Concatenate with text tokens
+    \item LLM processes combined input
+\end{enumerate}
+
+\textbf{Example: GraphGPT} \citep{tang2024graphgpt}:
+\begin{itemize}
+    \item Graph encoder aligned with LLM
+    \item Enables graph-based question answering
+    \item Supports various graph tasks
+\end{itemize}
+
+\subsubsection{Pattern 2: LLM for Graph Enhancement}
+
+Use LLM to improve GNN:
+
+\textbf{Applications.}
+\begin{itemize}
+    \item Generate node features from text descriptions
+    \item Explain GNN predictions \citep{he2023explanations}
+    \item Augment training data
+\end{itemize}
+
+\subsubsection{Pattern 3: GNN-RAG}
+
+Use GNN for knowledge graph retrieval \citep{wang2024gnnrag}:
+
+\textbf{Pipeline.}
+\begin{enumerate}
+    \item Query $\rightarrow$ retrieve relevant subgraph
+    \item GNN reasons over subgraph
+    \item Linearize subgraph for LLM
+    \item LLM generates final answer
+\end{enumerate}
+
+\section{World Models for Spatial Intelligence}
+
+\subsection{Model-Based Reinforcement Learning}
+
+\subsubsection{Dreamer Series}
+
+\textbf{Dreamer} \citep{hafner2019dream}:
+\begin{itemize}
+    \item Learns latent dynamics model
+    \item Plans in imagination
+    \item Actor-critic in latent space
+\end{itemize}
+
+\textbf{DreamerV2} \citep{hafner2021dreamerv2}:
+\begin{itemize}
+    \item Discrete latent representations
+    \item Human-level Atari performance
+    \item More stable training
+\end{itemize}
+
+\textbf{DreamerV3} \citep{hafner2023dreamerv3}:
+\begin{itemize}
+    \item Single algorithm across domains
+    \item Symlog predictions for stability
+    \item Fixed hyperparameters
+\end{itemize}
+
+\subsubsection{DayDreamer}
+
+\citep{wu2023daydreamer}: Transfer world models to real robots:
+\begin{itemize}
+    \item Train in simulation
+    \item Fine-tune on real robot data
+    \item Demonstrates sim-to-real transfer
+\end{itemize}
+
+\subsection{Video World Models}
+
+\subsubsection{Genie}
+
+\citep{bruce2024genie}: Controllable world model from videos:
+\begin{itemize}
+    \item Learns from internet videos
+    \item Generates interactive environments
+    \item Enables training without simulators
+\end{itemize}
+
+\subsubsection{GAIA-1}
+
+\citep{hu2023gaia1}: World model for autonomous driving:
+\begin{itemize}
+    \item Generates realistic driving videos
+    \item Conditioned on actions and context
+    \item Enables scalable training data generation
+\end{itemize}
+
+\subsection{LLM-Based World Models}
+
+\textbf{RAP} \citep{hao2023rap}: Reasoning via Planning:
+\begin{itemize}
+    \item LLM as world model
+    \item Monte Carlo Tree Search for planning
+    \item Strong reasoning performance
+\end{itemize}
+
+\textbf{Engineering Considerations.}
+\begin{itemize}
+    \item LLMs may hallucinate state transitions
+    \item Need grounding in real observations
+    \item Uncertainty quantification is challenging
+\end{itemize}
+
+\section{Embodied AI Systems}
+
+\subsection{Simulation Platforms}
+
+\subsubsection{Habitat}
+
+\citep{savva2019habitat, szot2021habitat2, puig2023habitat3}:
+\begin{itemize}
+    \item High-fidelity 3D environments
+    \item Supports navigation and manipulation
+    \item Large-scale benchmark datasets
+    \item Active research community
+\end{itemize}
+
+\textbf{Habitat 3.0} features:
+\begin{itemize}
+    \item Human-robot interaction
+    \item Social navigation
+    \item Collaborative tasks
+\end{itemize}
+
+\subsubsection{iGibson}
+
+\citep{shen2021igibson, li2021igibson}:
+\begin{itemize}
+    \item Interactive environments
+    \item Realistic physics simulation
+    \item Object state changes
+\end{itemize}
+
+\subsubsection{AI2-THOR}
+
+\citep{kolve2017ai2thor}:
+\begin{itemize}
+    \item Interactive visual AI
+    \item Procedurally generated scenes
+    \item Rich object interactions
+\end{itemize}
+
+\subsection{Open-Ended Agents}
+
+\subsubsection{Voyager}
+
+\citep{wang2023voyager}: Open-ended exploration in Minecraft:
+\begin{itemize}
+    \item LLM-driven curriculum learning
+    \item Skill library construction
+    \item Self-verification of skills
+\end{itemize}
+
+\textbf{Key Components.}
+\begin{enumerate}
+    \item Automatic curriculum: LLM proposes tasks
+    \item Skill library: Stores successful programs
+    \item Iterative prompting: Refines code until success
+\end{enumerate}
+
+\subsubsection{MineDojo}
+
+\citep{fan2022minedojo}:
+\begin{itemize}
+    \item Benchmark suite for open-ended agents
+    \item Internet-scale knowledge base
+    \item Diverse task types
+\end{itemize}
+
+\subsection{Grounded Language Agents}
+
+\subsubsection{SayCan}
+
+\citep{ahn2022saycan}: Grounding LLMs in robot affordances:
+
+\textbf{Scoring Function.}
+\begin{equation}
+p(\text{action} | \text{instruction}) \propto p_{\text{LLM}}(\text{action} | \text{instruction}) \cdot p_{\text{affordance}}(\text{action})
+\end{equation}
+
+\textbf{Components.}
+\begin{itemize}
+    \item LLM provides semantic relevance
+    \item Value function provides feasibility
+    \item Combined scoring selects actions
+\end{itemize}
+
+\subsubsection{Code as Policies}
+
+\citep{liang2023code}: Generate executable robot code:
+\begin{itemize}
+    \item LLM generates Python code
+    \item Code calls robot APIs
+    \item Enables complex behaviors
+\end{itemize}
+
+\section{Geospatial Foundation Models}
+
+\subsection{Remote Sensing Models}
+
+\subsubsection{Prithvi}
+
+\citep{jakubik2024prithvi}: NASA/IBM geospatial foundation model:
+\begin{itemize}
+    \item Pretrained on HLS (Harmonized Landsat Sentinel-2)
+    \item Supports multiple downstream tasks
+    \item Open weights available
+\end{itemize}
+
+\textbf{Applications.}
+\begin{itemize}
+    \item Land use classification
+    \item Flood mapping
+    \item Wildfire detection
+    \item Crop monitoring
+\end{itemize}
+
+\subsubsection{SatMAE}
+
+\citep{cong2022satmae}: Self-supervised learning for satellite imagery:
+\begin{itemize}
+    \item Masked autoencoder approach
+    \item Handles temporal sequences
+    \item Strong transfer learning
+\end{itemize}
+
+\subsubsection{SatlasPretrain}
+
+\citep{bastani2023satlaspretrain}: Large-scale pretraining:
+\begin{itemize}
+    \item 302M image dataset
+    \item Multiple sensor types
+    \item Diverse geographic coverage
+\end{itemize}
+
+\subsection{Urban Computing}
+
+\subsubsection{Traffic Prediction}
+
+State-of-the-art approaches \citep{jin2023stgnn, li2018dcrnn, yu2018stgcn}:
+\begin{itemize}
+    \item Graph-based spatial modeling
+    \item Temporal sequence modeling
+    \item Multi-step forecasting
+\end{itemize}
+
+\subsubsection{Smart City Applications}
+
+\citep{zheng2014urban, allam2020ai}:
+\begin{itemize}
+    \item Traffic management
+    \item Energy optimization
+    \item Public safety
+    \item Urban planning
+\end{itemize}
+
+\section{Industry Applications and Internal Use Cases}
+
+\subsection{External Industry Leaders}
+
+\subsubsection{Palantir}
+
+\citep{palantir2023, bailey2021palantir, freeman2021palantir}:
+\begin{itemize}
+    \item Foundry platform for data integration
+    \item Geospatial analysis for defense
+    \item Supply chain optimization
+\end{itemize}
+
+\subsubsection{ESRI}
+
+\citep{esri2023}:
+\begin{itemize}
+    \item ArcGIS platform
+    \item GeoAI capabilities
+    \item Enterprise GIS solutions
+\end{itemize}
+
+\subsubsection{Waymo}
+
+\citep{waymo2023, waymo_emma_2024, waymo2024safety}:
+\begin{itemize}
+    \item Autonomous vehicle deployment
+    \item End-to-end driving (EMMA)
+    \item Safety-focused development
+\end{itemize}
+
+\subsubsection{Foursquare}
+
+\citep{foursquare2023, krumm2017introduction}:
+\begin{itemize}
+    \item Location intelligence
+    \item Movement pattern analysis
+    \item POI data
+\end{itemize}
+
+\subsection{Internal Use Cases for AtlasPro AI}
+
+Based on our analysis, we identify the following high-value internal use cases:
+
+\textbf{Use Case 1: Intelligent Geospatial Analysis.}
+\begin{itemize}
+    \item Combine GNN-LLM for spatial reasoning
+    \item Natural language queries over geospatial data
+    \item Automated report generation
+\end{itemize}
+
+\textbf{Use Case 2: Multi-Agent Coordination.}
+\begin{itemize}
+    \item Fleet management and optimization
+    \item Collaborative robotics
+    \item Distributed sensing
+\end{itemize}
+
+\textbf{Use Case 3: Predictive Spatial Analytics.}
+\begin{itemize}
+    \item Traffic and demand forecasting
+    \item Risk assessment
+    \item Resource optimization
+\end{itemize}
+
+\section{Evaluation Framework and Internal Benchmarking}
+
+\subsection{Existing Benchmarks}
+
+\subsubsection{Navigation}
+
+\begin{itemize}
+    \item R2R \citep{anderson2018vln}: Vision-language navigation
+    \item RxR \citep{ku2020room}: Multilingual VLN
+    \item REVERIE \citep{qi2020reverie}: Remote referring expression
+    \item Habitat ObjectNav \citep{batra2020objectnav}: Object-goal navigation
+    \item SOON \citep{zhu2021soon}: Scenarios for object navigation
+\end{itemize}
+
+\subsubsection{Manipulation}
+
+\begin{itemize}
+    \item RLBench \citep{james2020rlbench}: Robot learning benchmark
+    \item Meta-World \citep{yu2020metaworld}: Multi-task manipulation
+    \item BEHAVIOR \citep{srivastava2021behavior, li2023behavior1k}: Household activities
+    \item CLIPort \citep{shridhar2022cliport}: Language-conditioned manipulation
+\end{itemize}
+
+\subsubsection{Spatial Reasoning}
+
+\begin{itemize}
+    \item CLEVR \citep{johnson2017clevr}: Compositional reasoning
+    \item GQA \citep{hudson2019gqa}: Visual question answering
+    \item SpatialVLM \citep{chen2024spatialvlm}: Spatial reasoning in VLMs
+    \item REM \citep{thompson2025rem}: Embodied spatial reasoning
+    \item EmbodiedBench \citep{yang2025embodiedbench}: Comprehensive embodied evaluation
+\end{itemize}
+
+\subsubsection{Agent Benchmarks}
+
+\begin{itemize}
+    \item AgentBench \citep{liu2023agentbench}: LLM agent evaluation
+    \item WebArena \citep{zhou2023webarena}: Web-based agents
+    \item OSWorld \citep{xie2024osworld}: Computer use agents
+    \item SafeAgentBench \citep{safeagentbench2025}: Safe task planning
+\end{itemize}
+
+\subsubsection{Geospatial}
+
+\begin{itemize}
+    \item BigEarthNet \citep{sumbul2019bigearthnet}: Land use classification
+    \item fMoW \citep{christie2018fmow}: Functional map of the world
+    \item xBD \citep{gupta2019xbd}: Building damage assessment
+    \item SpaceNet \citep{van2018spacenet}: Building and road extraction
+\end{itemize}
+
+\subsection{Internal Benchmarking Framework}
+
+We recommend building an internal benchmarking framework with the following components:
+
+\textbf{Continuous Evaluation.}
+\begin{itemize}
+    \item Automated testing on each commit
+    \item Performance tracking over time
+    \item Regression detection
+\end{itemize}
+
+\textbf{Custom Benchmarks.}
+\begin{itemize}
+    \item Tasks specific to AtlasPro AI use cases
+    \item Real-world data from our deployments
+    \item Edge cases and failure modes
+\end{itemize}
+
+\textbf{Human Evaluation.}
+\begin{itemize}
+    \item User studies for subjective quality
+    \item Expert evaluation for safety-critical tasks
+    \item A/B testing in production
+\end{itemize}
+
+\section{Safety Engineering}
+
+\subsection{Principles}
+
+\textbf{Defense in Depth.} Multiple layers of safety:
+\begin{itemize}
+    \item Model-level safety (constitutional AI \citep{bai2022constitutional})
+    \item System-level safety (sandboxing, limits)
+    \item Hardware-level safety (e-stops, sensors)
+\end{itemize}
+
+\textbf{Fail-Safe Design.} Systems should fail safely:
+\begin{itemize}
+    \item Default to safe states
+    \item Graceful degradation
+    \item Clear failure modes
+\end{itemize}
+
+\subsection{Red Teaming}
+
+\citep{ganguli2022red}: Proactive adversarial testing:
+\begin{itemize}
+    \item Dedicated red team
+    \item Automated adversarial testing
+    \item Bug bounty programs
+\end{itemize}
+
+\subsection{Alignment}
+
+\citep{amodei2016safety, hendrycks2021ethics}: Ensuring AI systems behave as intended:
+\begin{itemize}
+    \item Clear specification of goals
+    \item Value alignment techniques
+    \item Human oversight mechanisms
+\end{itemize}
+
+\section{Autonomous Driving: Deep Technical Analysis}
+
+Autonomous driving represents one of the most demanding applications of spatial AI, requiring real-time perception, prediction, and planning in safety-critical environments.
+
+\subsection{End-to-End Driving Architectures}
+
+\subsubsection{UniAD: Unified Autonomous Driving}
+
+\citep{hu2023uniad} presents a unified framework integrating perception, prediction, and planning:
+
+\textbf{Architecture Components.}
+\begin{itemize}
+    \item \textbf{BEV Encoder:} Transforms multi-camera images to bird's-eye-view representation
+    \item \textbf{Track Query:} Maintains object tracking across frames
+    \item \textbf{Motion Query:} Predicts future trajectories of agents
+    \item \textbf{Occupancy Prediction:} Forecasts future occupancy grids
+    \item \textbf{Planning Head:} Generates ego-vehicle trajectory
+\end{itemize}
+
+\textbf{Key Innovation.} Joint training of all components enables information flow between tasks, improving overall performance compared to modular approaches.
+
+\subsubsection{VAD: Vectorized Autonomous Driving}
+
+\citep{jiang2023vad} introduces vectorized scene representation:
+\begin{itemize}
+    \item Represents scenes as sets of vectors (lanes, agents)
+    \item More efficient than dense grid representations
+    \item Enables direct reasoning about scene structure
+\end{itemize}
+
+\subsubsection{EMMA: End-to-End Multimodal Model}
+
+\citep{waymo_emma_2024} from Waymo demonstrates multimodal driving:
+\begin{itemize}
+    \item Integrates camera, lidar, and radar inputs
+    \item Language-conditioned driving
+    \item Reasoning about complex scenarios
+\end{itemize}
+
+\subsection{BEV Perception Pipeline}
+
+Bird's-eye-view (BEV) representations have become standard for autonomous driving perception.
+
+\subsubsection{LSS: Lift-Splat-Shoot}
+
+\citep{philion2020lift} introduced the foundational approach:
+\begin{enumerate}
+    \item \textbf{Lift:} Predict depth distribution for each pixel
+    \item \textbf{Splat:} Project features to 3D using predicted depth
+    \item \textbf{Shoot:} Collapse 3D features to BEV plane
+\end{enumerate}
+
+\subsubsection{BEVFormer}
+
+\citep{li2022bevformer, yang2023bevformerv2} uses transformers for BEV generation:
+\begin{itemize}
+    \item Spatial cross-attention for multi-camera fusion
+    \item Temporal self-attention for temporal modeling
+    \item Deformable attention for efficiency
+\end{itemize}
+
+\subsection{Datasets for Autonomous Driving}
 
 \begin{table}[h!]
 \centering
-\caption{NIST AI RMF Application}
-\begin{tabular}{@{}lp{0.7\textwidth}@{}}
+\caption{Major Autonomous Driving Datasets}
+\begin{tabular}{@{}lccc@{}}
 \toprule
-\textbf{Function} & \textbf{Application to Spatial AI} \\
+\textbf{Dataset} & \textbf{Scenes} & \textbf{Sensors} & \textbf{Key Features} \\
 \midrule
-\textbf{Govern} & Establish a risk management culture, define roles and responsibilities, and create processes for oversight. \\
-\textbf{Map} & Identify potential risks across the AI lifecycle, from data collection to deployment. Categorize risks (technical, safety, legal, operational, reputational). \\
-\textbf{Measure} & Develop metrics to quantify risks, including probability of occurrence and severity of impact. Use simulation and real-world testing to gather data. \\
-\textbf{Manage} & Implement risk mitigation strategies, including technical controls, process changes, and human oversight. Continuously monitor and adapt. \\
+nuScenes \citep{caesar2020nuscenes} & 1000 & Camera, Lidar, Radar & 3D annotations \\
+Waymo Open \citep{sun2020scalability} & 1150 & Camera, Lidar & High quality \\
+Argoverse 2 \citep{wilson2023argoverse2} & 1000 & Camera, Lidar & HD maps \\
+KITTI \citep{geiger2012kitti} & 22 & Camera, Lidar & Foundational \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{Compliance Checklist}
+\section{3D Scene Understanding: Technical Deep-Dive}
 
+\subsection{Neural Radiance Fields (NeRF)}
+
+\subsubsection{Original NeRF}
+
+\citep{mildenhall2020nerf} represents scenes as continuous volumetric functions:
+
+\textbf{MLP Architecture.}
+\begin{equation}
+F_\theta: (\mathbf{x}, \mathbf{d}) \rightarrow (\mathbf{c}, \sigma)
+\end{equation}
+
+where $\mathbf{x}$ is 3D position, $\mathbf{d}$ is viewing direction, $\mathbf{c}$ is color, and $\sigma$ is density.
+
+\textbf{Volume Rendering.}
+\begin{equation}
+C(\mathbf{r}) = \int_{t_n}^{t_f} T(t) \sigma(\mathbf{r}(t)) \mathbf{c}(\mathbf{r}(t), \mathbf{d}) dt
+\end{equation}
+
+where $T(t) = \exp(-\int_{t_n}^{t} \sigma(\mathbf{r}(s)) ds)$.
+
+\subsubsection{Mip-NeRF 360}
+
+\citep{barron2022mipnerf360} extends NeRF to unbounded scenes:
 \begin{itemize}
-    \item \textbf{GDPR:} Ensure all data collection and processing complies with GDPR, especially for data involving individuals.
-    \item \textbf{EU AI Act:} Classify the system according to the AI Act\'s risk levels and ensure compliance with relevant requirements.
-    \item \textbf{SOC 2:} Implement controls for security, availability, processing integrity, confidentiality, and privacy.
-    \item \textbf{ISO 27001:} Establish an Information Security Management System (ISMS) to manage information security risks.
+    \item Integrated positional encoding for anti-aliasing
+    \item Contraction function for unbounded scenes
+    \item Proposal network for efficient sampling
 \end{itemize}
 
-\section{Financial Model}
+\subsection{3D Gaussian Splatting}
 
-\subsection{Capital Expenditures (CapEx)}
+\citep{kerbl20233dgaussian} provides real-time novel view synthesis:
 
+\textbf{Representation.} Scene as set of 3D Gaussians:
 \begin{itemize}
-    \item \textbf{Compute Infrastructure:} GPUs (NVIDIA H100s), TPUs, servers.
-    \item \textbf{Robotics Hardware:} Robot platforms, sensors, actuators.
-    \item \textbf{Simulation Software:} Licenses for Habitat, Isaac Sim, etc.
+    \item Position (mean)
+    \item Covariance matrix (shape)
+    \item Opacity
+    \item Spherical harmonics (view-dependent color)
 \end{itemize}
 
-\subsection{Operational Expenditures (OpEx)}
-
+\textbf{Rendering.} Differentiable rasterization:
 \begin{itemize}
-    \item \textbf{Cloud Computing Costs:} Data storage, model training, inference.
-    \item \textbf{Engineering Salaries:} AI researchers, software engineers, MLOps.
-    \item \textbf{Data Acquisition:} Costs for purchasing or collecting proprietary data.
+    \item Project Gaussians to 2D
+    \item Sort by depth
+    \item Alpha-blend front-to-back
 \end{itemize}
 
-\subsection{Return on Investment (ROI)}
-
-ROI can be measured through:
+\textbf{Advantages over NeRF.}
 \begin{itemize}
-    \item Increased operational efficiency.
-    \item New product and service offerings.
-    \item Enhanced competitive advantage.
+    \item Real-time rendering (100+ FPS)
+    \item Explicit representation (easier editing)
+    \item Faster training (minutes vs. hours)
 \end{itemize}
 
-\appendix
+\subsection{Point Cloud Processing}
 
-\section{Model Card}
+\subsubsection{PointNet}
 
-\subsection{Model Details}
+\citep{qi2017pointnet} pioneered deep learning on point clouds:
 
+\textbf{Key Innovations.}
 \begin{itemize}
-    \item \textbf{Model Name:} AtlasPro Spatial Agent v1.0
-    \item \textbf{Architecture:} GNN-LLM with hierarchical memory
-    \item \textbf{Parameters:} 7B
-    \item \textbf{Training Data:} Open X-Embodiment, internal simulation data
+    \item Permutation invariance through max pooling
+    \item T-Net for spatial transformer
+    \item Direct processing of raw point clouds
 \end{itemize}
 
-\subsection{Intended Use}
+\subsubsection{PointNet++}
 
-This model is intended for internal research and development of autonomous systems for navigation and manipulation in simulated environments.
+\citep{qi2017pointnetplusplus} adds hierarchical structure:
+\begin{itemize}
+    \item Set abstraction layers for local feature learning
+    \item Multi-scale grouping for varying densities
+    \item Feature propagation for segmentation
+\end{itemize}
 
-\subsection{Limitations}
+\subsection{Scene Graphs}
 
-This model has not been tested in real-world environments and should not be used for safety-critical applications. It may exhibit biases present in its training data.
+\subsubsection{Visual Scene Graphs}
 
-\subsection{Ethical Considerations}
+\citep{xu2017scenegraph, krishna2017visual} represent scenes as graphs:
+\begin{itemize}
+    \item Nodes: Objects with attributes
+    \item Edges: Relationships between objects
+    \item Enables structured reasoning
+\end{itemize}
 
-The development of autonomous systems raises significant ethical considerations. We are committed to responsible AI development and have implemented the safety and risk management frameworks outlined in this report.
+\subsubsection{3D Scene Graphs}
+
+\citep{armeni2019scene, rosinol2020scene} extend to 3D:
+\begin{itemize}
+    \item Hierarchical structure (building $\rightarrow$ room $\rightarrow$ object)
+    \item Metric information (positions, sizes)
+    \item Semantic relationships
+\end{itemize}
+
+\section{Multi-Modal Foundation Models}
+
+\subsection{Vision-Language Models}
+
+\subsubsection{LLaVA}
+
+\citep{liu2023llava, liu2023visual} pioneered visual instruction tuning:
+
+\textbf{Architecture.}
+\begin{itemize}
+    \item Vision encoder: CLIP ViT-L/14
+    \item Projection layer: Linear or MLP
+    \item Language model: Vicuna/LLaMA
+\end{itemize}
+
+\textbf{Training Stages.}
+\begin{enumerate}
+    \item Pre-training: Image-text alignment
+    \item Fine-tuning: Visual instruction tuning
+\end{enumerate}
+
+\subsubsection{Flamingo}
+
+\citep{alayrac2022flamingo} introduced few-shot multimodal learning:
+\begin{itemize}
+    \item Perceiver resampler for visual tokens
+    \item Gated cross-attention for vision-language fusion
+    \item In-context learning with interleaved images and text
+\end{itemize}
+
+\subsubsection{BLIP-2}
+
+\citep{li2023blip2} efficiently bootstraps vision-language pretraining:
+\begin{itemize}
+    \item Q-Former bridges frozen image encoder and LLM
+    \item Two-stage training for efficiency
+    \item Strong zero-shot performance
+\end{itemize}
+
+\subsection{Frontier Models}
+
+\subsubsection{GPT-4V}
+
+\citep{achiam2023gpt4} represents frontier multimodal capabilities:
+\begin{itemize}
+    \item Strong visual understanding
+    \item Complex reasoning over images
+    \item Integration with tool use
+\end{itemize}
+
+\subsubsection{Gemini}
+
+\citep{team2023gemini} from Google DeepMind:
+\begin{itemize}
+    \item Native multimodal training
+    \item Strong performance across modalities
+    \item Available in multiple sizes
+\end{itemize}
+
+\subsubsection{Qwen-VL}
+
+\citep{bai2023qwenvl, wang2024qwen2vl} provides strong open-source alternative:
+\begin{itemize}
+    \item Competitive with proprietary models
+    \item Multiple resolution support
+    \item Strong Chinese and English performance
+\end{itemize}
+
+\section{Detailed Benchmark Analysis}
+
+This section provides detailed analysis of key benchmarks for internal evaluation planning.
+
+\subsection{Navigation Benchmark Details}
+
+\subsubsection{Room-to-Room (R2R)}
+
+\citep{anderson2018vln}:
+\begin{itemize}
+    \item 7,189 paths in Matterport3D environments
+    \item Average path length: 10m, 6 viewpoints
+    \item Metrics: Success Rate (SR), SPL, Navigation Error
+\end{itemize}
+
+\textbf{State-of-the-Art Performance.}
+\begin{table}[h!]
+\centering
+\caption{R2R Val-Unseen Performance}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Method} & \textbf{SR (\%)} & \textbf{SPL (\%)} \\
+\midrule
+Human & 86 & 76 \\
+Recurrent VLN-BERT & 63 & 57 \\
+HOPT & 64 & 57 \\
+DUST & 72 & 62 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{RxR: Room-across-Room}
+
+\citep{ku2020room}:
+\begin{itemize}
+    \item Multilingual (English, Hindi, Telugu)
+    \item Longer paths than R2R
+    \item More detailed instructions
+\end{itemize}
+
+\subsection{Manipulation Benchmark Details}
+
+\subsubsection{RLBench}
+
+\citep{james2020rlbench}:
+\begin{itemize}
+    \item 100 unique tasks
+    \item Multiple variations per task
+    \item CoppeliaSim simulation
+\end{itemize}
+
+\subsubsection{Meta-World}
+
+\citep{yu2020metaworld}:
+\begin{itemize}
+    \item 50 manipulation tasks
+    \item Multi-task and meta-learning evaluation
+    \item Sawyer robot simulation
+\end{itemize}
+
+\subsection{Agent Benchmark Details}
+
+\subsubsection{AgentBench}
+
+\citep{liu2023agentbench}:
+\begin{itemize}
+    \item 8 distinct environments
+    \item Operating system, database, web browsing
+    \item Comprehensive LLM agent evaluation
+\end{itemize}
+
+\subsubsection{EmbodiedBench}
+
+\citep{yang2025embodiedbench}:
+\begin{itemize}
+    \item Comprehensive embodied MLLM evaluation
+    \item Multiple spatial reasoning tasks
+    \item Manipulation and navigation
+\end{itemize}
+
+\section{Implementation Recipes}
+
+This section provides practical implementation guidance for common spatial AI tasks.
+
+\subsection{Recipe: Building a RAG-Enhanced Spatial Agent}
+
+\textbf{Step 1: Set Up Vector Database.}
+\begin{verbatim}
+import chromadb
+client = chromadb.Client()
+collection = client.create_collection("spatial_knowledge")
+\end{verbatim}
+
+\textbf{Step 2: Index Spatial Knowledge.}
+\begin{verbatim}
+# Embed and store spatial documents
+for doc in spatial_documents:
+    embedding = embed_model.encode(doc.text)
+    collection.add(
+        embeddings=[embedding],
+        documents=[doc.text],
+        metadatas=[{"location": doc.location}]
+    )
+\end{verbatim}
+
+\textbf{Step 3: Implement Retrieval-Augmented Agent.}
+\begin{verbatim}
+def spatial_agent(query):
+    # Retrieve relevant context
+    results = collection.query(query_texts=[query], n_results=5)
+    context = "\n".join(results["documents"][0])
+    
+    # Generate response with context
+    prompt = f"Context: {context}\n\nQuery: {query}"
+    response = llm.generate(prompt)
+    return response
+\end{verbatim}
+
+\subsection{Recipe: GNN for Traffic Prediction}
+
+\textbf{Step 1: Build Traffic Graph.}
+\begin{verbatim}
+import torch_geometric as pyg
+
+# Create edge index from road network
+edge_index = torch.tensor([[src_nodes], [dst_nodes]])
+
+# Node features: historical traffic
+x = torch.tensor(traffic_history)  # [N, T, F]
+\end{verbatim}
+
+\textbf{Step 2: Define Spatio-Temporal GNN.}
+\begin{verbatim}
+class STGNN(torch.nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.spatial_conv = GCNConv(in_channels, hidden)
+        self.temporal_conv = nn.GRU(hidden, hidden)
+        self.output = nn.Linear(hidden, out_channels)
+    
+    def forward(self, x, edge_index):
+        # Spatial aggregation
+        h = self.spatial_conv(x, edge_index)
+        # Temporal modeling
+        h, _ = self.temporal_conv(h)
+        return self.output(h)
+\end{verbatim}
+
+\subsection{Recipe: Deploying VLA Model on Robot}
+
+\textbf{Step 1: Load Pretrained Model.}
+\begin{verbatim}
+from transformers import AutoModelForVision2Seq
+model = AutoModelForVision2Seq.from_pretrained("openvla/openvla-7b")
+\end{verbatim}
+
+\textbf{Step 2: Optimize for Deployment.}
+\begin{verbatim}
+# Quantize for faster inference
+model = torch.quantization.quantize_dynamic(
+    model, {torch.nn.Linear}, dtype=torch.qint8
+)
+\end{verbatim}
+
+\textbf{Step 3: Robot Control Loop.}
+\begin{verbatim}
+while not done:
+    # Get observation
+    image = camera.capture()
+    instruction = "Pick up the red cup"
+    
+    # Predict action
+    action = model.predict(image, instruction)
+    
+    # Execute action
+    robot.execute(action)
+    
+    # Check completion
+    done = check_task_completion()
+\end{verbatim}
+
+\section{Computational Requirements}
+
+This section provides guidance on computational resources for different spatial AI tasks.
+
+\subsection{Training Requirements}
+
+\begin{table}[h!]
+\centering
+\caption{Computational Requirements for Training}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Model Type} & \textbf{GPUs} & \textbf{Memory} & \textbf{Time} \\
+\midrule
+VLA (7B) & 8$\times$A100 & 640GB & 1-2 weeks \\
+GNN (Traffic) & 1$\times$V100 & 32GB & 1-2 days \\
+NeRF & 1$\times$RTX 3090 & 24GB & 12-24 hours \\
+3D Gaussian Splatting & 1$\times$RTX 3090 & 24GB & 30-60 min \\
+World Model (Dreamer) & 1$\times$V100 & 32GB & 1-3 days \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Inference Requirements}
+
+\begin{table}[h!]
+\centering
+\caption{Inference Latency Requirements}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Application} & \textbf{Latency Requirement} & \textbf{Recommended Hardware} \\
+\midrule
+Robot Control & <50ms & Jetson AGX, RTX 4090 \\
+Autonomous Driving & <100ms & Multiple GPUs \\
+Traffic Prediction & <1s & Cloud GPU \\
+Geospatial Analysis & Minutes & Cloud cluster \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Open Challenges and Research Directions}
+
+\subsection{Robust Spatial Representation}
+
+\citep{mildenhall2020nerf, kerbl20233dgaussian, hong20233dllm}:
+\begin{itemize}
+    \item Generalization across scenes
+    \item Handling novel viewpoints
+    \item Efficient 3D representations
+\end{itemize}
+
+\subsection{Long-Horizon Planning}
+
+\citep{song2023llmplanner, valmeekam2023large}:
+\begin{itemize}
+    \item Planning over extended time horizons
+    \item Complex task decomposition
+    \item Error recovery and replanning
+\end{itemize}
+
+\subsection{Sim-to-Real Transfer}
+
+\citep{zhao2020sim, tobin2017domain, james2019sim}:
+\begin{itemize}
+    \item Domain randomization
+    \item System identification
+    \item Real-world fine-tuning
+\end{itemize}
+
+\subsection{Multi-Agent Coordination}
+
+\citep{zhang2021multi, wu2023autogen, hong2023metagpt}:
+\begin{itemize}
+    \item Communication protocols
+    \item Task allocation
+    \item Emergent coordination
+\end{itemize}
+
+\subsection{Scalable Data Collection}
+
+\citep{open_x_embodiment_rt_x_2023, walke2023bridgedata}:
+\begin{itemize}
+    \item Efficient data collection methods
+    \item Data sharing and standardization
+    \item Synthetic data generation
+\end{itemize}
+
+\section{Conclusion}
+
+This technical report has provided a comprehensive, engineering-focused analysis of autonomous spatial intelligence systems. We have synthesized over 500 papers to provide AtlasPro AI engineering teams with actionable guidance for building next-generation spatially-aware autonomous systems.
+
+\textbf{Key Takeaways.}
+\begin{enumerate}
+    \item Memory architecture is critical---invest in hierarchical memory systems.
+    \item GNN-LLM integration is a powerful paradigm for spatial reasoning.
+    \item World models enable safe planning through imagination.
+    \item Open-source VLA models provide strong baselines for robotics.
+    \item Safety engineering must be built in from the start.
+\end{enumerate}
+
+\textbf{Next Steps.}
+\begin{enumerate}
+    \item Establish internal benchmarking infrastructure.
+    \item Build prototype GNN-LLM integration system.
+    \item Deploy simulation environment for safe development.
+    \item Implement safety engineering practices.
+    \item Begin pilot projects in identified use cases.
+\end{enumerate}
+
+This document will be updated quarterly as the field advances. Questions and feedback should be directed to the Research Division.
 
 \bibliographystyle{plainnat}
 \bibliography{references}
