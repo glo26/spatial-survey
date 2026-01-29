@@ -1,95 +1,94 @@
 \documentclass{article}
 
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage[hidelinks]{hyperref}
 \usepackage{url}
 \usepackage{booktabs}
 \usepackage{amsfonts}
 \usepackage{amsmath}
 \usepackage{nicefrac}
+%\usepackage{microtype}
 \usepackage{graphicx}
 \usepackage{natbib}
 \usepackage[margin=1in]{geometry}
 \usepackage{enumitem}
 \usepackage{xcolor}
-\usepackage{colortbl}
+
+% Custom commands
+\newcommand{\ie}{\emph{i.e.},\xspace}
+\newcommand{\eg}{\emph{e.g.},\xspace}
+\newcommand{\etc}{\emph{etc.}}
+\newcommand{\wrt}{\emph{w.r.t.}\xspace}
 
 \begin{document}
 
-% Title with horizontal rules (matching Attention Is All You Need)
 \begin{center}
-\rule{\textwidth}{1.5pt}
-\vspace{0.3cm}
+{\Large\bfseries Autonomous Spatial Intelligence: A Survey of Agentic AI Methods}\\[3pt]
+{\Large\bfseries for Physical World Understanding and Interaction}
 
-{\LARGE \bf Autonomous Spatial Intelligence: A Survey of Agentic AI\\Methods for Physical World Understanding and Interaction}
-
-\vspace{0.3cm}
-\rule{\textwidth}{0.5pt}
 \vspace{0.8cm}
 
-% Authors in grid layout (matching Attention Is All You Need style)
-\begin{tabular}{ccc}
-\textbf{Gloria Felicia} & \textbf{Nolan Bryant} & \textbf{Handi Putra} \\
-AtlasPro AI & AtlasPro AI & AtlasPro AI \\
-gloria.felicia@atlaspro.ai & nolan.bryant@atlaspro.ai & handi.putra@atlaspro.ai \\
-\end{tabular}
+Gloria Felicia\textsuperscript{1}\quad
+Nolan Bryant\textsuperscript{1}\quad
+Handi Putra\textsuperscript{1}\quad
+Ayaan Gazali\textsuperscript{1}\\[6pt]
+Eliel Lobo\textsuperscript{1}\quad
+Esteban Rojas\textsuperscript{1}
 
-\vspace{0.5cm}
+\vspace{0.4cm}
 
-\begin{tabular}{ccc}
-\textbf{Ayaan Gazali} & \textbf{Eliel Lobo} & \textbf{Esteban Rojas} \\
-AtlasPro AI & AtlasPro AI & AtlasPro AI \\
-ayaan.gazali@atlaspro.ai & eliel.lobo@atlaspro.ai & esteban.rojas@atlaspro.ai \\
-\end{tabular}
+\textsuperscript{1}AtlasPro AI\\[3pt]
+{\small\texttt{\{gloria.felicia, nolan.bryant, handi.putra, ayaan.gazali, eliel.lobo, esteban.rojas\}@atlaspro.ai}}
 
-\vspace{1cm}
+\vspace{0.8cm}
 
-% Abstract
-{\large \bf Abstract}
+\textbf{Abstract}
 \end{center}
 
-\vspace{0.3cm}
+\vspace{0.2cm}
 
-\begin{quote}
-The convergence of Agentic Artificial Intelligence and Spatial Intelligence represents a transformative frontier in creating machines capable of autonomous operation in physical environments. This survey provides the first unified taxonomy systematically connecting agentic AI architectures---encompassing memory, planning, and tool use---with spatial intelligence capabilities spanning navigation, scene understanding, manipulation, and geospatial analysis. We synthesize over 300 papers across foundational agentic frameworks \citep{yao2023react, shinn2023reflexion, wang2024survey}, vision-language-action models \citep{brohan2023rt2, team2024octo, kim2024openvla}, graph neural networks for spatial reasoning \citep{kipf2017gcn, velickovic2018gat, wu2019graph}, world models \citep{hafner2023dreamerv3, hu2023gaia1}, and geospatial foundation models \citep{jakubik2024prithvi, cong2022satmae}. Our analysis reveals three key findings: (1) the critical role of hierarchical memory systems in enabling long-horizon spatial tasks, (2) the emergence of GNN-LLM integration as a powerful paradigm for structured spatial reasoning, and (3) the growing importance of world models for safe deployment in physical environments. We present a comprehensive evaluation framework and identify open challenges including robust spatial representation, sim-to-real transfer, and multi-agent coordination. This survey establishes a foundational reference for advancing spatially-aware autonomous systems.
-\end{quote}
+\noindent
+The convergence of agentic artificial intelligence and spatial intelligence represents a transformative frontier in creating machines capable of autonomous operation in physical environments. This survey provides the first unified taxonomy systematically connecting agentic AI architectures with spatial intelligence capabilities spanning navigation, scene understanding, manipulation, and geospatial analysis. We synthesize over 300 papers across foundational agentic frameworks \citep{yao2023react, shinn2023reflexion, wang2024survey}, vision-language-action models \citep{brohan2023rt2, team2024octo, kim2024openvla}, graph neural networks for spatial reasoning \citep{kipf2017gcn, velickovic2018gat, wu2019graph}, world models \citep{hafner2023dreamerv3, hu2023gaia1}, and geospatial foundation models \citep{jakubik2024prithvi, cong2022satmae}. Our analysis reveals three key findings: (1) the critical role of hierarchical memory systems in enabling long-horizon spatial tasks, (2) the emergence of GNN-LLM integration as a powerful paradigm for structured spatial reasoning, and (3) the growing importance of world models for safe deployment in physical environments. We present a comprehensive evaluation framework and identify open challenges including robust spatial representation, sim-to-real transfer, and multi-agent coordination. This survey establishes a foundational reference for advancing spatially-aware autonomous systems.
+
+\vspace{0.5cm}
 
 \section{Introduction}
 
 The pursuit of artificial general intelligence increasingly centers on creating agents that can perceive, reason about, and act within physical environments \citep{mccarthy1955proposal, turing1950computing}. While large language models have demonstrated remarkable capabilities in reasoning and planning \citep{brown2020language, openai2023gpt4, wei2022chain}, their ability to operate effectively in spatial contexts remains a fundamental challenge \citep{chen2024spatialvlm, yang2025embodiedbench}.
 
-We define \textbf{Agentic AI} as systems exhibiting goal-directed behavior through autonomous decision-making, characterized by three core capabilities: persistent memory for experience accumulation, planning for action sequencing, and tool use for capability extension \citep{wang2024survey, xi2023rise, weng2023agent}. Complementarily, \textbf{Spatial Intelligence} encompasses the ability to perceive 3D structure, reason about object relationships, navigate environments, and manipulate physical objects \citep{chen2024spatialvlm, thompson2025rem}.
+We define \emph{agentic AI} as systems exhibiting goal-directed behavior through autonomous decision-making, characterized by three core capabilities: persistent memory for experience accumulation, planning for action sequencing, and tool use for capability extension \citep{wang2024survey, xi2023rise, weng2023agent}. Complementarily, \emph{spatial intelligence} encompasses the ability to perceive 3D structure, reason about object relationships, navigate environments, and manipulate physical objects \citep{chen2024spatialvlm, thompson2025rem}.
 
 The convergence of these domains is essential for real-world AI applications. Autonomous vehicles must perceive dynamic environments and plan safe trajectories \citep{hu2023uniad, caesar2020nuscenes}. Robotic assistants require understanding of object affordances and spatial relationships \citep{brohan2023rt2, ahn2022saycan}. Urban computing systems must model complex spatio-temporal dependencies \citep{jin2023stgnn, li2018dcrnn}. Despite this importance, existing surveys treat these areas in isolation, lacking a unified framework connecting agentic architectures with spatial requirements.
 
-\textbf{Contributions.} This survey makes three primary contributions:
-\begin{enumerate}[leftmargin=*]
-    \item A \textbf{unified taxonomy} connecting agentic AI components (memory, planning, tool use) with spatial intelligence domains (navigation, scene understanding, manipulation, geospatial analysis), providing a structured framework for interdisciplinary research.
-    \item A \textbf{comprehensive analysis} of over 300 papers identifying key architectural patterns, including the emergence of GNN-LLM integration and world model-based planning as critical enablers for spatial reasoning.
-    \item A \textbf{forward-looking roadmap} identifying open challenges and research directions for developing robust, safe, and capable spatially-aware autonomous systems.
+This survey makes three primary contributions:
+\begin{enumerate}[leftmargin=*,itemsep=2pt]
+    \item A unified taxonomy connecting agentic AI components (memory, planning, tool use) with spatial intelligence domains (navigation, scene understanding, manipulation, geospatial analysis), providing a structured framework for interdisciplinary research.
+    \item A comprehensive analysis of over 300 papers identifying key architectural patterns, including the emergence of GNN-LLM integration and world model-based planning as critical enablers for spatial reasoning.
+    \item A forward-looking roadmap identifying open challenges and research directions for developing robust, safe, and capable spatially-aware autonomous systems.
 \end{enumerate}
 
 \section{Unified Taxonomy}
 
-We propose a two-dimensional taxonomy (Figure~\ref{fig:taxonomy}) that maps agentic capabilities to spatial task requirements, enabling systematic analysis of existing methods and identification of research gaps.
+We propose a two-dimensional taxonomy that maps agentic capabilities to spatial task requirements, enabling systematic analysis of existing methods and identification of research gaps.
 
 \subsection{Agentic AI Components}
 
-\textbf{Memory Systems.} Memory enables agents to accumulate and retrieve experiential knowledge. Short-term memory through in-context learning \citep{brown2020language} supports immediate reasoning, while long-term memory via retrieval-augmented generation \citep{lewis2020rag, packer2023memgpt} enables knowledge persistence. For spatial tasks, cognitive mapping \citep{gupta2019neuralslam, chaplot2020neural} and semantic spatial memory \citep{huang2023vlmaps} are critical for navigation and scene understanding.
+\paragraph{Memory Systems.} Memory enables agents to accumulate and retrieve experiential knowledge. Short-term memory through in-context learning \citep{brown2020language} supports immediate reasoning, while long-term memory via retrieval-augmented generation \citep{lewis2020rag, packer2023memgpt} enables knowledge persistence. For spatial tasks, cognitive mapping \citep{gupta2019neuralslam, chaplot2020neural} and semantic spatial memory \citep{huang2023vlmaps} are critical for navigation and scene understanding.
 
-\textbf{Planning Systems.} Planning decomposes goals into executable action sequences. Chain-of-thought reasoning \citep{wei2022chain, kojima2022large} enables step-by-step problem solving. Tree-based search \citep{yao2023tree, besta2023graph} explores multiple solution paths. Hierarchical planning \citep{song2023llmplanner, huang2022inner} bridges high-level goals with low-level actions. For spatial domains, planning must account for geometric constraints, physical dynamics, and uncertainty.
+\paragraph{Planning Systems.} Planning decomposes goals into executable action sequences. Chain-of-thought reasoning \citep{wei2022chain, kojima2022large} enables step-by-step problem solving. Tree-based search \citep{yao2023tree, besta2023graph} explores multiple solution paths. Hierarchical planning \citep{song2023llmplanner, huang2022inner} bridges high-level goals with low-level actions. For spatial domains, planning must account for geometric constraints, physical dynamics, and uncertainty.
 
-\textbf{Tool Use and Action.} Tool use extends agent capabilities through external interfaces. API integration \citep{schick2023toolformer, patil2023gorilla, qin2023toolllm} enables access to specialized functions. Code generation \citep{gao2023pal, liang2023code} provides flexible action specification. The ReAct architecture \citep{yao2023react} interleaves reasoning with action execution, forming the foundation for many spatial agents.
+\paragraph{Tool Use and Action.} Tool use extends agent capabilities through external interfaces. API integration \citep{schick2023toolformer, patil2023gorilla, qin2023toolllm} enables access to specialized functions. Code generation \citep{gao2023pal, liang2023code} provides flexible action specification. The ReAct architecture \citep{yao2023react} interleaves reasoning with action execution, forming the foundation for many spatial agents.
 
 \subsection{Spatial Intelligence Domains}
 
-\textbf{Navigation.} Navigation requires path planning and execution in physical or simulated environments. Vision-language navigation \citep{anderson2018vln, ku2020room, qi2020reverie} follows natural language instructions. Object-goal navigation \citep{batra2020objectnav, chaplot2020object} locates target object categories. Zero-shot approaches \citep{majumdar2022zson, gadre2022clip} leverage vision-language models for novel object navigation.
+\paragraph{Navigation.} Navigation requires path planning and execution in physical or simulated environments. Vision-language navigation \citep{anderson2018vln, ku2020room, qi2020reverie} follows natural language instructions. Object-goal navigation \citep{batra2020objectnav, chaplot2020object} locates target object categories. Zero-shot approaches \citep{majumdar2022zson, gadre2022clip} leverage vision-language models for novel object navigation.
 
-\textbf{Scene Understanding.} Scene understanding encompasses 3D perception and semantic reasoning. Neural radiance fields \citep{mildenhall2020nerf, barron2022mipnerf360} and 3D Gaussian splatting \citep{kerbl20233dgaussian} enable novel view synthesis. Point cloud processing \citep{qi2017pointnet, qi2017pointnetplusplus} supports 3D object detection. Scene graphs \citep{xu2017scenegraph, krishna2017visual, armeni2019scene} represent object relationships for higher-level reasoning.
+\paragraph{Scene Understanding.} Scene understanding encompasses 3D perception and semantic reasoning. Neural radiance fields \citep{mildenhall2020nerf, barron2022mipnerf360} and 3D Gaussian splatting \citep{kerbl20233dgaussian} enable novel view synthesis. Point cloud processing \citep{qi2017pointnet, qi2017pointnetplusplus} supports 3D object detection. Scene graphs \citep{xu2017scenegraph, krishna2017visual, armeni2019scene} represent object relationships for higher-level reasoning.
 
-\textbf{Manipulation.} Manipulation involves physical interaction with objects. Vision-language-action models \citep{brohan2022rt1, brohan2023rt2, team2024octo, kim2024openvla} directly map observations to robot actions. Task and motion planning \citep{garrett2021integrated, ahn2022saycan} integrates high-level reasoning with low-level control. Dexterous manipulation \citep{akkaya2019rubiks, chen2022system} addresses complex hand-object interactions.
+\paragraph{Manipulation.} Manipulation involves physical interaction with objects. Vision-language-action models \citep{brohan2022rt1, brohan2023rt2, team2024octo, kim2024openvla} directly map observations to robot actions. Task and motion planning \citep{garrett2021integrated, ahn2022saycan} integrates high-level reasoning with low-level control. Dexterous manipulation \citep{akkaya2019rubiks, chen2022system} addresses complex hand-object interactions.
 
-\textbf{Geospatial Analysis.} Geospatial analysis reasons about large-scale geographic data. Remote sensing foundation models \citep{jakubik2024prithvi, cong2022satmae, bastani2023satlaspretrain} enable transfer learning across satellite imagery tasks. Spatio-temporal graph networks \citep{li2018dcrnn, yu2018stgcn, wu2019graphwavenet, bai2020agcrn} model urban dynamics for traffic prediction and city planning.
+\paragraph{Geospatial Analysis.} Geospatial analysis reasons about large-scale geographic data. Remote sensing foundation models \citep{jakubik2024prithvi, cong2022satmae, bastani2023satlaspretrain} enable transfer learning across satellite imagery tasks. Spatio-temporal graph networks \citep{li2018dcrnn, yu2018stgcn, wu2019graphwavenet, bai2020agcrn} model urban dynamics for traffic prediction and city planning.
 
 \section{State-of-the-Art Methods}
 
@@ -97,83 +96,83 @@ We propose a two-dimensional taxonomy (Figure~\ref{fig:taxonomy}) that maps agen
 
 VLA models represent a paradigm shift in robotics, directly mapping multimodal inputs to actions through end-to-end learning.
 
-\textbf{Proprietary Models.} RT-1 \citep{brohan2022rt1} demonstrated transformer-based policies trained on large-scale robot data. RT-2 \citep{brohan2023rt2} co-trained on web-scale vision-language data, enabling emergent reasoning about novel objects. PaLM-E \citep{driess2023palme} integrated continuous sensor data into a 562B parameter language model for embodied reasoning.
+\paragraph{Proprietary Models.} RT-1 \citep{brohan2022rt1} demonstrated transformer-based policies trained on large-scale robot data. RT-2 \citep{brohan2023rt2} co-trained on web-scale vision-language data, enabling emergent reasoning about novel objects. PaLM-E \citep{driess2023palme} integrated continuous sensor data into a 562B parameter language model for embodied reasoning.
 
-\textbf{Open-Source Models.} Octo \citep{team2024octo} provides a generalist robot policy trained on the Open X-Embodiment dataset \citep{open_x_embodiment_rt_x_2023}. OpenVLA \citep{kim2024openvla} offers a 7B parameter alternative with competitive performance. These models democratize VLA research and enable community-driven advancement.
+\paragraph{Open-Source Models.} Octo \citep{team2024octo} provides a generalist robot policy trained on the Open X-Embodiment dataset \citep{open_x_embodiment_rt_x_2023}. OpenVLA \citep{kim2024openvla} offers a 7B parameter alternative with competitive performance. These models democratize VLA research and enable community-driven advancement.
 
-\textbf{Multimodal Foundations.} LLaVA \citep{liu2023llava} pioneered visual instruction tuning. Flamingo \citep{alayrac2022flamingo} introduced few-shot multimodal learning. BLIP-2 \citep{li2023blip2} efficiently bootstraps vision-language pretraining. Qwen-VL \citep{bai2023qwenvl, wang2024qwen2vl} and GPT-4V \citep{achiam2023gpt4} represent frontier multimodal capabilities.
+\paragraph{Multimodal Foundations.} LLaVA \citep{liu2023llava} pioneered visual instruction tuning. Flamingo \citep{alayrac2022flamingo} introduced few-shot multimodal learning. BLIP-2 \citep{li2023blip2} efficiently bootstraps vision-language pretraining. Qwen-VL \citep{bai2023qwenvl, wang2024qwen2vl} and GPT-4V \citep{achiam2023gpt4} represent frontier multimodal capabilities.
 
 \subsection{Graph Neural Networks for Spatial Reasoning}
 
 GNNs provide powerful tools for modeling spatial relationships and dependencies, with emerging integration with language models.
 
-\textbf{Foundational Architectures.} GCN \citep{kipf2017gcn} introduced spectral graph convolution. GAT \citep{velickovic2018gat} added attention mechanisms. GraphSAGE \citep{hamilton2017graphsage} enabled inductive learning. GIN \citep{xu2019gin} provided theoretical expressiveness analysis. These architectures form the basis for spatial graph learning.
+\paragraph{Foundational Architectures.} GCN \citep{kipf2017gcn} introduced spectral graph convolution. GAT \citep{velickovic2018gat} added attention mechanisms. GraphSAGE \citep{hamilton2017graphsage} enabled inductive learning. GIN \citep{xu2019gin} provided theoretical expressiveness analysis. These architectures form the basis for spatial graph learning.
 
-\textbf{Spatio-Temporal Networks.} DCRNN \citep{li2018dcrnn} models traffic as graph diffusion. STGCN \citep{yu2018stgcn} combines graph and temporal convolutions. Graph WaveNet \citep{wu2019graphwavenet} learns adaptive graph structures. AGCRN \citep{bai2020agcrn} introduces node-specific patterns. Comprehensive surveys \citep{jin2023stgnn, atluri2018spatiotemporal} detail these advances.
+\paragraph{Spatio-Temporal Networks.} DCRNN \citep{li2018dcrnn} models traffic as graph diffusion. STGCN \citep{yu2018stgcn} combines graph and temporal convolutions. Graph WaveNet \citep{wu2019graphwavenet} learns adaptive graph structures. AGCRN \citep{bai2020agcrn} introduces node-specific patterns. Comprehensive surveys \citep{jin2023stgnn, atluri2018spatiotemporal} detail these advances.
 
-\textbf{GNN-LLM Integration.} Recent work explores combining GNNs with LLMs for enhanced reasoning. GraphGPT \citep{tang2024graphgpt} aligns graph encoders with language models. GNN-RAG \citep{wang2024gnnrag} combines graph retrieval with language generation. This integration holds significant promise for spatial reasoning requiring both structural and semantic understanding.
+\paragraph{GNN-LLM Integration.} Recent work explores combining GNNs with LLMs for enhanced reasoning. GraphGPT \citep{tang2024graphgpt} aligns graph encoders with language models. GNN-RAG \citep{wang2024gnnrag} combines graph retrieval with language generation. This integration holds significant promise for spatial reasoning requiring both structural and semantic understanding.
 
 \subsection{World Models}
 
 World models learn predictive representations enabling planning through imagination, critical for safe deployment in physical environments.
 
-\textbf{Model-Based RL.} Dreamer \citep{hafner2019dream} introduced latent imagination. DreamerV2 \citep{hafner2021dreamerv2} achieved human-level Atari performance. DreamerV3 \citep{hafner2023dreamerv3} demonstrated cross-domain mastery. DayDreamer \citep{wu2023daydreamer} transferred world models to real robots.
+\paragraph{Model-Based Reinforcement Learning.} Dreamer \citep{hafner2019dream} introduced latent imagination. DreamerV2 \citep{hafner2021dreamerv2} achieved human-level Atari performance. DreamerV3 \citep{hafner2023dreamerv3} demonstrated cross-domain mastery. DayDreamer \citep{wu2023daydreamer} transferred world models to real robots.
 
-\textbf{Video World Models.} Genie \citep{bruce2024genie} learns controllable world models from internet videos. WorldDreamer \citep{yang2024worlddreamer} generates driving world models. GAIA-1 \citep{hu2023gaia1} produces realistic driving videos conditioned on actions.
+\paragraph{Video World Models.} Genie \citep{bruce2024genie} learns controllable world models from internet videos. WorldDreamer \citep{yang2024worlddreamer} generates driving world models. GAIA-1 \citep{hu2023gaia1} produces realistic driving videos conditioned on actions.
 
-\textbf{LLM-Based World Models.} LLMs can serve as world models for planning \citep{hao2023rap, guan2023leveraging}, predicting state transitions without explicit environment models.
+\paragraph{LLM-Based World Models.} LLMs can serve as world models for planning \citep{hao2023rap, guan2023leveraging}, predicting state transitions without explicit environment models.
 
 \subsection{Embodied AI Agents}
 
-\textbf{Open-Ended Exploration.} Voyager \citep{wang2023voyager} demonstrated open-ended exploration in Minecraft through LLM-driven curriculum learning. MineDojo \citep{fan2022minedojo} provides benchmarks for open-ended embodied agents.
+\paragraph{Open-Ended Exploration.} Voyager \citep{wang2023voyager} demonstrated open-ended exploration in Minecraft through LLM-driven curriculum learning. MineDojo \citep{fan2022minedojo} provides benchmarks for open-ended embodied agents.
 
-\textbf{Grounded Language Agents.} SayCan \citep{ahn2022saycan} grounds language models in robotic affordances. Code as Policies \citep{liang2023code} generates executable robot code. LLM-Planner \citep{song2023llmplanner} enables few-shot grounded planning.
+\paragraph{Grounded Language Agents.} SayCan \citep{ahn2022saycan} grounds language models in robotic affordances. Code as Policies \citep{liang2023code} generates executable robot code. LLM-Planner \citep{song2023llmplanner} enables few-shot grounded planning.
 
-\textbf{Simulation Platforms.} Habitat \citep{savva2019habitat, szot2021habitat2, puig2023habitat3} provides high-fidelity embodied AI simulation. iGibson \citep{shen2021igibson, li2021igibson} offers interactive environments. AI2-THOR \citep{kolve2017ai2thor} enables interactive visual AI research.
+\paragraph{Simulation Platforms.} Habitat \citep{savva2019habitat, szot2021habitat2, puig2023habitat3} provides high-fidelity embodied AI simulation. iGibson \citep{shen2021igibson, li2021igibson} offers interactive environments. AI2-THOR \citep{kolve2017ai2thor} enables interactive visual AI research.
 
 \section{Industry Applications}
 
 \subsection{Geospatial Intelligence}
 
-\textbf{Palantir} \citep{palantir2023, bailey2021palantir} integrates AI with geospatial analysis for defense and commercial applications. \textbf{ESRI} \citep{esri2023} provides ArcGIS with integrated GeoAI capabilities. \textbf{Google} \citep{googlemaps2023} deploys AI for global-scale mapping and navigation.
+Palantir \citep{palantir2023, bailey2021palantir} integrates AI with geospatial analysis for defense and commercial applications. ESRI \citep{esri2023} provides ArcGIS with integrated GeoAI capabilities. Google \citep{googlemaps2023} deploys AI for global-scale mapping and navigation.
 
 \subsection{Location Intelligence}
 
-\textbf{Foursquare} \citep{foursquare2023} provides location intelligence through movement pattern analysis. Smart city applications \citep{zheng2014urban, allam2020ai} leverage spatial AI for traffic management and urban planning.
+Foursquare \citep{foursquare2023} provides location intelligence through movement pattern analysis. Smart city applications \citep{zheng2014urban, allam2020ai} leverage spatial AI for traffic management and urban planning.
 
 \subsection{Autonomous Vehicles}
 
-\textbf{Waymo} \citep{waymo2023, waymo_emma_2024} has deployed autonomous vehicles at scale. End-to-end approaches including UniAD \citep{hu2023uniad}, VAD \citep{jiang2023vad}, and DriveVLM \citep{tian2024drivevlm} unify perception, prediction, and planning.
+Waymo \citep{waymo2023, waymo_emma_2024} has deployed autonomous vehicles at scale. End-to-end approaches including UniAD \citep{hu2023uniad}, VAD \citep{jiang2023vad}, and DriveVLM \citep{tian2024drivevlm} unify perception, prediction, and planning.
 
 \section{Evaluation Framework}
 
 \subsection{Navigation Benchmarks}
-R2R \citep{anderson2018vln}, RxR \citep{ku2020room}, REVERIE \citep{qi2020reverie} for vision-language navigation. Habitat ObjectNav \citep{batra2020objectnav} and SOON \citep{zhu2021soon} for object-goal navigation.
+R2R \citep{anderson2018vln}, RxR \citep{ku2020room}, and REVERIE \citep{qi2020reverie} evaluate vision-language navigation. Habitat ObjectNav \citep{batra2020objectnav} and SOON \citep{zhu2021soon} assess object-goal navigation.
 
 \subsection{Manipulation Benchmarks}
-RLBench \citep{james2020rlbench}, Meta-World \citep{yu2020metaworld}, BEHAVIOR \citep{srivastava2021behavior, li2023behavior1k} for robotic manipulation evaluation.
+RLBench \citep{james2020rlbench}, Meta-World \citep{yu2020metaworld}, and BEHAVIOR \citep{srivastava2021behavior, li2023behavior1k} provide robotic manipulation evaluation.
 
 \subsection{Spatial Reasoning Benchmarks}
-CLEVR \citep{johnson2017clevr}, GQA \citep{hudson2019gqa}, SpatialVLM \citep{chen2024spatialvlm}, REM \citep{thompson2025rem}, EmbodiedBench \citep{yang2025embodiedbench} for spatial reasoning evaluation.
+CLEVR \citep{johnson2017clevr}, GQA \citep{hudson2019gqa}, SpatialVLM \citep{chen2024spatialvlm}, REM \citep{thompson2025rem}, and EmbodiedBench \citep{yang2025embodiedbench} evaluate spatial reasoning capabilities.
 
 \subsection{Geospatial Benchmarks}
-BigEarthNet \citep{sumbul2019bigearthnet}, fMoW \citep{christie2018fmow}, xBD \citep{gupta2019xbd}, SpaceNet \citep{van2018spacenet} for remote sensing evaluation.
+BigEarthNet \citep{sumbul2019bigearthnet}, fMoW \citep{christie2018fmow}, xBD \citep{gupta2019xbd}, and SpaceNet \citep{van2018spacenet} assess remote sensing performance.
 
 \section{Open Challenges and Future Directions}
 
-\textbf{Robust Spatial Representation.} Developing representations that generalize across scenes, viewpoints, and conditions remains challenging \citep{mildenhall2020nerf, kerbl20233dgaussian}. Foundation models for 3D understanding \citep{hong20233dllm} represent promising directions.
+\paragraph{Robust Spatial Representation.} Developing representations that generalize across scenes, viewpoints, and conditions remains challenging \citep{mildenhall2020nerf, kerbl20233dgaussian}. Foundation models for 3D understanding \citep{hong20233dllm} represent promising directions.
 
-\textbf{Long-Horizon Planning.} Creating agents that plan over extended horizons and decompose complex spatial tasks is essential \citep{song2023llmplanner, valmeekam2023large}. Integration of neural and symbolic planning approaches shows promise.
+\paragraph{Long-Horizon Planning.} Creating agents that plan over extended horizons and decompose complex spatial tasks is essential \citep{song2023llmplanner, valmeekam2023large}. Integration of neural and symbolic planning approaches shows promise.
 
-\textbf{Safe and Reliable Operation.} Ensuring safe operation in safety-critical applications is paramount \citep{safeagentbench2025, amodei2016safety, bai2022constitutional}. Robust uncertainty handling and alignment with human values are critical.
+\paragraph{Safe and Reliable Operation.} Ensuring safe operation in safety-critical applications is paramount \citep{safeagentbench2025, amodei2016safety, bai2022constitutional}. Robust uncertainty handling and alignment with human values are critical.
 
-\textbf{Sim-to-Real Transfer.} Bridging simulation and reality remains challenging \citep{zhao2020sim, tobin2017domain}. Domain randomization and real-world fine-tuning are active research areas.
+\paragraph{Sim-to-Real Transfer.} Bridging simulation and reality remains challenging \citep{zhao2020sim, tobin2017domain}. Domain randomization and real-world fine-tuning are active research areas.
 
-\textbf{Multi-Agent Coordination.} Scaling to multi-agent systems for complex spatial tasks requires advances in coordination and communication \citep{zhang2021multi, wu2023autogen, hong2023metagpt}.
+\paragraph{Multi-Agent Coordination.} Scaling to multi-agent systems for complex spatial tasks requires advances in coordination and communication \citep{zhang2021multi, wu2023autogen, hong2023metagpt}.
 
 \section{Conclusion}
 
-This survey has provided a unified taxonomy connecting Agentic AI and Spatial Intelligence, synthesizing over 300 papers across foundational architectures, state-of-the-art methods, industry applications, and evaluation benchmarks. Our analysis reveals the critical importance of hierarchical memory, GNN-LLM integration, and world models for spatial reasoning. Key challenges remain in robust representation, long-horizon planning, and safe deployment. By establishing this foundational reference, we aim to accelerate progress toward capable, robust, and safe spatially-aware autonomous systems.
+This survey has provided a unified taxonomy connecting agentic AI and spatial intelligence, synthesizing over 300 papers across foundational architectures, state-of-the-art methods, industry applications, and evaluation benchmarks. Our analysis reveals the critical importance of hierarchical memory, GNN-LLM integration, and world models for spatial reasoning. Key challenges remain in robust representation, long-horizon planning, and safe deployment. By establishing this foundational reference, we aim to accelerate progress toward capable, robust, and safe spatially-aware autonomous systems.
 
 \bibliographystyle{plainnat}
 \bibliography{references}
