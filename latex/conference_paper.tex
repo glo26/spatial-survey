@@ -49,7 +49,7 @@ ayaan.gazali@atlaspro.ai & eliel.lobo@atlaspro.ai & esteban.rojas@atlaspro.ai \\
 \vspace{0.3cm}
 
 \begin{quote}
-The convergence of Agentic Artificial Intelligence and Spatial Intelligence marks a pivotal frontier in the pursuit of creating machines that can autonomously operate in the physical world. While agentic systems demonstrate increasingly sophisticated capabilities in planning and tool use, their ability to perceive, reason about, and interact with complex spatial environments remains a significant bottleneck. This survey addresses a critical gap in the existing literature by providing a unified taxonomy that systematically connects the architectural components of agentic AI with the functional requirements of spatial intelligence. We review over 1,000 papers spanning foundational agentic architectures \citep{yao2023react, shinn2023reflexion, yao2023tree, wei2022chain}, embodied AI systems \citep{wang2023voyager, driess2023palme, brohan2023rt2, ahn2022saycan}, vision-language-action models \citep{team2024octo, kim2024openvla, liu2023llava, alayrac2022flamingo}, graph neural networks for spatial reasoning \citep{kipf2017gcn, velickovic2018gat, hamilton2017graphsage, wu2019graph}, world models \citep{hafner2023dreamerv3, hafner2021dreamerv2, yang2024worlddreamer, hu2023gaia1}, and geospatial foundation models \citep{jakubik2024prithvi, bastani2023satlaspretrain, cong2022satmae, mendieta2023gfm}. Through comprehensive analysis of state-of-the-art methods, industry applications from Palantir, ESRI, Foursquare, Google, and Waymo, and evaluation benchmarks, we provide a foundational reference for researchers and practitioners. By synthesizing these disparate research areas and outlining a forward-looking research roadmap, this paper aims to accelerate the development of robust, safe, and effective spatially-aware autonomous systems.
+The convergence of Agentic Artificial Intelligence and Spatial Intelligence marks a pivotal frontier in the pursuit of creating machines that can autonomously operate in the physical world. While agentic systems demonstrate increasingly sophisticated capabilities in planning and tool use, their ability to perceive, reason about, and interact with complex spatial environments remains a significant bottleneck. This survey addresses a critical gap in the existing literature by providing a unified taxonomy that systematically connects the architectural components of agentic AI with the functional requirements of spatial intelligence. We review over 250 papers spanning foundational agentic architectures \citep{yao2023react, shinn2023reflexion, yao2023tree, wei2022chain}, embodied AI systems \citep{wang2023voyager, driess2023palme, brohan2023rt2, ahn2022saycan}, vision-language-action models \citep{team2024octo, kim2024openvla, liu2023llava, alayrac2022flamingo}, graph neural networks for spatial reasoning \citep{kipf2017gcn, velickovic2018gat, hamilton2017graphsage, wu2019graph}, world models \citep{hafner2023dreamerv3, hafner2021dreamerv2, yang2024worlddreamer, hu2023gaia1}, and geospatial foundation models \citep{jakubik2024prithvi, bastani2023satlaspretrain, cong2022satmae, mendieta2023gfm}. Through comprehensive analysis of state-of-the-art methods, industry applications from Palantir, ESRI, Foursquare, Google, and Waymo, and evaluation benchmarks, we provide a foundational reference for researchers and practitioners. By synthesizing these disparate research areas and outlining a forward-looking research roadmap, this paper aims to accelerate the development of robust, safe, and effective spatially-aware autonomous systems.
 \end{quote}
 
 \section{Introduction}
@@ -64,13 +64,13 @@ This survey aims to fill this critical gap. We provide a formal definition of Ag
 
 \begin{enumerate}[leftmargin=*]
     \item A novel, unified taxonomy that connects agentic architectures with spatial intelligence tasks, providing a structured framework for understanding and categorizing research in this interdisciplinary area.
-    \item A comprehensive review of over 1,000 papers covering state-of-the-art methods, evaluation benchmarks, and real-world industry applications, synthesizing findings from previously disparate fields.
+    \item A comprehensive review of over 250 papers covering state-of-the-art methods, evaluation benchmarks, and real-world industry applications, synthesizing findings from previously disparate fields.
     \item A forward-looking analysis of the open challenges and a research roadmap to guide future work in developing more capable, robust, and safe spatially-aware agentic systems.
 \end{enumerate}
 
 \section{A Taxonomy of Spatial Intelligence}
 
-We define \textbf{Spatial Intelligence} as an agent's ability to perceive, reason about, and interact with the physical world. We propose a taxonomy that categorizes spatial tasks into four key domains, each with distinct challenges and methodological approaches.
+We define \textbf{Spatial Intelligence} as an agent\'s ability to perceive, reason about, and interact with the physical world. We propose a taxonomy that categorizes spatial tasks into four key domains, each with distinct challenges and methodological approaches.
 
 \subsection{Navigation}
 
@@ -108,7 +108,7 @@ Manipulation encompasses the ability to interact with and modify objects in the 
 
 Geospatial analysis involves reasoning about large-scale geographic data, from satellite imagery to urban sensor networks. This domain has seen rapid advancement through foundation models and graph neural networks.
 
-\textbf{Remote Sensing Foundation Models.} Prithvi \citep{jakubik2024prithvi} introduced a geospatial foundation model pretrained on NASA's Harmonized Landsat Sentinel-2 data. SatMAE \citep{cong2022satmae} and SatCLIP \citep{klemmer2023satclip} developed self-supervised approaches for satellite imagery. Scale-MAE \citep{reed2023scalemae} addressed the multi-scale nature of remote sensing data. These models enable transfer learning across diverse geospatial tasks including land use classification \citep{sumbul2019bigearthnet, helber2019eurosat}, change detection \citep{zhang2018siamesecnn}, and building damage assessment \citep{gupta2019xbd}.
+\textbf{Remote Sensing Foundation Models.} Prithvi \citep{jakubik2024prithvi} introduced a geospatial foundation model pretrained on NASA\'s Harmonized Landsat Sentinel-2 data. SatMAE \citep{cong2022satmae} and SatCLIP \citep{klemmer2023satclip} developed self-supervised approaches for satellite imagery. Scale-MAE \citep{reed2023scalemae} addressed the multi-scale nature of remote sensing data. These models enable transfer learning across diverse geospatial tasks including land use classification \citep{sumbul2019bigearthnet, helber2019eurosat}, change detection \citep{zhang2018siamesecnn}, and building damage assessment \citep{gupta2019xbd}.
 
 \textbf{Spatio-Temporal Graph Networks.} Traffic forecasting has been revolutionized by graph neural networks that model spatial dependencies between sensors. DCRNN \citep{li2018dcrnn} introduced diffusion convolution for traffic prediction, while STGCN \citep{yu2018stgcn} combined graph convolution with temporal convolution. Graph WaveNet \citep{wu2019graphwavenet} learned adaptive adjacency matrices, and AGCRN \citep{bai2020agcrn} introduced attention mechanisms. These approaches have been extended to broader urban computing applications \citep{jin2023stgnn, atluri2018spatiotemporal}.
 
@@ -132,7 +132,7 @@ Memory enables agents to store and retrieve information from past experiences, s
 
 Planning enables agents to decompose high-level goals into executable action sequences. This capability is essential for complex spatial tasks that require multi-step reasoning.
 
-\textbf{Chain-of-Thought Planning.} CoT prompting \citep{wei2022chain} elicits step-by-step reasoning from language models. Zero-shot CoT \citep{kojima2022large} demonstrated that simple prompts like ``Let's think step by step'' can improve reasoning. Self-consistency \citep{wang2022self} aggregates multiple reasoning paths for more robust planning.
+\textbf{Chain-of-Thought Planning.} CoT prompting \citep{wei2022chain} elicits step-by-step reasoning from language models. Zero-shot CoT \citep{kojima2022large} demonstrated that simple prompts like ``Let\'s think step by step\'\' can improve reasoning. Self-consistency \citep{wang2022self} aggregates multiple reasoning paths for more robust planning.
 
 \textbf{Tree-Based Planning.} Tree of Thoughts \citep{yao2023tree} generalizes CoT by exploring multiple reasoning paths in a tree structure, enabling deliberate search and backtracking. Graph of Thoughts \citep{besta2023graph} further extends this to arbitrary graph structures. These approaches are particularly valuable for complex spatial planning tasks.
 
@@ -212,7 +212,7 @@ Autonomous driving represents a critical application domain for spatial AI, requ
 
 \textbf{End-to-End Driving.} UniAD \citep{hu2023uniad} unifies perception, prediction, and planning in a single model. VAD \citep{jiang2023vad} vectorizes scene representation for efficient planning. DriveVLM \citep{tian2024drivevlm} integrates vision-language models for driving. EMMA \citep{waymo_emma_2024} from Waymo demonstrates end-to-end multimodal driving.
 
-\textbf{BEV Perception.} Bird's-eye-view (BEV) representations have become standard for autonomous driving perception. LSS \citep{philion2020lift} introduced lift-splat-shoot for BEV generation. BEVFormer \citep{li2022bevformer, yang2023bevformerv2} uses transformers for BEV feature extraction. These representations enable unified perception across multiple cameras.
+\textbf{BEV Perception.} Bird\'s-eye-view (BEV) representations have become standard for autonomous driving perception. LSS \citep{philion2020lift} introduced lift-splat-shoot for BEV generation. BEVFormer \citep{li2022bevformer, yang2023bevformerv2} uses transformers for BEV feature extraction. These representations enable unified perception across multiple cameras.
 
 \textbf{Datasets and Benchmarks.} nuScenes \citep{caesar2020nuscenes} provides a large-scale multimodal dataset. Waymo Open Dataset \citep{sun2020scalability} offers high-quality sensor data. Argoverse 2 \citep{wilson2023argoverse2} includes HD maps and diverse scenarios. KITTI \citep{geiger2012kitti} remains a foundational benchmark.
 
@@ -304,7 +304,7 @@ Training capable spatial AI agents requires large-scale, diverse data. Approache
 
 \section{Conclusion}
 
-This survey has provided a comprehensive overview of the intersection of Agentic AI and Spatial Intelligence, reviewing over 1,000 papers spanning foundational architectures, state-of-the-art methods, industry applications, and evaluation benchmarks. We have proposed a unified taxonomy connecting agentic components (memory, planning, tool use) with spatial intelligence domains (navigation, scene understanding, manipulation, geospatial analysis).
+This survey has provided a comprehensive overview of the intersection of Agentic AI and Spatial Intelligence, reviewing over 250 papers spanning foundational architectures, state-of-the-art methods, industry applications, and evaluation benchmarks. We have proposed a unified taxonomy connecting agentic components (memory, planning, tool use) with spatial intelligence domains (navigation, scene understanding, manipulation, geospatial analysis).
 
 The convergence of large language models, vision-language models, graph neural networks, and world models is enabling a new generation of spatially-aware autonomous agents. Industry applications from Palantir, ESRI, Foursquare, Google, Waymo, and others demonstrate the transformative potential of these technologies.
 

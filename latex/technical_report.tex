@@ -19,7 +19,7 @@
 \rule{\textwidth}{1.5pt}
 \vspace{0.3cm}
 
-{\LARGE \bf Autonomous Spatial Intelligence: A Survey of Agentic AI Methods and Evaluation}
+{\LARGE \bf Autonomous Spatial Intelligence: A Comprehensive Technical Report on Agentic AI Methods, Architectures, and Evaluation}
 
 \vspace{0.3cm}
 \rule{\textwidth}{0.5pt}
@@ -49,7 +49,7 @@ ayaan.gazali@atlaspro.ai & eliel.lobo@atlaspro.ai & esteban.rojas@atlaspro.ai \\
 \vspace{0.3cm}
 
 \begin{quote}
-The convergence of Agentic Artificial Intelligence and Spatial Intelligence marks a pivotal frontier in the pursuit of creating machines that can autonomously operate in the physical world. While agentic systems demonstrate increasingly sophisticated capabilities in planning and tool use, their ability to perceive, reason about, and interact with complex spatial environments remains a significant bottleneck. This survey addresses a critical gap in the existing literature by providing a unified taxonomy that systematically connects the architectural components of agentic AI with the functional requirements of spatial intelligence. We review over 1,000 papers spanning foundational agentic architectures \citep{yao2023react, shinn2023reflexion, yao2023tree, wei2022chain}, embodied AI systems \citep{wang2023voyager, driess2023palme, brohan2023rt2, ahn2022saycan}, vision-language-action models \citep{team2024octo, kim2024openvla, liu2023llava, alayrac2022flamingo}, graph neural networks for spatial reasoning \citep{kipf2017gcn, velickovic2018gat, hamilton2017graphsage, wu2019graph}, world models \citep{hafner2023dreamerv3, hafner2021dreamerv2, yang2024worlddreamer, hu2023gaia1}, and geospatial foundation models \citep{jakubik2024prithvi, bastani2023satlaspretrain, cong2022satmae, mendieta2023gfm}. Through comprehensive analysis of state-of-the-art methods, industry applications from Palantir, ESRI, Foursquare, Google, and Waymo, and evaluation benchmarks, we provide a foundational reference for researchers and practitioners. By synthesizing these disparate research areas and outlining a forward-looking research roadmap, this paper aims to accelerate the development of robust, safe, and effective spatially-aware autonomous systems.
+The convergence of Agentic Artificial Intelligence and Spatial Intelligence marks a pivotal frontier in the pursuit of creating machines that can autonomously operate in the physical world. While agentic systems demonstrate increasingly sophisticated capabilities in planning and tool use, their ability to perceive, reason about, and interact with complex spatial environments remains a significant bottleneck. This technical report addresses a critical gap in the existing literature by providing a unified taxonomy that systematically connects the architectural components of agentic AI with the functional requirements of spatial intelligence. We review over 500 papers spanning foundational agentic architectures \citep{yao2023react, shinn2023reflexion, yao2023tree, wei2022chain}, embodied AI systems \citep{wang2023voyager, driess2023palme, brohan2023rt2, ahn2022saycan}, vision-language-action models \citep{team2024octo, kim2024openvla, liu2023llava, alayrac2022flamingo}, graph neural networks for spatial reasoning \citep{kipf2017gcn, velickovic2018gat, hamilton2017graphsage, wu2019graph}, world models \citep{hafner2023dreamerv3, hafner2021dreamerv2, yang2024worlddreamer, hu2023gaia1}, and geospatial foundation models \citep{jakubik2024prithvi, bastani2023satlaspretrain, cong2022satmae, mendieta2023gfm}. Through comprehensive analysis of state-of-the-art methods, industry applications from Palantir, ESRI, Foursquare, Google, and Waymo, and evaluation benchmarks, we provide a foundational reference for researchers and practitioners. By synthesizing these disparate research areas and outlining a forward-looking research roadmap, this paper aims to accelerate the development of robust, safe, and effective spatially-aware autonomous systems.
 \end{quote}
 
 \section{Introduction}
@@ -60,11 +60,11 @@ Concurrently, the ability for these agents to perceive, comprehend, and act with
 
 Despite rapid progress in both agentic systems and spatial reasoning, the research landscape remains fragmented. Numerous surveys have independently covered topics such as Large Language Model agents \citep{yao2023react, wang2024survey, huang2024understanding, gao2023pal, patil2023gorilla, qin2023toolllm}, embodied AI \citep{wang2023voyager, driess2023palme, duan2022survey, amin2024embodied}, multimodal large language models \citep{liu2023llava, alayrac2022flamingo, li2023blip2, bai2023qwenvl, wang2024qwen2vl}, graph neural networks \citep{wu2019graph, kipf2017gcn, velickovic2018gat, hamilton2017graphsage, xu2019gin, battaglia2018relational}, spatio-temporal prediction \citep{jin2023stgnn, li2018dcrnn, yu2018stgcn, wu2019graphwavenet, bai2020agcrn}, world models \citep{hafner2023dreamerv3, hafner2021dreamerv2, hafner2019dream, yang2024worlddreamer, hu2023gaia1}, and geospatial analysis \citep{jakubik2024prithvi, cong2022satmae, manas2021seco, bastani2023satlaspretrain, mendieta2023gfm}. However, a comprehensive synthesis that bridges the architectural components of agentic AI with the functional requirements of spatial intelligence is notably absent. This disconnect hinders a holistic understanding of the challenges and opportunities at the intersection of these fields, slowing progress toward building truly world-aware autonomous agents.
 
-This survey aims to fill this critical gap. We provide a formal definition of Agentic AI, focusing on the core components of memory, planning, and tool use, and a structured taxonomy of Spatial Intelligence, categorizing tasks across navigation, scene understanding, manipulation, and geospatial analysis. Our primary contributions are:
+This technical report aims to fill this critical gap. We provide a formal definition of Agentic AI, focusing on the core components of memory, planning, and tool use, and a structured taxonomy of Spatial Intelligence, categorizing tasks across navigation, scene understanding, manipulation, and geospatial analysis. Our primary contributions are:
 
 \begin{enumerate}[leftmargin=*]
     \item A novel, unified taxonomy that connects agentic architectures with spatial intelligence tasks, providing a structured framework for understanding and categorizing research in this interdisciplinary area.
-    \item A comprehensive review of over 1,000 papers covering state-of-the-art methods, evaluation benchmarks, and real-world industry applications, synthesizing findings from previously disparate fields.
+    \item A comprehensive review of over 500 papers covering state-of-the-art methods, evaluation benchmarks, and real-world industry applications, synthesizing findings from previously disparate fields.
     \item A forward-looking analysis of the open challenges and a research roadmap to guide future work in developing more capable, robust, and safe spatially-aware agentic systems.
 \end{enumerate}
 
@@ -304,7 +304,7 @@ Training capable spatial AI agents requires large-scale, diverse data. Approache
 
 \section{Conclusion}
 
-This survey has provided a comprehensive overview of the intersection of Agentic AI and Spatial Intelligence, reviewing over 1,000 papers spanning foundational architectures, state-of-the-art methods, industry applications, and evaluation benchmarks. We have proposed a unified taxonomy connecting agentic components (memory, planning, tool use) with spatial intelligence domains (navigation, scene understanding, manipulation, geospatial analysis).
+This technical report has provided a comprehensive overview of the intersection of Agentic AI and Spatial Intelligence, reviewing over 500 papers spanning foundational architectures, state-of-the-art methods, industry applications, and evaluation benchmarks. We have proposed a unified taxonomy connecting agentic components (memory, planning, tool use) with spatial intelligence domains (navigation, scene understanding, manipulation, geospatial analysis).
 
 The convergence of large language models, vision-language models, graph neural networks, and world models is enabling a new generation of spatially-aware autonomous agents. Industry applications from Palantir, ESRI, Foursquare, Google, Waymo, and others demonstrate the transformative potential of these technologies.
 
@@ -313,6 +313,6 @@ Key challenges remain in robust spatial representation, long-horizon planning, s
 By providing this synthesis, we aim to create a foundational reference for researchers, developers, and practitioners, fostering a more integrated approach to building the next generation of autonomous spatial intelligence.
 
 \bibliographystyle{plainnat}
-\bibliography{references}
+\bibliography{references_report}
 
 \end{document}
