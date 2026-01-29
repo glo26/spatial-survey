@@ -1,0 +1,30 @@
+graph TD
+    subgraph Agentic AI Components
+        A1[Memory Systems];
+        A2[Planning Systems];
+        A3[Tool Use & Action];
+    end
+
+    subgraph Spatial Intelligence Domains
+        S1[Navigation];
+        S2[Scene Understanding];
+        S3[Manipulation];
+        S4[Geospatial Analysis];
+    end
+
+    subgraph Key Intersections
+        style A1 fill:#cde4ff
+        style A2 fill:#cde4ff
+        style A3 fill:#cde4ff
+        style S1 fill:#e5d5ff
+        style S2 fill:#e5d5ff
+        style S3 fill:#e5d5ff
+        style S4 fill:#e5d5ff
+
+        A1 -- "Cognitive Maps" --> S1;
+        A1 -- "Semantic Memory" --> S2;
+        A2 -- "Task & Motion Planning" --> S3;
+        A2 -- "Route Planning" --> S4;
+        A3 -- "Vision-Language-Action" --> S3;
+        A3 -- "API for Geo-Data" --> S4;
+    end
