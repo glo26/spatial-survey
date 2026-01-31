@@ -405,46 +405,58 @@ Multimodal models integrate vision, language, and action understanding \citep{ba
 
 \section{Industry Applications as Design Patterns}
 
-Rather than cataloging company capabilities, we abstract industry deployments into reusable design patterns for spatial AI systems.
+Rather than cataloging company capabilities, we abstract industry deployments into reusable design patterns for spatial AI systems. These patterns instantiate specific regions of our three-axis taxonomy under real-world constraints: each pattern represents a particular combination of agentic capabilities (memory, planning, tool use), spatial task domains (navigation, manipulation, geospatial reasoning), and operational scales (micro, meso, macro)---revealing how theoretical frameworks translate into deployed systems.
+
+We adopt the established design pattern formalism from software architecture \citep{gamma1994design}: each pattern specifies a \textit{problem} (recurring challenge), \textit{forces} (constraints that shape solutions), and \textit{solution} (reusable architectural template).
 
 \subsection{Design Pattern 1: Human-in-the-Loop Spatial Reasoning}
 
+\textit{Problem:} High-stakes spatial decisions require accuracy beyond current AI capabilities. \textit{Forces:} Accountability requirements, liability concerns, domain expertise scarcity. \textit{Solution:} AI proposes spatial analyses; humans validate and correct; corrections update system memory or policy.
+
 This pattern combines AI spatial analysis with human expert validation \citep{amershi2019guidelines, shneiderman2022human, wang2019human, green2019principles, fails2003interactive, stumpf2009interacting, holzinger2016interactive, dudley2018review, zanzotto2019human}, exemplified by:
 
-\textbf{Geospatial Intelligence.} Palantir \citep{palantir2023, palantir2024aip} integrates AI with human analysts for defense and commercial applications. The Gotham platform enables intelligence analysis with spatial reasoning while maintaining human oversight for critical decisions.
+\textbf{Geospatial Intelligence.} Defense-grade geospatial fusion systems \citep{palantir2023, palantir2024aip} integrate multi-source spatial data (satellite imagery, signals intelligence, terrain models) with human analyst workflows. These systems enable intelligence analysis with spatial reasoning while maintaining human oversight for critical decisions---a requirement driven by accountability and legal constraints in defense contexts.
 
-\textbf{GIS Workflows.} ESRI \citep{esri2023, esri2024geoai, esri2024arcgis} provides ArcGIS with integrated GeoAI capabilities where AI assists human planners in urban planning, environmental monitoring, and disaster response. The pattern: AI proposes, human validates, system learns from corrections.
+\textbf{GIS Workflows.} ESRI \citep{esri2023, esri2024geoai, esri2024arcgis} provides ArcGIS with integrated GeoAI capabilities where AI assists human planners in urban planning, environmental monitoring, and disaster response. The workflow follows a reusable 3-step schematic: (1) \textit{Agent proposal}---AI generates spatial analysis using memory-augmented reasoning; (2) \textit{Human validation/correction}---domain expert reviews, accepts, or modifies outputs; (3) \textit{Memory update}---corrections are stored for retrieval-augmented future queries, enabling continuous improvement without full model retraining.
 
 \subsection{Design Pattern 2: Weakly Supervised Planetary-Scale Learning}
 
+\textit{Problem:} Macro-scale spatial reasoning requires global coverage, but dense labeling is infeasible at planetary scale. \textit{Forces:} Label scarcity (only 0.01\% of Earth's surface has dense annotations), distribution shift across geographies, and computational constraints. \textit{Solution:} Self-supervised pretraining on petabyte-scale imagery, followed by task-specific fine-tuning with minimal labels.
+
 This pattern leverages massive unlabeled data with minimal supervision for global-scale models \citep{ratner2017snorkel, zhang2022survey, zhou2018brief, chapelle2009semi, zhu2005semi, oliver2018realistic, lee2013pseudo, tarvainen2017mean}:
 
-\textbf{Satellite Foundation Models.} NASA-IBM Prithvi \citep{jakubik2024prithvi} trains on Harmonized Landsat Sentinel-2 data using self-supervised learning. Planet Labs \citep{planet_labs_2023, planet2024daily} operates the largest Earth-imaging constellation, enabling daily global monitoring. Maxar provides high-resolution imagery for defense applications. The pattern: self-supervised pretraining on petabyte-scale imagery, fine-tuning for specific tasks.
+\textbf{Satellite Foundation Models.} The common pipeline abstracts as: \textit{Data} (multi-spectral satellite imagery from Landsat, Sentinel, commercial providers) $\rightarrow$ \textit{Representation} (self-supervised pretraining via masked autoencoding or contrastive learning) $\rightarrow$ \textit{Downstream reasoning} (fine-tuning for land cover classification, change detection, or crop yield prediction). NASA-IBM Prithvi \citep{jakubik2024prithvi} exemplifies this pipeline with Harmonized Landsat Sentinel-2 data. Planet Labs \citep{planet_labs_2023, planet2024daily} and Maxar provide the data infrastructure enabling daily global monitoring.
 
 \textbf{Mapping at Scale.} Google \citep{googlemaps2023, google2024mapsai, google2024earthengine} deploys AI for global-scale mapping through Google Earth Engine and Maps AI. The pattern: leverage user interactions and multi-source data for continuous model improvement.
 
 \subsection{Design Pattern 3: Agent-Assisted Spatial Workflows}
 
+\textit{Problem:} Spatial analysis tasks are repetitive and time-consuming for human experts. \textit{Forces:} Need for scalability, desire to preserve human agency, variable task complexity. \textit{Solution:} AI agent operates as primary analyst; human provides high-level guidance and handles exceptions.
+
+\textit{Contrast with HITL:} In Pattern 1 (HITL), the human is the \textit{gatekeeper}---every AI output requires validation. In Pattern 3, the agent is the \textit{primary operator}---humans supervise and intervene only when confidence is low or stakes are high.
+
 This pattern deploys AI agents to augment human spatial reasoning \citep{shneiderman2020human, horvitz1999principles, amershi2014power, abdul2018trends, gillies2016human, yang2020reexamining}:
 
 \textbf{Autonomous GIS.} AutonomousGIS \citep{li2025autonomousgis} and GeoGPT \citep{bai2024geogpt} integrate agentic capabilities with geospatial analysis. The pattern: LLM-based agents that can query spatial databases, generate maps, and answer geographic questions.
 
-\textbf{Location Intelligence.} Foursquare \citep{foursquare2023, foursquare2024places} and Carto \citep{carto2023, carto2024spatial} provide location-based services with AI-powered analytics. Wherobots \citep{wherobots2023, wherobots2024sedona} offers cloud-native spatial analytics. The pattern: spatial data infrastructure with AI-powered query and analysis.
+\textbf{Location Intelligence.} Foursquare \citep{foursquare2023, foursquare2024places} and Carto \citep{carto2023, carto2024spatial} provide location-based services with AI-powered analytics. Wherobots \citep{wherobots2023, wherobots2024sedona} offers cloud-native spatial analytics. The pattern: spatial data infrastructure with AI-powered query and analysis. \textit{Current limitations:} schema mismatch when integrating heterogeneous spatial databases, and spatial ambiguity in natural language queries (e.g., ``near downtown'' has variable interpretation across cities).
 
 \subsection{Design Pattern 4: Embodied AI at Scale}
 
+\textit{Problem:} Deploying spatial AI in safety-critical physical systems. \textit{Forces:} Regulatory requirements (NHTSA, EU AI Act), liability frameworks, long-tail safety scenarios, and public trust. \textit{Solution:} Massive simulation for policy learning, conservative real-world deployment with human oversight, continuous learning from fleet data with safety constraints.
+
 This pattern deploys learned spatial policies in physical systems \citep{kober2013reinforcement, levine2016end, ibarz2021train, kalashnikov2021mt, julian2020scaling, akkaya2019solving, levine2018learning, tobin2017domain}:
 
-\textbf{Autonomous Vehicles.} Waymo \citep{waymo2023, waymo_emma_2024, waymo2024driver} has deployed autonomous vehicles at scale with millions of miles driven. EMMA \citep{waymo_emma_2024} provides end-to-end multimodal models for driving. Tesla \citep{tesla2023fsd, tesla2024autopilot} pursues vision-only autonomy. The pattern: massive simulation, careful real-world deployment, continuous learning from fleet data.
+\textbf{Autonomous Vehicles.} Two contrasting sensing philosophies have emerged: \textit{Lidar-centric stacks} (Waymo \citep{waymo2023, waymo_emma_2024, waymo2024driver}, Cruise) fuse lidar point clouds with camera imagery for redundant depth estimation, achieving higher safety margins but at greater sensor cost. \textit{Vision-only stacks} (Tesla \citep{tesla2023fsd, tesla2024autopilot}) rely on camera arrays with learned depth estimation, enabling lower hardware cost but requiring more robust perception models. EMMA \citep{waymo_emma_2024} represents a hybrid approach with end-to-end multimodal models. The common pattern: massive simulation, conservative real-world deployment, continuous learning from fleet data under regulatory oversight.
 
 \textbf{Robot Learning Platforms.} Open X-Embodiment \citep{open_x_embodiment_rt_x_2023} provides large-scale robot data from Google DeepMind and collaborating institutions. Bridge Data \citep{walke2023bridgedata, walke2024bridgev2} enables cross-domain transfer. The pattern: diverse data collection, foundation model training, transfer to specific embodiments.
 
-\begin{tcolorbox}[colback=takeawayblue,colframe=black!50,title=Key Takeaways: Industry Patterns]
+\begin{tcolorbox}[colback=takeawayblue,colframe=black!50,title=Lessons for Researchers: Industry Patterns]
 \begin{itemize}[leftmargin=*,nosep]
-    \item Human-in-the-loop patterns dominate safety-critical applications (defense, urban planning)
-    \item Weakly supervised learning enables planetary-scale models without exhaustive labeling
-    \item Agent-assisted workflows augment rather than replace human spatial reasoning
-    \item Embodied AI deployment requires massive simulation followed by careful real-world transfer
+    \item \textbf{Design for human oversight:} Safety-critical spatial systems require HITL patterns; plan for human validation interfaces from the start
+    \item \textbf{Embrace weak supervision:} Planetary-scale spatial reasoning is only feasible with self-supervised pretraining; dense labeling does not scale
+    \item \textbf{Calibrate autonomy to stakes:} Use agent-assisted (high autonomy) for routine tasks, HITL (low autonomy) for high-stakes decisions
+    \item \textbf{Simulate before deploying:} Embodied spatial AI requires orders of magnitude more simulation than real-world data; budget accordingly
 \end{itemize}
 \end{tcolorbox}
 
