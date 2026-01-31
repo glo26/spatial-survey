@@ -59,7 +59,7 @@ ayaan.gazali@atlaspro.ai & eliel.lobo@atlaspro.ai & esteban.rojas@atlaspro.ai \\
 \vspace{0.3cm}
 
 \begin{quote}
-The dominant approaches for creating autonomous agents are based on large language models, which excel at reasoning and planning \citep{brown2020gpt3, openai2023gpt4, touvron2023llama2, team2023gemini, anthropic2024claude, dubey2024llama3, achiam2023gpt4, anil2023palm, chowdhery2022palm, jiang2023mistral, abdin2024phi3, grattafiori2024llama32, devlin2019bert}. However, these models lack the innate spatial intelligence required to perceive, navigate, and interact with the complex physical world, a critical gap for embodied AI \citep{chen2024spatialvlm, yang2025embodiedbench, duan2022surveyembodiedaisimulators, amin2024embodied, cheng2025embodiedeval, guo2024embodied, liu2024aligning}. We introduce a unified three-axis taxonomy that systematically connects agentic AI architectures with spatial intelligence capabilities across spatial scales, providing the first comprehensive framework for this convergent domain. We synthesize over 900 papers, revealing three key findings: (1) hierarchical memory systems are critical for long-horizon spatial tasks \citep{packer2023memgpt, banino2018vector, xu2025amemagenticmemoryllm, zhang2025memevolvemetaevolutionagentmemory, blundell2016model, pritzel2017neural}; (2) GNN-LLM integration is an emergent paradigm for structured spatial reasoning \citep{jin2023stgnn, chen2024llaga, chen2024graphgpt, chai2023graphllm, shehzad2024graphtransformers, fatemi2023talk, fatemi2024talk}; and (3) world models are essential for safe deployment in physical environments \citep{hafner2023dreamerv3, bruce2024genie, ha2018worldmodels, feng2025worldmodels, ding2024worldmodels, brooks2024sora, hafner2019dreamer, hafner2021dreamerv2, schrittwieser2020mastering}. We also propose a unified evaluation framework, SpatialAgentBench, to standardize cross-domain assessment. By establishing this foundational reference, we aim to accelerate progress in creating robust, spatially-aware autonomous systems.
+The dominant approaches for creating autonomous agents are based on large language models, which excel at reasoning and planning \citep{brown2020gpt3, openai2023gpt4, touvron2023llama2, team2023gemini, anthropic2024claude, dubey2024llama3, achiam2023gpt4, anil2023palm, chowdhery2022palm, jiang2023mistral, abdin2024phi3, grattafiori2024llama32, devlin2019bert}. However, these models lack the innate spatial intelligence required to perceive, navigate, and interact with the complex physical world, a critical gap for embodied AI \citep{chen2024spatialvlm, yang2025embodiedbench, duan2022surveyembodiedaisimulators, amin2024embodied, cheng2025embodiedeval, guo2024embodied, liu2024aligning}. We introduce a unified three-axis taxonomy that systematically connects agentic AI architectures with spatial intelligence capabilities across spatial scales, providing the first comprehensive framework for this convergent domain. We synthesize over 800 papers, revealing three key findings: (1) hierarchical memory systems are critical for long-horizon spatial tasks \citep{packer2023memgpt, banino2018vector, xu2025amemagenticmemoryllm, zhang2025memevolvemetaevolutionagentmemory, blundell2016model, pritzel2017neural}; (2) GNN-LLM integration is an emergent paradigm for structured spatial reasoning \citep{jin2023stgnn, chen2024llaga, chen2024graphgpt, chai2023graphllm, shehzad2024graphtransformers, fatemi2023talk, fatemi2024talk}; and (3) world models are essential for safe deployment in physical environments \citep{hafner2023dreamerv3, bruce2024genie, ha2018worldmodels, feng2025worldmodels, ding2024worldmodels, brooks2024sora, hafner2019dreamer, hafner2021dreamerv2, schrittwieser2020mastering}. We also outline SpatialAgentBench, a conceptual evaluation framework for future research to standardize cross-domain assessment. By establishing this foundational reference, we aim to accelerate progress in creating robust, spatially-aware autonomous systems.
 \end{quote}
 
 \section{Introduction}
@@ -74,12 +74,11 @@ Complementarily, \textbf{Spatial Intelligence} encompasses the ability to percei
 
 The convergence of these domains is essential for real-world AI applications across multiple sectors. Autonomous vehicles must perceive dynamic environments and plan safe trajectories \citep{hu2023uniad, caesar2020nuscenes, waymo2023, geiger2012kitti, cadena2016slam, chen2024endtoend, waymo_emma_2024, tian2024drivevlm, sun2020waymo, ettinger2021womd, wilson2023argoverse2, chang2019argoverse, lyft2019level5, houston2021oneformer}. Robotic assistants require understanding of object affordances and spatial relationships \citep{brohan2023rt2, ahn2022saycan, team2024octo, kim2024openvla, driess2023palme, black2024pi0, bharadhwaj2024roboagent, open_x_embodiment_rt_x_2023, brohan2022rt1, bousmalis2023robocat, reed2022gato, jang2022bcz, lynch2020learning, pertsch2021accelerating}. Urban computing systems must model complex spatio-temporal dependencies \citep{jin2023stgnn, li2018dcrnn, yu2018stgcn, wu2019graphwavenet, zheng2014urban, cui2024spatiotemporalinteraction, cini2023taming, bai2020agcrn, guo2019astgcn, zheng2020gman, choi2022stgrat, yuan2020survey, yuan2024unist, liu2024stllm}. Geospatial intelligence platforms must analyze satellite imagery and geographic data at scale \citep{jakubik2024prithvi, cong2022satmae, mai2023opportunities, janowicz2020geoai, li2025autonomousgis, bastani2023satlaspretrain, esri2024geoai, xiao2025foundationmodelsremotesensing, fuller2024croma, chi2022microestimates, christie2018fmow, christie2018functional, demir2018deepglobe, zhu2017deep, bai2024geogpt}. Despite this importance, existing surveys treat these areas in isolation, lacking a unified framework connecting agentic architectures with spatial requirements.
 
-\textbf{Contributions.} This survey makes five primary contributions:
+\textbf{Contributions.} This survey makes four primary contributions:
 \begin{enumerate}[leftmargin=*]
     \item A \textbf{unified three-axis taxonomy} connecting agentic AI components (memory, planning, tool use) with spatial intelligence domains (navigation, scene understanding, manipulation, geospatial analysis) across spatial scales (micro, meso, macro), providing a structured framework for interdisciplinary research.
-    \item A \textbf{comprehensive analysis} of over 900 papers identifying key architectural patterns, including the emergence of GNN-LLM integration, vision-language-action models, and world model-based planning as critical enablers for spatial reasoning.
+    \item A \textbf{comprehensive analysis} of over 800 papers identifying key architectural patterns, including the emergence of GNN-LLM integration, vision-language-action models, and world model-based planning as critical enablers for spatial reasoning.
     \item A \textbf{systematic comparison} with existing surveys, demonstrating how this work uniquely bridges agentic AI and spatial intelligence domains.
-    \item The \textbf{proposal of a unified evaluation framework, SpatialAgentBench}, with 8 tasks spanning navigation, manipulation, scene understanding, and geospatial reasoning to standardize cross-domain assessment.
     \item A \textbf{forward-looking roadmap} identifying grand challenges and research directions for developing robust, safe, and capable spatially-aware autonomous systems.
 \end{enumerate}
 
@@ -96,7 +95,7 @@ We then applied a rigorous multi-stage filtering process:
     \item \textbf{Relevance Filtering:} We ensured papers directly addressed the intersection of agentic capabilities and spatial intelligence.
 \end{enumerate}
 
-This process resulted in a final corpus of over 900 papers, which were systematically analyzed to derive the taxonomy, identify key trends, and synthesize the findings presented in this survey. We employed a snowball sampling technique to ensure comprehensive coverage of related works, following citation chains both forward and backward. Two independent reviewers validated the paper selection and taxonomy development.
+This process resulted in a final corpus of over 800 papers, which were systematically analyzed to derive the taxonomy, identify key trends, and synthesize the findings presented in this survey. We employed a snowball sampling technique to ensure comprehensive coverage of related works, following citation chains both forward and backward. Two independent reviewers validated the paper selection and taxonomy development.
 
 \section{Related Work and Survey Comparison}
 
@@ -517,9 +516,9 @@ While existing benchmarks have advanced the field \citep{raji2021ai, liao2021we,
 
 \textbf{Cross-Scale Evaluation.} Benchmarks typically operate at a single spatial scale. Real applications require reasoning across micro (grasping), meso (navigation), and macro (planning) scales simultaneously. \textit{Gap: No benchmark evaluates cross-scale spatial reasoning.}
 
-\subsection{SpatialAgentBench: Proposed Unified Framework}
+\subsection{SpatialAgentBench: A Conceptual Framework for Future Research}
 
-Our proposed benchmark addresses these gaps with eight tasks designed to evaluate the full spectrum of spatial agent capabilities:
+We outline a conceptual benchmark framework that could address these gaps with eight tasks designed to evaluate the full spectrum of spatial agent capabilities:
 
 \begin{enumerate}
     \item \textbf{VLN-Instruct}: Vision-language navigation with complex, multi-step instructions requiring spatial reasoning and landmark recognition.
@@ -536,7 +535,7 @@ Our proposed benchmark addresses these gaps with eight tasks designed to evaluat
 \begin{itemize}[leftmargin=*,nosep]
     \item Existing benchmarks are fragmented across domains with incompatible metrics
     \item Critical gaps exist in sim-to-real transfer, long-horizon, safety-critical, and cross-scale evaluation
-    \item SpatialAgentBench proposes unified evaluation across navigation, manipulation, scene understanding, and geospatial reasoning
+    \item SpatialAgentBench is outlined as a conceptual framework for unified evaluation across navigation, manipulation, scene understanding, and geospatial reasoning
     \item Standardized metrics (SPL, nDTW, safety rates) enable cross-domain comparison
 \end{itemize}
 \end{tcolorbox}
@@ -648,7 +647,7 @@ This survey, while comprehensive, has several limitations:
 
 \section{Conclusion}
 
-This survey has provided a unified three-axis taxonomy connecting Agentic AI and Spatial Intelligence across spatial scales, synthesizing over 900 papers across foundational architectures, state-of-the-art methods, industry applications, and evaluation benchmarks. Our analysis reveals three key findings:
+This survey has provided a unified three-axis taxonomy connecting Agentic AI and Spatial Intelligence across spatial scales, synthesizing over 800 papers across foundational architectures, state-of-the-art methods, industry applications, and evaluation benchmarks. Our analysis reveals three key findings:
 
 \begin{enumerate}
     \item \textbf{Hierarchical memory systems} are critical for long-horizon spatial tasks, enabling agents to accumulate and retrieve spatial knowledge effectively. Advances in retrieval-augmented generation, episodic memory, and spatial memory representations provide foundations for persistent spatial understanding.
@@ -660,7 +659,7 @@ This survey has provided a unified three-axis taxonomy connecting Agentic AI and
 
 We have identified six grand challenges that represent fundamental bottlenecks: unified spatial representation, grounded long-horizon planning, safe deployment under uncertainty, sim-to-real transfer, scalable multi-agent coordination, and efficient edge deployment \citep{russell2010artificial, norvig2021artificial}. The convergence of vision-language-action models, graph neural networks, world models, and foundation models provides promising directions for addressing these challenges.
 
-By establishing this foundational reference with a three-axis taxonomy and proposing SpatialAgentBench, we aim to accelerate progress toward capable, robust, and safe spatially-aware autonomous systems that can perceive, reason about, and act within the physical world \citep{wooldridge2009introduction}. The intersection of agentic AI and spatial intelligence represents a critical frontier for artificial intelligence, with profound implications for autonomous vehicles, robotics, urban computing, and geospatial intelligence.
+By establishing this foundational reference with a three-axis taxonomy and outlining the conceptual SpatialAgentBench framework, we aim to accelerate progress toward capable, robust, and safe spatially-aware autonomous systems that can perceive, reason about, and act within the physical world \citep{wooldridge2009introduction}. The intersection of agentic AI and spatial intelligence represents a critical frontier for artificial intelligence, with profound implications for autonomous vehicles, robotics, urban computing, and geospatial intelligence.
 
 \bibliographystyle{plainnat}
 \bibliography{references}
