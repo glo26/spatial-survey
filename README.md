@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![GitHub stars](https://img.shields.io/github/stars/glo26/spatial-survey?style=social)](https://github.com/glo26/spatial-survey)
 
-A comprehensive survey bridging **Agentic AI**, **Spatial Intelligence**, and **World Models** for physical world understanding. This paper introduces a unified three-axis taxonomy connecting agentic capabilities with spatial tasks across scales.
+This survey bridges the gap between agentic AI systems and spatial intelligence. We review over 800 papers to understand how AI agents can perceive, reason about, and act within the physical world.
 
 ## Authors
 
@@ -12,39 +12,42 @@ A comprehensive survey bridging **Agentic AI**, **Spatial Intelligence**, and **
 
 AtlasPro AI
 
-## Abstract
+## What This Paper Is About
 
-While large language models have become the dominant paradigm for agentic reasoning and planning, their success in symbolic domains does not readily translate to the physical world. Spatial intelligence—the ability to perceive 3D structure, reason about object relationships, and act under physical constraints—is an orthogonal, not incremental, capability that is critical for embodied agents. This paper bridges that gap through a systematic review of over 800 peer-reviewed papers from top-tier venues, introducing a unified three-axis taxonomy connecting agentic capabilities with spatial tasks across scales.
+Large language models are remarkably good at reasoning and planning in symbolic domains, but they struggle when it comes to the physical world. Navigation agents hallucinate paths that don't exist. Manipulation planners propose grasps that are physically impossible. Embodied systems misjudge distances by orders of magnitude.
 
-## Key Contributions
+Why? Because spatial intelligence requires something fundamentally different: the ability to perceive 3D structure, reason about object relationships, and act under physical constraints. This is not just an incremental improvement over language understanding; it's an orthogonal capability.
 
-1. **Unified Three-Axis Taxonomy**: A novel framework mapping agentic AI components (memory, planning, tool use) to spatial intelligence domains (navigation, scene understanding, manipulation, geospatial analysis) across spatial scales (micro, meso, macro).
+We wrote this survey to bridge that gap. Through a systematic review of over 800 papers from top venues, we introduce a three-axis taxonomy that connects agentic capabilities (memory, planning, tool use) with spatial task domains (navigation, scene understanding, manipulation, geospatial analysis) across different spatial scales (micro, meso, macro).
 
-2. **Comprehensive Analysis**: Review of 800+ papers identifying key architectural patterns including GNN-LLM integration, vision-language-action models, and world model-based planning.
+## What We Contribute
 
-3. **Systematic Comparison**: Quantitative comparison with existing surveys demonstrating unique coverage of the agentic-spatial intersection.
+1. **A Three-Axis Taxonomy**: A framework for organizing the intersection of agentic AI and spatial intelligence across scales.
 
-4. **Forward-Looking Roadmap**: Six grand challenges and research directions, including the conceptual SpatialAgentBench framework for future unified evaluation.
+2. **Analysis of 800+ Papers**: We identify key architectural patterns, including how GNNs are being integrated with LLMs, the rise of vision-language-action models, and the role of world models in planning.
 
-5. **Industry Design Patterns**: Analysis of real-world deployments from Waymo, Tesla, Palantir, ESRI, and other industry leaders, abstracted into reusable design patterns.
+3. **Comparison with Existing Surveys**: A quantitative look at what other surveys cover and where they leave gaps.
+
+4. **Six Grand Challenges**: Research directions for the field, including the need for unified evaluation frameworks.
+
+5. **Industry Design Patterns**: Lessons from real-world deployments at Waymo, Tesla, Palantir, ESRI, and others, abstracted into reusable patterns.
 
 ## Repository Structure
 
 ```
 spatial-survey/
-├── conference/                    # Main conference paper (58 pages)
-│   ├── main.tex                   # LaTeX source
-│   ├── main.pdf                   # Compiled PDF
-│   └── references.bib             # Bibliography (847 unique citations)
-│
-├── technical-report/              # Extended technical report
+├── conference/                    # Main paper (58 pages)
 │   ├── main.tex                   # LaTeX source
 │   ├── main.pdf                   # Compiled PDF
 │   └── references.bib             # Bibliography
 │
-├── versions/                      # Previous versions archive
-├── latex/                         # Original working directory
-└── README.md                      # This file
+├── technical-report/              # Extended version
+│   ├── main.tex
+│   ├── main.pdf
+│   └── references.bib
+│
+├── versions/                      # Archive of previous versions
+└── README.md
 ```
 
 ## Paper Statistics
@@ -52,25 +55,23 @@ spatial-survey/
 | Metric | Value |
 |--------|-------|
 | Pages | 58 |
-| Unique Citations | 847 |
+| Unique Citations | 751 |
 | Sections | 11 |
 | Tables | 5 |
 | Equations | 9 |
 
 ## Topics Covered
 
-- **Agentic AI Architectures**: ReAct, Reflexion, Tree of Thoughts, Multi-Agent Systems
-- **Embodied AI & VLA Models**: RT-2, PaLM-E, Octo, OpenVLA, Voyager, SayCan
-- **Spatial Reasoning & Navigation**: VLN, Habitat, ZSON, VLMaps, VoxPoser
+- **Agentic AI**: ReAct, Reflexion, Tree of Thoughts, Multi-Agent Systems
+- **Embodied AI**: RT-2, PaLM-E, Octo, OpenVLA, Voyager, SayCan
+- **Navigation**: VLN, Habitat, ZSON, VLMaps, VoxPoser
 - **Graph Neural Networks**: DCRNN, STGCN, Graph WaveNet, GNN-LLM Integration
-- **3D Scene Understanding**: ScanNet, Matterport3D, NeRF, 3D Gaussian Splatting
+- **3D Understanding**: ScanNet, Matterport3D, NeRF, 3D Gaussian Splatting
 - **World Models**: Dreamer, DreamerV2, DreamerV3, Genie, GAIA-1, Sora
 - **Geospatial AI**: Prithvi, SatMAE, GeoAI, Remote Sensing Foundation Models
-- **Industry Applications**: Autonomous Vehicles, Robot Learning, Geospatial Intelligence
+- **Industry**: Autonomous Vehicles, Robot Learning, Geospatial Intelligence
 
 ## Compilation
-
-To compile the LaTeX paper:
 
 ```bash
 cd conference/
@@ -81,8 +82,6 @@ pdflatex main.tex
 ```
 
 ## Citation
-
-If you find our work useful in your research, please consider citing:
 
 ```bibtex
 @article{felicia2026perception,
@@ -99,4 +98,4 @@ MIT License
 
 ## Contact
 
-For questions or collaboration inquiries, please contact the authors at AtlasPro AI.
+For questions or collaboration, reach out to the authors at AtlasPro AI.
