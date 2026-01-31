@@ -1,9 +1,10 @@
-# Autonomous Spatial Intelligence: A Survey of Agentic AI Methods and Evaluation
+# From Perception to Action: Spatial AI Agents and World Models
 
 [![arXiv](https://img.shields.io/badge/arXiv-2601.XXXXX-b31b1b.svg)](https://arxiv.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![GitHub stars](https://img.shields.io/github/stars/glo26/spatial-survey?style=social)](https://github.com/glo26/spatial-survey)
 
-This repository contains the research materials for a comprehensive survey on Autonomous Spatial Intelligence, exploring the intersection of Agentic AI architectures and spatial intelligence tasks.
+A comprehensive survey bridging **Agentic AI**, **Spatial Intelligence**, and **World Models** for physical world understanding. This paper introduces a unified three-axis taxonomy connecting agentic capabilities with spatial tasks across scales.
 
 ## Authors
 
@@ -11,85 +12,66 @@ This repository contains the research materials for a comprehensive survey on Au
 
 AtlasPro AI
 
+## Abstract
+
+While large language models have become the dominant paradigm for agentic reasoning and planning, their success in symbolic domains does not readily translate to the physical world. Spatial intelligence—the ability to perceive 3D structure, reason about object relationships, and act under physical constraints—is an orthogonal, not incremental, capability that is critical for embodied agents. This paper bridges that gap through a systematic review of over 800 peer-reviewed papers from top-tier venues, introducing a unified three-axis taxonomy connecting agentic capabilities with spatial tasks across scales.
+
+## Key Contributions
+
+1. **Unified Three-Axis Taxonomy**: A novel framework mapping agentic AI components (memory, planning, tool use) to spatial intelligence domains (navigation, scene understanding, manipulation, geospatial analysis) across spatial scales (micro, meso, macro).
+
+2. **Comprehensive Analysis**: Review of 800+ papers identifying key architectural patterns including GNN-LLM integration, vision-language-action models, and world model-based planning.
+
+3. **SpatialAgentBench**: A conceptual evaluation framework for standardizing cross-domain assessment of spatial AI agents.
+
+4. **Industry Design Patterns**: Analysis of real-world deployments from Waymo, Tesla, Palantir, ESRI, and other industry leaders, abstracted into reusable design patterns.
+
 ## Repository Structure
 
 ```
 spatial-survey/
-├── conference/                    # Conference paper version (IEEE, NeurIPS, ICLR)
-│   ├── main.tex                   # LaTeX source (21 pages)
+├── conference/                    # Main conference paper (58 pages)
+│   ├── main.tex                   # LaTeX source
 │   ├── main.pdf                   # Compiled PDF
-│   └── references.bib             # Bibliography (1,165 references)
+│   └── references.bib             # Bibliography (847 unique citations)
 │
-├── technical-report/              # Technical report version (arXiv)
-│   ├── main.tex                   # LaTeX source (16 pages)
+├── technical-report/              # Extended technical report
+│   ├── main.tex                   # LaTeX source
 │   ├── main.pdf                   # Compiled PDF
-│   └── references.bib             # Bibliography (1,165 references)
+│   └── references.bib             # Bibliography
 │
 ├── versions/                      # Previous versions archive
-│   ├── main-v1.tex                # Version 1 LaTeX source
-│   └── main-v1.pdf                # Version 1 PDF
-│
-├── latex/                         # Original LaTeX working directory
-│   ├── conference_paper.tex       # Conference paper source
-│   ├── conference_paper.pdf       # Conference paper PDF
-│   ├── technical_report.tex       # Technical report source
-│   ├── technical_report.pdf       # Technical report PDF
-│   └── references.bib             # Master bibliography
-│
-├── Comprehensive_Spatial_AI_Survey.md   # Full survey in Markdown format
-├── paper_insights.md              # Research notes and insights
-├── survey_framework.md            # A+ framework for survey writing
-├── top_survey_analysis.md         # Analysis of top survey papers
+├── latex/                         # Original working directory
 └── README.md                      # This file
 ```
 
-## Paper Versions
+## Paper Statistics
 
-### Conference Paper (21 pages)
+| Metric | Value |
+|--------|-------|
+| Pages | 58 |
+| Unique Citations | 847 |
+| Sections | 11 |
+| Tables | 5 |
+| Equations | 9 |
 
-**Title:** Autonomous Spatial Intelligence: A Survey of Agentic AI Methods and Evaluation
+## Topics Covered
 
-**Target Venues:** IEEE, NeurIPS, ICLR, ICML
-
-This version follows the "Attention Is All You Need" formatting style with 208 carefully curated citations. It provides comprehensive coverage of agentic architectures, embodied AI, spatial reasoning, and industry applications in a format suitable for top-tier conference submission.
-
-### Technical Report (16 pages)
-
-**Title:** Autonomous Spatial Intelligence: A Comprehensive Technical Report
-
-**Target Venue:** arXiv preprint
-
-This version provides more exhaustive coverage with an expanded bibliography, suitable for technical documentation and reference purposes.
-
-## Key Contributions
-
-This survey provides a unified framework for understanding the intersection of two critical AI domains: Agentic AI and Spatial Intelligence.
-
-1. **Unified Taxonomy:** A novel taxonomy connecting agentic AI architectures (memory, planning, tool use) with spatial intelligence tasks (navigation, scene understanding, manipulation, geospatial analysis).
-
-2. **Comprehensive Review:** Analysis of over 250 papers covering state-of-the-art methods, evaluation benchmarks, and real-world industry applications from Palantir, ESRI, Foursquare, Google, Waymo, and other industry leaders.
-
-3. **Forward-Looking Analysis:** Identification of open challenges and a research roadmap for autonomous spatial intelligence.
-
-## Bibliography
-
-The repository contains 1,165 unique references covering:
-
-- Agentic AI Architectures (ReAct, Reflexion, Tree of Thoughts, Multi-Agent Systems)
-- Embodied AI and VLA Models (RT-2, PaLM-E, Octo, OpenVLA, Voyager, SayCan)
-- Spatial Reasoning and Navigation (VLN, Habitat, ZSON, VLMaps)
-- GNN and Spatio-Temporal Networks (DCRNN, STGCN, Graph WaveNet)
-- 3D Scene Understanding (ScanNet, Matterport3D, NeRF, 3D Gaussian Splatting)
-- Geospatial AI and Remote Sensing (GeoFM, SatCLIP, SSL4EO)
-- World Models (Dreamer, Genie, Sora, WorldDreamer)
-- Foundation Models (CLIP, SAM, DINOv2, Grounding DINO)
+- **Agentic AI Architectures**: ReAct, Reflexion, Tree of Thoughts, Multi-Agent Systems
+- **Embodied AI & VLA Models**: RT-2, PaLM-E, Octo, OpenVLA, Voyager, SayCan
+- **Spatial Reasoning & Navigation**: VLN, Habitat, ZSON, VLMaps, VoxPoser
+- **Graph Neural Networks**: DCRNN, STGCN, Graph WaveNet, GNN-LLM Integration
+- **3D Scene Understanding**: ScanNet, Matterport3D, NeRF, 3D Gaussian Splatting
+- **World Models**: Dreamer, DreamerV2, DreamerV3, Genie, GAIA-1, Sora
+- **Geospatial AI**: Prithvi, SatMAE, GeoAI, Remote Sensing Foundation Models
+- **Industry Applications**: Autonomous Vehicles, Robot Learning, Geospatial Intelligence
 
 ## Compilation
 
-To compile the LaTeX papers:
+To compile the LaTeX paper:
 
 ```bash
-cd conference/  # or technical-report/
+cd conference/
 pdflatex main.tex
 bibtex main
 pdflatex main.tex
@@ -98,11 +80,11 @@ pdflatex main.tex
 
 ## Citation
 
-If you find our work useful in your research, please consider citing our paper:
+If you find our work useful in your research, please consider citing:
 
 ```bibtex
-@article{felicia2026autonomous,
-    title={Autonomous Spatial Intelligence: A Survey of Agentic AI Methods and Evaluation},
+@article{felicia2026perception,
+    title={From Perception to Action: Spatial AI Agents and World Models},
     author={Felicia, Gloria and Bryant, Nolan and Putra, Handi and Gazali, Ayaan and Lobo, Eliel and Rojas, Esteban},
     journal={arXiv preprint arXiv:2601.XXXXX},
     year={2026}
