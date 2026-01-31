@@ -179,25 +179,25 @@ Table~\ref{tab:methods_mapping} maps representative methods to our three-axis ta
 
 \begin{table}[h!]
 \centering
-\caption{Representative Methods Mapped to the Three-Axis Taxonomy}
+\caption{Representative Methods Mapped to the Three-Axis Taxonomy. Representation types: Symbolic (language, code), Metric (geometric, visual), Latent (learned embeddings), Multimodal (combined).}
 \label{tab:methods_mapping}
 \resizebox{\textwidth}{!}{
-\begin{tabular}{lcccc}
+\begin{tabular}{lccccc}
 \toprule
-\textbf{Method} & \textbf{Spatial Task} & \textbf{Agentic Capability} & \textbf{Spatial Scale} & \textbf{Representation} \\
+\textbf{Method} & \textbf{Spatial Task} & \textbf{Agentic Capability} & \textbf{Scale} & \textbf{Repr.} & \textbf{Primary Failure Mode} \\
 \midrule
-VLN-BERT \citep{hong2021vln} & Navigation & Memory + Planning & Meso & Language + Visual \\
-SayCan \citep{ahn2022saycan} & Manipulation & Planning + Tool Use & Micro & Language + Affordance \\
-RT-2 \citep{brohan2023rt2} & Manipulation & Tool Use & Micro & Visual + Action \\
-VLMaps \citep{huang2023vlmaps} & Navigation & Memory & Meso & Semantic Map \\
-Voyager \citep{wang2023voyager} & Navigation + Manipulation & Memory + Planning & Meso & Language + Code \\
-DCRNN \citep{li2018dcrnn} & Geospatial & Memory & Macro & Graph \\
-Graph WaveNet \citep{wu2019graphwavenet} & Geospatial & Memory & Macro & Adaptive Graph \\
-Prithvi \citep{jakubik2024prithvi} & Geospatial & - & Macro & Visual (Satellite) \\
-DreamerV3 \citep{hafner2023dreamerv3} & Navigation + Manipulation & Planning (World Model) & Meso & Latent \\
-PaLM-E \citep{driess2023palme} & Manipulation & Planning + Tool Use & Micro-Meso & Multimodal \\
-OpenVLA \citep{kim2024openvla} & Manipulation & Tool Use & Micro & Visual + Action \\
-LLaGA \citep{chen2024llaga} & Scene Understanding & Memory & Meso & Graph + Language \\
+VLN-BERT \citep{hong2021vln} & Navigation & Memory + Planning & Meso & Multimodal & Instruction grounding errors \\
+SayCan \citep{ahn2022saycan} & Manipulation & Planning + Tool Use & Micro--Meso & Symbolic & Affordance mismatch \\
+RT-2 \citep{brohan2023rt2} & Manipulation & Tool Use & Micro & Metric & Out-of-distribution objects \\
+VLMaps \citep{huang2023vlmaps} & Navigation & Memory & Meso & Metric & Semantic drift over time \\
+Voyager \citep{wang2023voyager} & Navigation + Manip. & Memory + Planning & Meso & Symbolic & Code execution failures \\
+DCRNN \citep{li2018dcrnn} & Geospatial & Memory (low planning) & Macro & Latent & Non-stationary dynamics \\
+Graph WaveNet \citep{wu2019graphwavenet} & Geospatial & Memory (low planning) & Macro & Latent & Sparse graph regions \\
+Prithvi \citep{jakubik2024prithvi} & Geospatial & Memory only & Macro & Metric & No action capability \\
+DreamerV3 \citep{hafner2023dreamerv3} & Navigation + Manip. & Planning (World Model) & Micro--Meso & Latent & Model compounding error \\
+PaLM-E \citep{driess2023palme} & Manipulation & Planning + Tool Use & Micro--Meso & Multimodal & Hallucinated actions \\
+OpenVLA \citep{kim2024openvla} & Manipulation & Tool Use & Micro & Metric & Limited generalization \\
+LLaGA \citep{chen2024llaga} & Scene Understanding & Memory & Meso & Multimodal & Graph construction noise \\
 \bottomrule
 \end{tabular}
 }
@@ -208,6 +208,7 @@ LLaGA \citep{chen2024llaga} & Scene Understanding & Memory & Meso & Graph + Lang
     \item The three-axis taxonomy (Task $\times$ Capability $\times$ Scale) provides a comprehensive framework for organizing spatial AI research
     \item Most methods address meso-spatial scales; micro and macro scales remain underexplored
     \item Memory systems are critical across all spatial tasks but implementations vary significantly by scale
+    \item \textbf{Critical gap:} Macro-scale geospatial methods are memory-dominant with minimal planning capabilities---no existing system combines city-scale reasoning with autonomous goal-directed behavior
     \item The intersection of GNN-based methods with agentic capabilities represents an emerging frontier
 \end{itemize}
 \end{tcolorbox}
