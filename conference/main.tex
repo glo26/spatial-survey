@@ -272,9 +272,17 @@ Tool use extends agent capabilities through external interfaces and physical act
 
 \section{Spatial Intelligence Domains}
 
+\textit{Micro-summary:} This section surveys methods for agent navigation, scene understanding, manipulation, and geospatial reasoning. We explicitly tie these task domains to agentic planning and highlight key benchmark gaps.
+
+\textit{Micro-summary:} This section surveys methods for agent navigation, scene understanding, manipulation, and geospatial reasoning. We explicitly tie these task domains to agentic planning and highlight key benchmark gaps.
+
 This section examines the four primary spatial task domains, organized around the question: \textit{What spatial capabilities must agents possess to operate in the physical world?}
 
 \subsection{Navigation: How Do Agents Move Through Space?}
+
+\textit{Micro-summary:} This subsection covers visual and language-guided navigation, from classical robotics to modern learning-based systems. We highlight the evolution from explicit mapping to implicit spatial reasoning.
+
+\textit{Micro-summary:} This subsection covers visual and language-guided navigation, from classical robotics to modern learning-based systems. We highlight the evolution from explicit mapping to implicit spatial reasoning.
 
 Navigation requires agents to perceive environments, plan paths, and execute locomotion toward goals \citep{bonin2008visual, desouza2002vision, thrun2002robotic, siegwart2011introduction, choset2005principles, cadena2016slam, engel2017direct, fuentes2015visual, durrant2006simultaneous, konolige2008outdoor}.
 
@@ -288,6 +296,10 @@ Navigation requires agents to perceive environments, plan paths, and execute loc
 
 \subsection{Scene Understanding: How Do Agents Perceive 3D Structure?}
 
+\textit{Micro-summary:} This subsection reviews techniques for 3D scene understanding. We explicitly connect these representations to their use in downstream agentic planning, moving beyond a purely computer vision perspective.
+
+\textit{Micro-summary:} This subsection reviews techniques for 3D scene understanding. We explicitly connect these representations to their use in downstream agentic planning, moving beyond a purely computer vision perspective.
+
 Scene understanding encompasses perceiving 3D geometry \citep{hartley2003multiple, szeliski2022computer, forsyth2011computer, marr1982vision, prince2012computer, faugeras1993three}, recognizing objects \citep{krizhevsky2012imagenet, he2016deep, simonyan2015very, szegedy2015going, huang2017densely, tan2019efficientnet}, and reasoning about spatial relationships \citep{johnson2015image, krishna2017visual, lu2016visual, xu2017scene, zellers2019recognition}.
 
 \textbf{Neural Scene Representations.} NeRF \citep{mildenhall2020nerf, barron2022mipnerf360, muller2022instant, park2019deepsdf, mescheder2019occupancy, barron2023zipnerf, martin2021nerf, tancik2022block, chen2022tensorf, fridovich2022plenoxels} revolutionized 3D reconstruction. Mip-NeRF \citep{barron2022mipnerf360} handles multi-scale rendering. 3D Gaussian Splatting \citep{kerbl20233dgaussian, luiten2023dynamic, fan2024lightgaussian, yu2024mipsplatting, huang20242d} enables real-time rendering. Integration with SLAM \citep{sucar2021imap, zhu2022nice, keetha2024splatam, bird2025dvmslam, teed2021droid, teed2024deep, mur2017orbslam2, campos2021orbslam3} enables online reconstruction.
@@ -300,6 +312,10 @@ Scene understanding encompasses perceiving 3D geometry \citep{hartley2003multipl
 
 \subsection{Manipulation: How Do Agents Interact with Objects?}
 
+\textit{Micro-summary:} This subsection focuses on robot manipulation, covering grasping, pre-grasp manipulation, and long-horizon sequential tasks. We emphasize the shift from isolated actions to complex, multi-step task composition.
+
+\textit{Micro-summary:} This subsection focuses on robot manipulation, covering grasping, pre-grasp manipulation, and long-horizon sequential tasks. We emphasize the shift from isolated actions to complex, multi-step task composition.
+
 Manipulation requires understanding object affordances \citep{gibson1979ecological, do2018affordancenet, nagarajan2019grounded, fang2018demo2vec, zhu2015understanding, myers2015affordance}, planning contact-rich interactions \citep{chitnis2020efficient, kroemer2021review}, and executing precise motor commands \citep{argall2009survey, billard2008survey, ravichandar2020recent}.
 
 \textbf{Vision-Language-Action Models.} VLA models \citep{brohan2022rt1, brohan2023rt2, team2024octo, kim2024openvla, black2024pi0, driess2023palme, open_x_embodiment_rt_x_2023, zitkovich2023rt2, padalkar2023open} directly map visual observations and language instructions to actions. RT-1 \citep{brohan2022rt1} introduced large-scale robot learning. RT-2 \citep{brohan2023rt2} demonstrated web-scale pretraining transfer. RT-X \citep{open_x_embodiment_rt_x_2023} enables cross-embodiment learning. Octo \citep{team2024octo} provides an open generalist policy. OpenVLA \citep{kim2024openvla} offers open-source VLA. $\pi_0$ \citep{black2024pi0} introduces flow matching for robot learning. RoboCat \citep{bousmalis2023robocat} demonstrates self-improvement.
@@ -311,6 +327,10 @@ Manipulation requires understanding object affordances \citep{gibson1979ecologic
 \textbf{Simulation Environments.} Simulation platforms \citep{james2020rlbench, yu2020metaworld, makoviychuk2021isaac, savva2019habitat, kolve2017ai2thor, gu2023maniskill2, deitke2023objaverse, xiang2020sapien, mu2021maniskill, ehsani2021manipulathor, szot2021habitat2, li2021igibson, shen2021igibson} provide training environments. RLBench \citep{james2020rlbench} offers diverse manipulation tasks. Meta-World \citep{yu2020metaworld} provides multi-task benchmarks. Isaac Gym \citep{makoviychuk2021isaac} enables GPU-accelerated simulation.
 
 \subsection{Geospatial Analysis: How Do Agents Reason at Planetary Scale?}
+
+\textit{Micro-summary:} This subsection covers methods for macro-scale geospatial analysis. We provide intuitive explanations for key equations and connect these techniques to real-world applications.
+
+\textit{Micro-summary:} This subsection covers methods for macro-scale geospatial analysis. We provide intuitive explanations for key equations and connect these techniques to real-world applications.
 
 Geospatial analysis requires processing satellite imagery \citep{zhu2017deep, ma2019deep, yuan2020deep, zhang2016deep, tuia2016domain, camps2014advances}, modeling urban dynamics \citep{bibri2017smart, batty2013big, kitchin2014real, jiang2021deepurbandownscale}, and reasoning about geographic relationships \citep{egenhofer1991point, cohn2008qualitative, randell1992spatial}.
 
@@ -348,7 +368,10 @@ AGCRN \citep{bai2020agcrn, song2020spatial} introduces node-specific patterns th
 
 \section{Enabling Technologies}
 
-\subsection{Graph Neural Networks for Spatial Reasoning}
+\textit{Micro-summary:} This section reviews the three core technologies that underpin modern spatial AI systems: Graph Neural Networks for relational reasoning, World Models for predictive simulation, and Multimodal Foundation Models for perception and grounding. We explain each technology with intuitive examples and connect them to the taxonomy.
+\subsection{Graph Neural Networks: How Do Agents Reason About Relationships?}
+
+\textit{Micro-summary:} This subsection explains how GNNs model spatial relationships. We provide a simplified, intuitive explanation of the message-passing mechanism and highlight its application in both micro- and macro-scale spatial reasoning. for Spatial Reasoning}
 
 GNNs provide inductive biases well-suited to spatial reasoning through message passing on graph structures \citep{kipf2017semi, velivckovic2018graph, xu2019powerful, hamilton2017inductive, wu2020comprehensive, wu2020gnnsurvey, zhou2020graph, zhang2020deep, li2016gated, defferrard2016convolutional, bruna2014spectral}.
 
@@ -367,9 +390,11 @@ f(T_g \cdot x) = T_g \cdot f(x)
 \end{equation}
 where $T_g$ is a group transformation. Graph transformers \citep{ying2021graphormer, dwivedi2023benchmarking, rampasek2022gps, kreuzer2021rethinking, chen2022structure} combine attention with graph structure. E3NN \citep{batzner2022e3nn}, geometric message passing \citep{brandstetter2022geometric}, and SchNet \citep{schutt2017schnet} advance equivariant architectures.
 
-\subsection{World Models}
+\subsection{World Models: How Do Agents Predict the Future?}
 
-World models learn predictive representations enabling planning through imagination \citep{lecun2022path, schmidhuber2015learning, matsuo2022deep, lecun2024objective, lecun2024jepa, moerland2023model, sutton1991dyna, deisenroth2011pilco}.
+\textit{Micro-summary:} This subsection covers world models, which enable agents to simulate future outcomes of their actions. We contrast model-based and model-free approaches and discuss the role of world models in safe and efficient planning.
+
+For an agent to act safely and effectively in the physical world, it must be able to predict the consequences of its actions. World models provide this predictive capability, enabling planning and foresight by learning a model of how the world behaves \citep{lecun2022path, schmidhuber2015learning, matsuo2022deep, lecun2024objective, lecun2024jepa, moerland2023model, sutton1991dyna, deisenroth2011pilco}. This is essential for spatial safety, as it allows an agent to avoid physically dangerous or irreversible states.
 
 \textbf{Latent Dynamics Models.} World models learn a latent dynamics model that predicts future states:
 \begin{align}
@@ -377,22 +402,25 @@ World models learn predictive representations enabling planning through imaginat
 \text{Dynamics:} \quad & \hat{\mathbf{z}}_{t+1} = p_\theta(\hat{\mathbf{z}}_{t+1} | \mathbf{z}_t, \mathbf{a}_t) \\
 \text{Decoder:} \quad & \hat{\mathbf{o}}_t = p_\psi(\hat{\mathbf{o}}_t | \mathbf{z}_t)
 \end{align}
+	Here, the encoder compresses high-dimensional observations (e.g., images) into a compact latent state $\mathbf{z}_t$. The dynamics model then predicts the next latent state $\hat{\mathbf{z}}_{t+1}$ given the current state and an action, effectively simulating the future in a compressed space.
 
-\textbf{Model-Based Reinforcement Learning.} Dreamer \citep{hafner2019dreamer, hafner2019planet} introduced latent imagination for sample-efficient learning through recurrent state-space models. DreamerV2 \citep{hafner2021dreamerv2} achieved human-level Atari performance with discrete latent states. DreamerV3 \citep{hafner2023dreamerv3} demonstrated cross-domain mastery with a single algorithm through symlog predictions. DayDreamer \citep{wu2023daydreamer} transferred world models to real robots with minimal real-world data. PlaNet \citep{hafner2019learning, hafner2019planet} pioneered latent dynamics learning. MuZero \citep{schrittwieser2020mastering} combined learned models with MCTS for game playing. Additional approaches include MBPO \citep{janner2019mbpo, chua2018deep}, World Models \citep{ha2018worldmodels}, TD-MPC \citep{hansen2022tdmpc, hansen2024tdmpc2}, and IRIS \citep{micheli2023transformers}.
+\textbf{Model-Based Reinforcement Learning.} Dreamer \citep{hafner2019dreamer, hafner2019planet} introduced latent imagination for sample-efficient learning through recurrent state-space models. DreamerV2 \citep{hafner2021dreamerv2} achieved human-level Atari performance with discrete latent states. DreamerV3 \citep{hafner2023dreamerv3} demonstrated cross-domain mastery with a single algorithm through symlog predictions. The progression from Dreamer to DreamerV3 illustrates a key research trajectory: from continuous latent states to discrete representations for precision, and finally to a single, highly generalizable model that masters numerous domains without modification. Crucially, DayDreamer \citep{wu2023daydreamer} demonstrated the immense potential of this approach for robotics, successfully transferring a world model learned in simulation to a physical robot with minimal fine-tuning on real-world data. This highlights a promising path for overcoming the sim-to-real gap. PlaNet \citep{hafner2019learning, hafner2019planet} pioneered latent dynamics learning. MuZero \citep{schrittwieser2020mastering} combined learned models with MCTS for game playing. Additional approaches include MBPO \citep{janner2019mbpo, chua2018deep}, World Models \citep{ha2018worldmodels}, TD-MPC \citep{hansen2022tdmpc, hansen2024tdmpc2}, and IRIS \citep{micheli2023transformers}.
 
-\textbf{Video World Models.} Genie \citep{bruce2024genie} learns controllable world models from internet videos enabling interactive environments. WorldDreamer \citep{yang2024worlddreamer} generates driving world models for autonomous vehicles. GAIA-1 \citep{hu2023gaia1} produces realistic driving videos conditioned on actions and text. Sora \citep{openai2024sora} demonstrates video generation as world simulation at scale. Video prediction models \citep{yang2024video, baker2022video, wu2024ivideogpt, yan2021videogpt, wu2022nuwa} provide foundations for world understanding.
+\textbf{Video World Models.} A recent development is the emergence of two distinct types of world models learned from video. **Controllable world models**, such as Genie \citep{bruce2024genie}, learn interactive environments from unlabeled internet videos, allowing a user to control a character in a generated world. In contrast, **generative world models** focus on high-fidelity simulation. For instance, GAIA-1 \citep{hu2023gaia1} and WorldDreamer \citep{yang2024worlddreamer} produce realistic driving videos conditioned on actions and text, while Sora \citep{openai2024sora} demonstrates large-scale video generation as a form of world simulation. These approaches are foundational for agents that must understand complex, dynamic scenes \citep{yang2024video, baker2022video, wu2024ivideogpt, yan2021videogpt, wu2022nuwa}.
 
-\textbf{LLM-Based World Models.} LLMs can serve as world models for planning \citep{hao2023rap, huang2022language}, predicting state transitions without explicit environment models. This approach leverages the vast knowledge encoded in LLMs to simulate world dynamics. RAP \citep{hao2023rap} combines reasoning with acting through world model rollouts. TransDreamer \citep{chen2022transdreamer}, UniSim \citep{yang2023unisim}, and Genie 2 \citep{bruce2024genie2} advance world modeling.
+\textbf{LLM-Based World Models.} LLMs can serve as world models for planning \citep{hao2023rap, huang2022language}, predicting state transitions without explicit environment models. This approach leverages the vast knowledge encoded in LLMs to simulate world dynamics. However, it is crucial to note that while LLMs can model abstract state transitions, they currently lack the fine-grained physical fidelity of dedicated world models, a critical limitation for tasks requiring precise geometric and physical reasoning. RAP \citep{hao2023rap} combines reasoning with acting through world model rollouts. TransDreamer \citep{chen2022transdreamer}, UniSim \citep{yang2023unisim}, and Genie 2 \citep{bruce2024genie2} advance world modeling. These models are particularly effective for the Planning capability at the meso- and macro-scales of our taxonomy, where abstract, high-level predictions are often sufficient.
 
-\subsection{Multimodal Foundation Models}
+\subsection{Multimodal Foundation Models: How Do Agents Ground Language in Perception?}
 
-Multimodal models integrate vision, language, and action understanding \citep{baltruvsaitis2019multimodal, xu2023multimodal, liang2024foundations, ngiam2011multimodal, srivastava2012multimodal, ramachandram2017deep}.
+\textit{Micro-summary:} This subsection reviews multimodal foundation models that connect language to visual and other sensory data. We emphasize their role in providing semantic grounding for agentic systems and highlight current limitations in spatial understanding.
 
-\textbf{Vision-Language Models.} CLIP \citep{radford2021clip} enabled zero-shot visual recognition through contrastive pretraining on web-scale data. BLIP-2 \citep{li2023blip2} introduced efficient vision-language pretraining with frozen encoders. LLaVA \citep{liu2023llava, liu2024llavanext} demonstrated visual instruction tuning with strong performance. GPT-4V \citep{openai2023gpt4v, zheng2024gpt4vision, yan2023gpt4v} achieved strong multimodal reasoning. Gemini \citep{team2023gemini} provides native multimodal capabilities. Flamingo \citep{alayrac2022flamingo} enables few-shot visual learning through interleaved attention. PaLI \citep{chen2022pali, chen2023pali} scales vision-language models. Kosmos-2 \citep{peng2023kosmos2} adds grounding capabilities. Qwen-VL \citep{bai2023qwenvl} provides open multilingual VLMs. Additional models include InstructBLIP \citep{dai2023instructblip}, CogVLM \citep{wang2023cogvlm}, InternVL \citep{chen2024internvl2}, and Ferret \citep{you2023ferret, zhang2024ferret}.
+Multimodal models integrate vision, language, and action understanding, providing the perceptual foundation for agentic systems \citep{baltruvsaitis2019multimodal, xu2023multimodal, liang2024foundations, ngiam2011multimodal, srivastava2012multimodal, ramachandram2017deep}. However, perception alone is insufficient; without a mechanism for agency---to plan, reason, and act upon this understanding---a multimodal model remains a passive observer rather than an active participant in the world.
 
-\textbf{Spatial Vision-Language Models.} SpatialVLM \citep{chen2024spatialvlm, yang2024llmgrounder} specializes in spatial reasoning with fine-grained understanding. SpatialRGPT \citep{cheng2024spatialrgpt} provides regional spatial reasoning. VoxPoser \citep{huang2023voxposer} extracts affordances from VLMs into 3D representations. VLMaps \citep{huang2023vlmaps} creates semantic spatial maps for navigation. These models bridge vision-language understanding with spatial reasoning.
+\textbf{Vision-Language Models.} Foundational VLMs can be broadly categorized into two paradigms. **Contrastive models** like CLIP \citep{radford2021clip} and BLIP-2 \citep{li2023blip2} learn a shared embedding space between images and text, enabling powerful zero-shot classification. **Instruction-tuned models**, such as LLaVA \citep{liu2023llava, liu2024llavanext}, InstructBLIP \citep{dai2023instructblip}, and Ferret \citep{you2023ferret, zhang2024ferret}, are fine-tuned on conversational data to follow user instructions, leading to strong performance in visual question answering and dialogue. Large-scale models like GPT-4V \citep{openai2023gpt4v, zheng2024gpt4vision, yan2023gpt4v}, Gemini \citep{team2023gemini}, Flamingo \citep{alayrac2022flamingo}, and PaLI \citep{chen2022pali, chen2023pali} have further pushed the boundaries of multimodal reasoning, with open-source alternatives like Qwen-VL \citep{bai2023qwenvl}, CogVLM \citep{wang2023cogvlm}, and InternVL \citep{chen2024internvl2} promoting broader access.
 
-\textbf{3D Vision-Language Models.} 3D-LLM \citep{hong20233dllm, chen2024ll3da, zhu20233d} enables language understanding of 3D scenes. Open3D-VQA \citep{zhang2025open3dvqa} provides open-vocabulary 3D visual question answering. LLM-Grounder \citep{yang2024llmgrounder} grounds language in 3D environments.
+\textbf{Spatial Vision-Language Models.} SpatialVLM \citep{chen2024spatialvlm, yang2024llmgrounder} specializes in spatial reasoning with fine-grained understanding. SpatialRGPT \citep{cheng2024spatialrgpt} provides regional spatial reasoning. VoxPoser \citep{huang2023voxposer} extracts affordances from VLMs into 3D representations. This creates a distinction between **map-centric grounding**, where models like VLMaps \citep{huang2023vlmaps} build an explicit semantic map of the environment for navigation, and **affordance-centric grounding**, where models like VoxPoser \citep{huang2023voxposer} directly infer actionable affordances onto a 3D representation of the scene without a full map. These models represent a critical bridge between passive perception and active planning, grounding high-level instructions in concrete spatial representations.
+
+\textbf{3D Vision-Language Models.} 3D-LLM \citep{hong20233dllm, chen2024ll3da, zhu20233d} enables language understanding of 3D scenes. Open3D-VQA \citep{zhang2025open3dvqa} provides open-vocabulary 3D visual question answering. LLM-Grounder \citep{yang2024llmgrounder} grounds language in 3D environments. The shift to 3D representations fundamentally increases reasoning complexity, as the agent must now contend with concepts like occlusion, viewpoint changes, and volumetric properties, which are absent in 2D image-based reasoning.
 
 \begin{tcolorbox}[colback=takeawayblue,colframe=black!50,title=Key Takeaways: Enabling Technologies]
 \begin{itemize}[leftmargin=*,nosep]
@@ -400,63 +428,66 @@ Multimodal models integrate vision, language, and action understanding \citep{ba
     \item World models enable sample-efficient learning and safe planning through imagination
     \item Spatial VLMs (SpatialVLM, VLMaps, VoxPoser) bridge the gap between vision-language understanding and spatial action
     \item Equivariant architectures provide principled approaches to geometric reasoning
+	    \item \textbf{Caution:} The performance of these models is heavily dependent on large-scale, high-quality data, and they can be brittle when faced with out-of-distribution scenarios.
 \end{itemize}
 \end{tcolorbox}
 
 \section{Industry Applications as Design Patterns}
 
+From the foundational technologies, we now turn to how they are integrated into large-scale, deployed systems. Analyzing real-world industry applications through the lens of design patterns offers a powerful method for scientific inquiry. It allows us to move beyond bespoke system descriptions and instead identify recurring, generalizable solutions to common problems in spatial AI. This approach grounds our theoretical taxonomy in practice, revealing not only *what* capabilities are used, but *how* they are composed under the constraints of commercial viability, safety, and scale. These patterns are not merely engineering solutions; they are empirical evidence of convergent evolution in system design, offering valuable insights for both academic researchers and industry practitioners.
+
 Rather than cataloging company capabilities, we abstract industry deployments into reusable design patterns for spatial AI systems. These patterns instantiate specific regions of our three-axis taxonomy under real-world constraints: each pattern represents a particular combination of agentic capabilities (memory, planning, tool use), spatial task domains (navigation, manipulation, geospatial reasoning), and operational scales (micro, meso, macro)---revealing how theoretical frameworks translate into deployed systems.
 
-We adopt the established design pattern formalism from software architecture \citep{gamma1994design}: each pattern specifies a \textit{problem} (recurring challenge), \textit{forces} (constraints that shape solutions), and \textit{solution} (reusable architectural template).
+A design pattern is a general, reusable solution to a commonly occurring problem within a given context. We adopt the established design pattern formalism from software architecture \citep{gamma1994design}: each pattern specifies a \textit{problem} (recurring challenge), \textit{forces} (constraints that shape solutions), and \textit{solution} (reusable architectural template).
 
 \subsection{Design Pattern 1: Human-in-the-Loop Spatial Reasoning}
 
-\textit{Problem:} High-stakes spatial decisions require accuracy beyond current AI capabilities. \textit{Forces:} Accountability requirements, liability concerns, domain expertise scarcity. \textit{Solution:} AI proposes spatial analyses; humans validate and correct; corrections update system memory or policy.
+\textit{Problem:} High-stakes spatial decisions require accuracy beyond current AI capabilities. \textit{Forces:} Accountability requirements, liability concerns, domain expertise scarcity. \textit{Solution:} A 3-step human-in-the-loop process where (1) an AI agent proposes a spatial analysis, (2) a human expert validates or corrects the output, and (3) the feedback is used to update the system's memory or policy for continuous improvement.
 
 This pattern combines AI spatial analysis with human expert validation \citep{amershi2019guidelines, shneiderman2022human, wang2019human, green2019principles, fails2003interactive, stumpf2009interacting, holzinger2016interactive, dudley2018review, zanzotto2019human}, exemplified by:
 
-\textbf{Geospatial Intelligence.} Defense-grade geospatial fusion systems \citep{palantir2023, palantir2024aip} integrate multi-source spatial data (satellite imagery, signals intelligence, terrain models) with human analyst workflows. These systems enable intelligence analysis with spatial reasoning while maintaining human oversight for critical decisions---a requirement driven by accountability and legal constraints in defense contexts.
+\textbf{Geospatial Intelligence.} Geospatial intelligence fusion platforms integrate multi-source spatial data (satellite imagery, signals intelligence, terrain models) with human analyst workflows \citep{palantir2023, palantir2024aip}. These systems enable intelligence analysis with spatial reasoning while maintaining human oversight for critical decisions---a requirement driven by accountability and legal constraints in defense contexts.
 
-\textbf{GIS Workflows.} ESRI \citep{esri2023, esri2024geoai, esri2024arcgis} provides ArcGIS with integrated GeoAI capabilities where AI assists human planners in urban planning, environmental monitoring, and disaster response. The workflow follows a reusable 3-step schematic: (1) \textit{Agent proposal}---AI generates spatial analysis using memory-augmented reasoning; (2) \textit{Human validation/correction}---domain expert reviews, accepts, or modifies outputs; (3) \textit{Memory update}---corrections are stored for retrieval-augmented future queries, enabling continuous improvement without full model retraining.
+\textbf{GIS Workflows.} Geographic Information Systems (GIS) for urban planning and environmental monitoring integrate AI capabilities to assist human planners \citep{esri2023, esri2024geoai, esri2024arcgis}. This workflow directly implements the 3-step schematic defined in the pattern.
 
 \subsection{Design Pattern 2: Weakly Supervised Planetary-Scale Learning}
 
-\textit{Problem:} Macro-scale spatial reasoning requires global coverage, but dense labeling is infeasible at planetary scale. \textit{Forces:} Label scarcity (only 0.01\% of Earth's surface has dense annotations), distribution shift across geographies, and computational constraints. \textit{Solution:} Self-supervised pretraining on petabyte-scale imagery, followed by task-specific fine-tuning with minimal labels.
+\textit{Problem:} Macro-scale spatial reasoning must handle vast, unlabeled datasets and extreme distribution shifts caused by diverse geographies, sensor types, and atmospheric conditions. \textit{Forces:} Dense labeling is economically and logistically infeasible at a planetary scale. \textit{Solution:} A two-stage process involving (1) self-supervised pretraining on petabyte-scale, unlabeled satellite imagery to learn a robust general representation, followed by (2) rapid, task-specific fine-tuning using minimal labeled data.
 
 This pattern leverages massive unlabeled data with minimal supervision for global-scale models \citep{ratner2017snorkel, zhang2022survey, zhou2018brief, chapelle2009semi, zhu2005semi, oliver2018realistic, lee2013pseudo, tarvainen2017mean}:
 
-\textbf{Satellite Foundation Models.} The common pipeline abstracts as: \textit{Data} (multi-spectral satellite imagery from Landsat, Sentinel, commercial providers) $\rightarrow$ \textit{Representation} (self-supervised pretraining via masked autoencoding or contrastive learning) $\rightarrow$ \textit{Downstream reasoning} (fine-tuning for land cover classification, change detection, or crop yield prediction). NASA-IBM Prithvi \citep{jakubik2024prithvi} exemplifies this pipeline with Harmonized Landsat Sentinel-2 data. Planet Labs \citep{planet_labs_2023, planet2024daily} and Maxar provide the data infrastructure enabling daily global monitoring.
+\textbf{Satellite Foundation Models.} This pattern follows a clear abstraction: massive \textit{data scale} (petabytes of multi-spectral imagery from providers like Landsat, Sentinel, Planet, and Maxar) enables the learning of a powerful \textit{representation} through self-supervised techniques (e.g., masked autoencoding), which can then be fine-tuned for various \textit{downstream tasks} like land cover classification, change detection, or crop yield prediction. NASA-IBM Prithvi \citep{jakubik2024prithvi} exemplifies this pipeline with Harmonized Landsat Sentinel-2 data. Planet Labs \citep{planet_labs_2023, planet2024daily} and Maxar provide the data infrastructure enabling daily global monitoring.
 
-\textbf{Mapping at Scale.} Google \citep{googlemaps2023, google2024mapsai, google2024earthengine} deploys AI for global-scale mapping through Google Earth Engine and Maps AI. The pattern: leverage user interactions and multi-source data for continuous model improvement.
+\textbf{Mapping at Scale.} Large-scale mapping platforms deploy AI for global-scale analysis through cloud-based geospatial data services \citep{googlemaps2023, google2024mapsai, google2024earthengine}. The learning loop is explicit: user interactions with the map (e.g., correcting a business location, reporting a road closure) provide a continuous stream of weak supervision signals. These signals are aggregated and used to automatically update the underlying geospatial models, improving map accuracy and freshness at a global scale.
 
 \subsection{Design Pattern 3: Agent-Assisted Spatial Workflows}
 
 \textit{Problem:} Spatial analysis tasks are repetitive and time-consuming for human experts. \textit{Forces:} Need for scalability, desire to preserve human agency, variable task complexity. \textit{Solution:} AI agent operates as primary analyst; human provides high-level guidance and handles exceptions.
 
-\textit{Contrast with HITL:} In Pattern 1 (HITL), the human is the \textit{gatekeeper}---every AI output requires validation. In Pattern 3, the agent is the \textit{primary operator}---humans supervise and intervene only when confidence is low or stakes are high.
+\textit{Contrast with HITL:} This pattern is distinct from HITL (Pattern 1). In HITL, control is human-driven, with the AI acting as a proposal tool requiring mandatory validation. Here, control is agent-driven; the AI is the primary operator, and humans act as supervisors who only intervene on exceptions, enabling a significant increase in operational tempo and scale.
 
 This pattern deploys AI agents to augment human spatial reasoning \citep{shneiderman2020human, horvitz1999principles, amershi2014power, abdul2018trends, gillies2016human, yang2020reexamining}:
 
-\textbf{Autonomous GIS.} AutonomousGIS \citep{li2025autonomousgis} and GeoGPT \citep{bai2024geogpt} integrate agentic capabilities with geospatial analysis. The pattern: LLM-based agents that can query spatial databases, generate maps, and answer geographic questions.
+\textbf{Autonomous GIS.} AutonomousGIS \citep{li2025autonomousgis} and GeoGPT \citep{bai2024geogpt} integrate agentic capabilities with geospatial analysis. The pattern involves LLM-based agents that can query spatial databases, generate maps, and answer geographic questions. \textbf{Gap:} Current capability boundaries are defined by the agent's ability to resolve spatial ambiguity in natural language (e.g., ``near downtown'') and handle schema heterogeneity when fusing disparate geospatial databases.
 
 \textbf{Location Intelligence.} Foursquare \citep{foursquare2023, foursquare2024places} and Carto \citep{carto2023, carto2024spatial} provide location-based services with AI-powered analytics. Wherobots \citep{wherobots2023, wherobots2024sedona} offers cloud-native spatial analytics. The pattern: spatial data infrastructure with AI-powered query and analysis. \textit{Current limitations:} schema mismatch when integrating heterogeneous spatial databases, and spatial ambiguity in natural language queries (e.g., ``near downtown'' has variable interpretation across cities).
 
 \subsection{Design Pattern 4: Embodied AI at Scale}
 
-\textit{Problem:} Deploying spatial AI in safety-critical physical systems. \textit{Forces:} Regulatory requirements (NHTSA, EU AI Act), liability frameworks, long-tail safety scenarios, and public trust. \textit{Solution:} Massive simulation for policy learning, conservative real-world deployment with human oversight, continuous learning from fleet data with safety constraints.
+\textit{Problem:} Deploying spatial AI in safety-critical physical systems where failures have unacceptable costs. \textit{Forces:} Strict regulatory frameworks (e.g., NHTSA, EU AI Act), liability concerns, the challenge of validating performance on long-tail safety scenarios, and the need to earn public trust. \textit{Solution:} A safety-first methodology combining massive-scale simulation for initial policy learning, conservative real-world deployment with human oversight, and continuous learning from fleet data under rigorous safety and validation constraints.
 
 This pattern deploys learned spatial policies in physical systems \citep{kober2013reinforcement, levine2016end, ibarz2021train, kalashnikov2021mt, julian2020scaling, akkaya2019solving, levine2018learning, tobin2017domain}:
 
-\textbf{Autonomous Vehicles.} Two contrasting sensing philosophies have emerged: \textit{Lidar-centric stacks} (Waymo \citep{waymo2023, waymo_emma_2024, waymo2024driver}, Cruise) fuse lidar point clouds with camera imagery for redundant depth estimation, achieving higher safety margins but at greater sensor cost. \textit{Vision-only stacks} (Tesla \citep{tesla2023fsd, tesla2024autopilot}) rely on camera arrays with learned depth estimation, enabling lower hardware cost but requiring more robust perception models. EMMA \citep{waymo_emma_2024} represents a hybrid approach with end-to-end multimodal models. The common pattern: massive simulation, conservative real-world deployment, continuous learning from fleet data under regulatory oversight.
+\textbf{Autonomous Vehicles.} The autonomous vehicle industry showcases two contrasting sensing philosophies. The \textit{lidar-centric} approach (e.g., Waymo, Cruise) fuses lidar point clouds with camera imagery for redundant, high-precision depth estimation, prioritizing maximum safety margins at the cost of higher sensor expenses \citep{waymo2023, waymo_emma_2024, waymo2024driver}. In contrast, the \textit{vision-only} approach (e.g., Tesla) relies on a suite of cameras and powerful learned depth estimation algorithms, aiming for a lower hardware cost and a more scalable solution, but placing an extreme demand on the robustness of its perception models \citep{tesla2023fsd, tesla2024autopilot}. Both paradigms, however, adhere to the overarching pattern of massive simulation, cautious real-world deployment, and continuous learning from fleet data, all within the strict confines of transportation safety regulations.
 
 \textbf{Robot Learning Platforms.} Open X-Embodiment \citep{open_x_embodiment_rt_x_2023} provides large-scale robot data from Google DeepMind and collaborating institutions. Bridge Data \citep{walke2023bridgedata, walke2024bridgev2} enables cross-domain transfer. The pattern: diverse data collection, foundation model training, transfer to specific embodiments.
 
 \begin{tcolorbox}[colback=takeawayblue,colframe=black!50,title=Lessons for Researchers: Industry Patterns]
 \begin{itemize}[leftmargin=*,nosep]
-    \item \textbf{Design for human oversight:} Safety-critical spatial systems require HITL patterns; plan for human validation interfaces from the start
-    \item \textbf{Embrace weak supervision:} Planetary-scale spatial reasoning is only feasible with self-supervised pretraining; dense labeling does not scale
-    \item \textbf{Calibrate autonomy to stakes:} Use agent-assisted (high autonomy) for routine tasks, HITL (low autonomy) for high-stakes decisions
-    \item \textbf{Simulate before deploying:} Embodied spatial AI requires orders of magnitude more simulation than real-world data; budget accordingly
+    \item \textbf{Abstract Problems to Patterns:} Industry solutions often solve recurring scientific challenges. Abstracting them into design patterns can reveal generalizable insights for the academic community.
+    \item \textbf{Data as a Moat, Supervision as a Bottleneck:} Access to planetary-scale proprietary data is a key industry advantage, but the inability to label it creates a supervision bottleneck. This highlights a major opportunity for research in self-supervised and weakly supervised learning.
+    \item \textbf{Human-in-the-Loop is a Spectrum:} The level of human oversight is not binary but a design choice along a spectrum from full human control to full agent autonomy. Research on adaptive autonomy and dynamic human-agent collaboration is critical.
+    \item \textbf{Safety is Non-Negotiable:} For any research intended for real-world deployment, safety, validation, and regulatory compliance are not afterthoughts but core research problems that must be addressed from the beginning.
 \end{itemize}
 \end{tcolorbox}
 
