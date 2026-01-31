@@ -464,7 +464,7 @@ This pattern deploys learned spatial policies in physical systems \citep{kober20
 
 \subsection{Existing Benchmarks}
 
-Table~\ref{tab:benchmarks} summarizes key benchmarks organized by our taxonomy.
+Table~\ref{tab:benchmarks} summarizes key benchmarks organized by our taxonomy. \textit{Reading guide:} The table maps each benchmark to the Task axis (navigation, manipulation, scene understanding), Scale axis (micro/meso/macro), and Capability axis (which agentic capabilities are evaluated). This organization reveals coverage patterns: navigation benchmarks dominate meso-scale evaluation, while micro-scale manipulation and macro-scale geospatial reasoning remain underrepresented.
 
 \begin{table}[h!]
 \centering
@@ -484,10 +484,10 @@ Meta-World \citep{yu2020metaworld} & Manipulation & Micro & Simulated & SR & Too
 nuScenes \citep{caesar2020nuscenes} & Scene Understanding & Meso-Macro & Real & mAP, NDS & Memory \\
 KITTI \citep{geiger2012kitti} & Scene Understanding & Meso & Real & mAP & Memory \\
 ScanNet \citep{dai2017scannet} & Scene Understanding & Meso & Real & mIoU & Memory \\
-AgentBench \citep{liu2023agentbench} & General & - & Mixed & SR & All \\
+AgentBench \citep{liu2023agentbench} & General & - & Mixed & SR & Memory + Planning + Tool Use \\
 WebArena \citep{zhou2023webarena} & Web & - & Simulated & SR & Planning + Tool Use \\
 SWE-Bench \citep{jimenez2024swebench} & Code & - & Real & Pass@k & Planning + Tool Use \\
-EmbodiedBench \citep{yang2025embodiedbench} & Embodied & Meso & Simulated & SR & All \\
+EmbodiedBench \citep{yang2025embodiedbench} & Embodied & Meso & Simulated & SR & Memory + Planning + Tool Use \\
 SafeAgentBench \citep{safeagentbench2025} & Safety & - & Simulated & Safety Rate & Planning \\
 \bottomrule
 \end{tabular}
@@ -496,53 +496,47 @@ SafeAgentBench \citep{safeagentbench2025} & Safety & - & Simulated & Safety Rate
 
 \subsection{Evaluation Metrics}
 
-We propose standardized metrics across domains with formal definitions \citep{powers2011evaluation, sokolova2009systematic, hossin2015review, deng2014deep, hand2001simple, manning2008introduction, japkowicz2011evaluating, ferri2009experimental}:
+We summarize standardized metrics across domains \citep{powers2011evaluation, sokolova2009systematic, hossin2015review}. The key metric for each domain is:
 
-\textbf{Navigation Metrics.} Success Rate (SR) measures task completion. Success weighted by Path Length (SPL) \citep{anderson2018evaluation} accounts for path efficiency:
-\begin{equation}
-\text{SPL} = \frac{1}{N} \sum_{i=1}^{N} S_i \cdot \frac{\ell_i}{\max(\ell_i, p_i)}
-\end{equation}
-where $S_i$ is the binary success indicator, $\ell_i$ is the shortest path length, and $p_i$ is the actual path length.
+\textbf{Navigation:} SPL (Success weighted by Path Length) \citep{anderson2018evaluation}---$\text{SPL} = \frac{1}{N} \sum_{i=1}^{N} S_i \cdot \frac{\ell_i}{\max(\ell_i, p_i)}$---jointly rewards task completion and path efficiency.
 
-Normalized Dynamic Time Warping (nDTW) measures trajectory similarity:
-\begin{equation}
-\text{nDTW} = \exp\left(-\frac{\text{DTW}(P, R)}{\ell_R}\right)
-\end{equation}
-where $P$ is the predicted path, $R$ is the reference path, and $\ell_R$ is the reference path length.
+\textbf{Manipulation:} Task Success Rate with Goal Condition Satisfaction for partial credit.
 
-\textbf{Manipulation Metrics.} Task Success Rate measures goal achievement. Goal Condition Satisfaction evaluates partial completion. Efficiency metrics include action count and time to completion.
+\textbf{Scene Understanding:} mAP (mean Average Precision) for detection, mIoU for segmentation.
 
-\textbf{Reasoning Metrics.} Accuracy, F1 Score, and BLEU scores assess spatial reasoning and question answering.
-
-\textbf{Safety Metrics.} Collision Rate, Safety Violation Rate, and Risk-Aware Success measure safe operation.
+\textbf{Safety:} Risk-Aware Success = SR $\times$ (1 - Collision Rate)---penalizes unsafe completions.
 
 \subsection{Critical Analysis: What Benchmarks Fail to Measure}
 
 While existing benchmarks have advanced the field \citep{raji2021ai, liao2021we, ribeiro2020beyond, buolamwini2018gender, mitchell2019model, gebru2021datasheets, denton2020bringing, bender2021dangers}, several fundamental limitations warrant critical examination:
 
-\textbf{Simulation-Reality Gap.} Most benchmarks rely on simulated environments \citep{savva2019habitat, kolve2017ai2thor, james2020rlbench, chattopadhyay2021robustnav, szot2021habitat2, puig2018virtualhome, shridhar2020alfred}, which differ from real-world conditions in visual appearance, physics, and dynamics. Policies trained in simulation often fail to transfer \citep{zhao2020sim, tobin2017domain, andrychowicz2020learning, openai2019solving, akkaya2019solving, rusu2017sim}, limiting practical applicability. \textit{Gap: No benchmark systematically measures sim-to-real transfer degradation.}
+\textbf{Simulation-Reality Gap.} Most benchmarks rely on simulated environments \citep{savva2019habitat, kolve2017ai2thor, james2020rlbench}. \textit{Concrete example:} RT-1 achieves 97\% success in simulation but drops to 68\% on real robots \citep{brohan2022rt1}; VLN agents trained in Matterport3D show 40\% performance degradation in real buildings \citep{anderson2018vln}. \textit{Gap: No benchmark systematically measures sim-to-real transfer degradation.}
 
-\textbf{Metric Limitations.} Standard metrics like SPL assume optimal paths are known, which is unrealistic in novel environments. Success Rate ignores partial progress and efficiency. Current metrics do not capture important aspects such as safety, robustness to perturbations, and graceful degradation. \textit{Gap: Metrics reward task completion but not safe, robust, or interpretable behavior.}
+\textbf{Metric Limitations.} Three distinct issues: (1) \textit{Optimality assumption}---SPL assumes optimal paths are known, unrealistic in novel environments; (2) \textit{Binary success}---SR ignores partial progress (an agent 1cm from goal scores 0); (3) \textit{Missing dimensions}---no standard metrics for safety, robustness, or interpretability. \textit{Gap: Metrics reward task completion but not safe, robust, or interpretable behavior.}
 
 \textbf{Long-Horizon Evaluation.} Most benchmarks evaluate short episodes (tens to hundreds of steps). Real-world tasks require sustained performance over hours or days with memory persistence and error recovery. \textit{Gap: No benchmark evaluates multi-day spatial tasks with persistent memory.}
 
 \textbf{Safety-Critical Evaluation.} Benchmarks rarely evaluate failure modes, adversarial robustness, or behavior under distribution shift. Safety-critical applications require understanding of worst-case performance. \textit{Gap: Safety evaluation remains ad-hoc rather than systematic.}
 
-\textbf{Cross-Scale Evaluation.} Benchmarks typically operate at a single spatial scale. Real applications require reasoning across micro (grasping), meso (navigation), and macro (planning) scales simultaneously. \textit{Gap: No benchmark evaluates cross-scale spatial reasoning.}
+\textbf{Cross-Scale Evaluation.} \textit{This is the most critical gap.} Benchmarks operate at a single spatial scale, yet real applications demand seamless cross-scale reasoning. Consider a home robot: it must plan a room-level path (meso), avoid furniture (meso), and grasp a cup handle (micro)---all within one task. No existing benchmark evaluates this integration. \textit{Gap: No benchmark evaluates cross-scale spatial reasoning, despite it being essential for real-world deployment.}
 
 \subsection{SpatialAgentBench: A Conceptual Framework for Future Research}
 
-We outline a conceptual benchmark framework that could address these gaps with eight tasks designed to evaluate the full spectrum of spatial agent capabilities:
+We outline a conceptual benchmark framework that addresses the gaps identified above, explicitly mapped to our three-axis taxonomy:
+
+\textit{Taxonomy mapping:} Each gap corresponds to an axis limitation---Simulation-Reality Gap affects all axes (policies don't transfer); Metric Limitations affect the Capability axis (incomplete evaluation of memory, planning, tool use); Long-Horizon and Safety gaps affect the Capability axis (planning and self-reflection); Cross-Scale gap affects the Scale axis (no micro-meso-macro integration).
+
+We identify eight \textit{research directions} for future benchmark development, each addressing a specific gap:
 
 \begin{enumerate}
-    \item \textbf{VLN-Instruct}: Vision-language navigation with complex, multi-step instructions requiring spatial reasoning and landmark recognition.
-    \item \textbf{ObjectSearch}: Multi-room object search with semantic reasoning, requiring agents to leverage commonsense knowledge about object locations.
-    \item \textbf{SceneQA}: 3D scene question answering requiring understanding of spatial relationships, object properties, and scene semantics.
-    \item \textbf{ManipSeq}: Sequential manipulation planning with long-horizon tasks requiring tool use and state tracking.
-    \item \textbf{GeoReason}: Geospatial reasoning from satellite imagery including change detection, land use classification, and spatial pattern analysis.
-    \item \textbf{TrafficPredict}: Spatio-temporal traffic prediction requiring modeling of complex urban dynamics and graph-structured dependencies.
-    \item \textbf{SafeNav}: Navigation with safety constraints including obstacle avoidance, social navigation, and risk-aware planning.
-    \item \textbf{MultiAgent}: Coordinated multi-agent spatial tasks requiring communication, task allocation, and collaborative planning.
+    \item \textbf{VLN-Instruct} (Task: Navigation, Capability: Memory + Planning, Scale: Meso): Complex multi-step instructions requiring spatial reasoning.
+    \item \textbf{ObjectSearch} (Task: Navigation, Capability: Memory, Scale: Meso): Semantic reasoning about object locations.
+    \item \textbf{SceneQA} (Task: Scene Understanding, Capability: Memory, Scale: Meso): 3D spatial relationship reasoning.
+    \item \textbf{ManipSeq} (Task: Manipulation, Capability: Planning + Tool Use, Scale: Micro): Long-horizon manipulation with state tracking.
+    \item \textbf{GeoReason} (Task: Geospatial, Capability: Memory, Scale: Macro): Satellite imagery analysis and change detection.
+    \item \textbf{TrafficPredict} (Task: Geospatial, Capability: Memory + Planning, Scale: Macro): Spatio-temporal urban dynamics.
+    \item \textbf{SafeNav} (Task: Navigation, Capability: Planning, Scale: Meso): Safety-constrained navigation with risk awareness.
+    \item \textbf{MultiAgent} (Task: All, Capability: All, Scale: Meso--Macro): Coordinated multi-agent spatial tasks.
 \end{enumerate}
 
 \begin{tcolorbox}[colback=takeawayblue,colframe=black!50,title=Key Takeaways: Evaluation]
