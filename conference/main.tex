@@ -99,13 +99,13 @@ This process resulted in a final corpus of over 800 papers, which were systemati
 
 \section{Related Work and Survey Comparison}
 
-While several surveys have addressed aspects of agentic AI or spatial intelligence, none have provided a unified framework connecting the two domains. We review existing surveys across five categories and provide a systematic comparison in Table~\ref{tab:survey_comparison}.
+While several surveys have addressed aspects of agentic AI or spatial intelligence, no prior work has explicitly and systematically unified these domains within a single framework. We review existing surveys across five categories and provide a systematic comparison in Table~\ref{tab:survey_comparison}.
 
-\textbf{Agentic AI Surveys.} Recent surveys on LLM-based agents \citep{wang2024survey, xi2023rise, guo2024large, durante2024agent, weng2023agent, mialon2023augmented} focus on reasoning and tool use but do not address spatial capabilities. \citet{sumers2024cognitive} provides a cognitive architecture perspective. \citet{chan2023chateval} evaluates conversational agents.
+\textbf{Agentic AI Surveys.} Recent surveys on LLM-based agents \citep{wang2024survey, xi2023rise, guo2024large, durante2024agent, weng2023agent, mialon2023augmented} focus on reasoning and tool use but do not address spatial capabilities. \citet{sumers2024cognitive} provides a cognitive architecture perspective. The common limitation across these works is their treatment of agents as primarily symbolic reasoners, neglecting the perceptual and motor grounding required for physical world interaction.
 
 \textbf{Embodied AI Surveys.} Embodied AI surveys \citep{duan2022surveyembodiedaisimulators, gupta2021embodied, francis2022corl, savva2019habitat, anderson2018evaluation, gervet2023navigating} cover simulation environments and benchmarks but lack integration with agentic architectures. \citet{kawaharazuka2025vla} surveys vision-language-action models specifically for robotics.
 
-\textbf{Geospatial AI Surveys.} Geospatial AI surveys \citep{mai2023opportunities, janowicz2020geoai, xiao2025foundationmodelsremotesensing} and spatio-temporal data mining reviews \citep{jin2023stgnn, atluri2018spatiotemporal, wang2020deep, jiang2022graph, balachandar2025urbanincidentpredictiongraph} are highly specialized and do not connect to general agentic systems. \citet{zhan2024neuralnetworksgeospatialdata} surveys neural networks for geospatial data.
+\textbf{Geospatial AI Surveys.} Geospatial AI surveys \citep{mai2023opportunities, janowicz2020geoai, xiao2025foundationmodelsremotesensing} and spatio-temporal data mining reviews \citep{jin2023stgnn, atluri2018spatiotemporal, wang2020deep, jiang2022graph, balachandar2025urbanincidentpredictiongraph} are highly specialized. Critically, these works treat geospatial systems as passive prediction tools, lacking the autonomous decision-making loops, memory mechanisms, and goal-directed planning that characterize agentic systems.
 
 \textbf{Graph Neural Network Surveys.} GNN surveys \citep{wu2020gnnsurvey, bronstein2021geometric, hamilton2020graph, battaglia2018relational, zhou2020graph, zhang2020deep, velivckovic2023everything} provide comprehensive coverage of graph learning but do not focus on spatial applications or agent integration. Surveys on GNNs for specific domains include traffic \citep{jiang2022graph}, urban computing \citep{balachandar2025urbanincidentpredictiongraph}, and spatio-temporal prediction \citep{jin2023stgnn}.
 
@@ -113,7 +113,7 @@ While several surveys have addressed aspects of agentic AI or spatial intelligen
 
 \begin{table}[h!]
 \centering
-\caption{Comparison with Existing Surveys. Our work is the first to provide unified coverage across all dimensions.}
+\caption{Comparison with Existing Surveys. Symbols: \checkmark~= comprehensive coverage, $\circ$~= partial coverage, blank~= not covered. Our work provides the first unified coverage across all dimensions.}
 \label{tab:survey_comparison}
 \resizebox{\textwidth}{!}{
 \begin{tabular}{lccccccc}
@@ -133,11 +133,10 @@ Zhang et al. (2024) \citep{zhang2024lmms} & $\circ$ & & $\circ$ & & & & \\
 \bottomrule
 \end{tabular}
 }
-\vspace{0.2cm}
-\footnotesize{\checkmark = comprehensive coverage, $\circ$ = partial coverage, blank = not covered}
+
 \end{table}
 
-Our work is the first to bridge these gaps, providing a comprehensive, structured analysis of the convergent domain of autonomous spatial intelligence with a unified three-axis taxonomy.
+As Table~\ref{tab:survey_comparison} reveals, existing surveys cluster around either agentic reasoning (top rows) or domain-specific spatial methods (middle rows), with no prior work achieving comprehensive coverage across all seven dimensions. This fragmentation motivates our unified taxonomy.
 
 \section{Unified Three-Axis Taxonomy}
 
