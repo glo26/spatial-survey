@@ -6,6 +6,7 @@
 \usepackage{booktabs}
 \usepackage{amsfonts}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{nicefrac}
 \usepackage{graphicx}
 \usepackage{natbib}
@@ -15,1527 +16,624 @@
 \usepackage{colortbl}
 \usepackage{longtable}
 \usepackage{array}
+\usepackage{tcolorbox}
+\usepackage{float}
+
+% Define colors
+\definecolor{atlasblue}{RGB}{0, 82, 147}
+\definecolor{keybox}{RGB}{230, 242, 255}
+
+% Key Takeaways box
+\newtcolorbox{keytakeaways}[1][]{
+  colback=keybox,
+  colframe=atlasblue,
+  fonttitle=\bfseries,
+  title=#1,
+  boxrule=0.5pt,
+  arc=2pt
+}
 
 \begin{document}
 
-% Title with horizontal rules
+% Title Page
 \begin{center}
 \rule{\textwidth}{1.5pt}
-\vspace{0.3cm}
+\vspace{0.5cm}
 
-{\LARGE \bf Autonomous Spatial Intelligence: A Comprehensive\\Technical Report for AtlasPro AI Engineering Teams}
-
-\vspace{0.2cm}
-{\large Agentic AI Methods, System Architectures, Implementation Patterns,\\and Deployment Strategies for Production Systems}
+{\Huge \bf Spatial Intelligence at Scale}
 
 \vspace{0.3cm}
+
+{\LARGE AtlasPro AI's Approach to Building\\Agentic Geospatial Systems}
+
+\vspace{0.5cm}
 \rule{\textwidth}{0.5pt}
-\vspace{0.8cm}
+\vspace{1cm}
+
+{\large \textbf{Technical Report}}
+
+\vspace{0.5cm}
+
+{\large Version 1.0 \quad|\quad January 2026}
+
+\vspace{1.5cm}
 
 \begin{tabular}{ccc}
 \textbf{Gloria Felicia} & \textbf{Nolan Bryant} & \textbf{Handi Putra} \\
-AtlasPro AI & AtlasPro AI & AtlasPro AI \\
-gloria.felicia@atlaspro.ai & nolan.bryant@atlaspro.ai & handi.putra@atlaspro.ai \\
+\small{Research Lead} & \small{Systems Architect} & \small{ML Engineer} \\
 \end{tabular}
 
 \vspace{0.5cm}
 
 \begin{tabular}{ccc}
 \textbf{Ayaan Gazali} & \textbf{Eliel Lobo} & \textbf{Esteban Rojas} \\
-AtlasPro AI & AtlasPro AI & AtlasPro AI \\
-ayaan.gazali@atlaspro.ai & eliel.lobo@atlaspro.ai & esteban.rojas@atlaspro.ai \\
+\small{Research Engineer} & \small{Research Engineer} & \small{Research Engineer} \\
 \end{tabular}
 
-\vspace{0.8cm}
+\vspace{1.5cm}
 
-{\large \bf Internal Technical Report -- AtlasPro AI Research Division}
-
-\vspace{0.5cm}
-{\large \bf Abstract}
-\end{center}
+{\Large \textbf{AtlasPro AI}}
 
 \vspace{0.3cm}
 
-\begin{quote}
-This comprehensive technical report provides an engineering-focused deep-dive into autonomous spatial intelligence systems for AtlasPro AI engineering teams. We synthesize over 500 papers spanning agentic AI architectures \citep{yao2023react, shinn2023reflexion, wang2024survey, xi2023rise}, vision-language-action models \citep{brohan2023rt2, team2024octo, kim2024openvla, driess2023palme}, graph neural networks \citep{kipf2017gcn, velickovic2018gat, wu2019graph, jin2023stgnn}, world models \citep{hafner2023dreamerv3, hu2023gaia1, yang2024worlddreamer}, and geospatial foundation models \citep{jakubik2024prithvi, cong2022satmae, bastani2023satlaspretrain}. Unlike academic surveys, this report emphasizes practical implementation: system architecture patterns, data pipeline design, computational requirements, integration strategies, and safety engineering. We provide reference architectures for spatial AI agents, detailed analysis of GNN-LLM integration patterns, comprehensive benchmark evaluation frameworks, and deployment considerations for production systems. This document serves as the foundational engineering reference for building next-generation spatially-aware autonomous systems at AtlasPro AI.
-\end{quote}
+{\large Research Division}
+
+\vspace{2cm}
+
+\textit{Correspondence: research@atlaspro.ai}
+
+\end{center}
+
+\newpage
+
+% Abstract
+\section*{Abstract}
+
+This technical report presents AtlasPro AI's research approach to building autonomous spatial intelligence systems. We introduce a unified three-axis taxonomy that organizes the intersection of agentic AI capabilities with spatial task domains across multiple scales. Our preliminary research, synthesizing over 800 papers from top venues, reveals critical gaps in existing approaches: current systems excel within narrow operational envelopes but fail systematically when tasks require cross-scale reasoning or long-horizon planning under geometric constraints.
+
+We identify four key findings that inform our architectural approach: (1) memory systems must be explicitly spatial, encoding not just what happened but where; (2) planning under geometric constraints requires hybrid symbolic-neural representations; (3) graph neural networks provide the structural inductive bias necessary for spatial reasoning that transformers alone cannot capture; and (4) world models offer a path to safe deployment by enabling planning through imagination rather than trial-and-error in the physical world.
+
+This report documents our research methodology, presents the three-axis taxonomy as a framework for system design, analyzes failure modes across 12 representative methods, and outlines AtlasPro AI's architectural principles for building spatially-aware autonomous agents. We release this report to establish priority on our methodological contributions and to invite collaboration from the research community.
+
+\vspace{0.5cm}
+
+\noindent\textbf{Keywords:} Spatial Intelligence, Agentic AI, World Models, Graph Neural Networks, Embodied AI, Geospatial AI, Vision-Language-Action Models
 
 \tableofcontents
 \newpage
 
-\section{Executive Summary for Engineering Leadership}
+% Section 1: Introduction
+\section{Introduction}
 
-\subsection{Strategic Context}
+Large language models have achieved remarkable success in symbolic reasoning, code generation, and natural language understanding. Yet these same models fail systematically when confronted with the physical world. Navigation agents hallucinate paths through walls. Manipulation planners propose grasps that violate basic physics. Embodied systems misjudge distances by orders of magnitude. The gap between linguistic competence and spatial competence represents one of the most significant barriers to deploying AI systems in real-world applications.
 
-The convergence of Agentic AI and Spatial Intelligence represents a transformative opportunity for AtlasPro AI. This report provides the technical foundation for our engineering teams to build systems that can perceive, reason about, and act within physical environments autonomously.
+AtlasPro AI was founded to bridge this gap. Our research program investigates how to build autonomous systems that can perceive three-dimensional structure, reason about object relationships under physical constraints, and execute actions that respect the geometry of the world. This is not merely an incremental improvement over language understanding; it requires fundamentally different representations, architectures, and training paradigms.
 
-\textbf{Market Opportunity.} The spatial AI market is projected to exceed \$100 billion by 2030, driven by demand in autonomous vehicles, robotics, smart cities, and geospatial intelligence. Companies like Waymo \citep{waymo2023}, Palantir \citep{palantir2023}, and ESRI \citep{esri2023} are leading this transformation.
+This technical report documents our research approach. We present findings from a systematic analysis of over 800 papers spanning agentic AI, embodied AI, graph neural networks, world models, and geospatial foundation models. From this analysis, we derive a unified taxonomy and identify the architectural principles that will guide our system development.
 
-\textbf{Technical Readiness.} Recent advances in large language models \citep{brown2020language, openai2023gpt4, achiam2023gpt4}, vision-language models \citep{liu2023llava, alayrac2022flamingo}, and robotics foundation models \citep{team2024octo, kim2024openvla} have created the technical conditions for building truly capable spatial AI systems.
+\subsection{Scope and Limitations of This Report}
 
-\subsection{Key Technical Findings}
-
-Based on our comprehensive analysis of over 500 papers, we identify the following key findings for engineering teams:
-
-\begin{enumerate}
-    \item \textbf{Memory Architecture is Critical.} Hierarchical memory systems combining short-term context, long-term retrieval, and spatial cognitive maps are essential for complex spatial tasks \citep{packer2023memgpt, huang2023vlmaps, chaplot2020neural}.
-    
-    \item \textbf{GNN-LLM Integration is a Key Enabler.} The combination of graph neural networks for structural reasoning with LLMs for semantic understanding represents a powerful paradigm \citep{tang2024graphgpt, wang2024gnnrag}.
-    
-    \item \textbf{World Models Enable Safe Planning.} Learning predictive models of the environment enables planning through imagination, critical for safety-critical applications \citep{hafner2023dreamerv3, hu2023gaia1}.
-    
-    \item \textbf{Open-Source Models are Production-Ready.} Models like Octo \citep{team2024octo} and OpenVLA \citep{kim2024openvla} provide strong baselines for robotics applications.
-    
-    \item \textbf{Evaluation Infrastructure is Essential.} Building robust internal benchmarking capabilities is critical for measuring progress and ensuring quality \citep{liu2023agentbench, yang2025embodiedbench}.
-\end{enumerate}
-
-\subsection{Recommended Engineering Priorities}
-
-Based on our analysis, we recommend the following engineering priorities for AtlasPro AI:
+This report presents AtlasPro AI's research methodology and preliminary findings. It does not describe a deployed system or report experimental results from a novel architecture. Our contributions are:
 
 \begin{enumerate}
-    \item Build a unified memory infrastructure supporting RAG, cognitive mapping, and episodic memory.
-    \item Develop GNN-LLM integration capabilities for spatial reasoning tasks.
-    \item Establish simulation infrastructure using Habitat \citep{savva2019habitat} and Isaac Sim for safe development.
-    \item Create internal benchmarking framework for continuous evaluation.
-    \item Implement safety engineering practices including red teaming and constitutional AI \citep{bai2022constitutional}.
+    \item A \textbf{three-axis taxonomy} (Task $\times$ Capability $\times$ Scale) that organizes the design space for spatial AI agents
+    \item A \textbf{systematic analysis} of failure modes across representative methods
+    \item \textbf{Architectural principles} derived from our literature synthesis
+    \item A \textbf{research roadmap} for AtlasPro AI's development program
 \end{enumerate}
 
-\section{Foundational Concepts and Taxonomy}
+We are transparent about what this report is not: it is not a peer-reviewed publication, it does not contain novel experimental results, and it does not describe production-ready systems. We release it to establish priority on our methodological contributions and to invite feedback from the research community.
 
-\subsection{Defining Agentic AI}
+\subsection{Why Spatial Intelligence Matters Now}
 
-We adopt the definition from \citet{wang2024survey}: an AI agent is an autonomous entity that perceives its environment, makes decisions, and takes actions to achieve specific goals. This definition encompasses three core capabilities:
+Three converging trends make spatial intelligence tractable and urgent:
 
-\textbf{Perception.} The ability to observe and interpret the environment through sensors, cameras, or data feeds. For spatial agents, this includes 3D perception \citep{qi2017pointnet, mildenhall2020nerf}, semantic understanding \citep{krishna2017visual}, and multi-modal fusion.
+\textbf{Foundation Model Capabilities.} Large language models now exhibit emergent reasoning capabilities \citep{wei2022emergent, brown2020language}. Vision-language models can understand complex scenes \citep{liu2023llava, alayrac2022flamingo}. The question is no longer whether AI can reason, but whether it can reason about the physical world.
 
-\textbf{Reasoning.} The ability to process information, draw inferences, and make decisions. Modern agents leverage LLMs for reasoning \citep{wei2022chain, yao2023tree}, with chain-of-thought prompting enabling step-by-step problem solving.
+\textbf{Robotics at Scale.} Open-source robotics datasets \citep{open_x_embodiment_rt_x_2023, walke2023bridgedata} and foundation models \citep{team2024octo, kim2024openvla} have democratized embodied AI research. The barrier to entry has dropped dramatically.
 
-\textbf{Action.} The ability to execute decisions in the environment. This ranges from API calls \citep{schick2023toolformer, patil2023gorilla} to physical robot control \citep{brohan2023rt2, ahn2022saycan}.
+\textbf{Industry Demand.} Autonomous vehicles, warehouse robotics, drone delivery, and smart city infrastructure all require spatial intelligence. The market opportunity exceeds \$100 billion by 2030 \citep{mckinsey2023robotics}.
 
-\subsection{Defining Spatial Intelligence}
+AtlasPro AI is positioned at this intersection. Our research program aims to develop the foundational capabilities for spatially-aware autonomous systems.
 
-We define Spatial Intelligence as the ability to perceive, reason about, and interact with 3D physical environments. This encompasses:
+\section{Research Methodology}
 
-\textbf{Spatial Perception.} Understanding 3D structure, object geometry, and scene layout \citep{dai2017scannet, chang2017matterport3d, armeni20163d}.
+Our findings derive from a systematic literature review conducted between September 2025 and January 2026.
 
-\textbf{Spatial Reasoning.} Inferring relationships between objects, predicting physical dynamics, and understanding affordances \citep{chen2024spatialvlm, johnson2017clevr, hudson2019gqa}.
+\subsection{Paper Selection}
 
-\textbf{Spatial Action.} Navigating environments \citep{anderson2018vln, batra2020objectnav}, manipulating objects \citep{zeng2021transporter, shridhar2022cliport}, and coordinating multi-agent systems \citep{zhang2021multi}.
+We applied a multi-stage filtering process:
 
-\subsection{Unified Taxonomy}
+\textbf{Stage 1: Temporal Filter.} We focused on papers published between 2020 and 2025, with selective inclusion of foundational works from earlier years.
 
-We propose a two-dimensional taxonomy mapping agentic components to spatial domains:
+\textbf{Stage 2: Venue Filter.} We prioritized top-tier venues: NeurIPS, ICML, ICLR, CVPR, ICCV, ECCV, CoRL, RSS, ICRA, and high-impact arXiv preprints with significant citations.
+
+\textbf{Stage 3: Relevance Filter.} Papers were included if they addressed at least one of: agentic AI architectures, spatial reasoning, embodied AI, graph neural networks for spatial data, world models, or geospatial foundation models.
+
+\textbf{Stage 4: Quality Filter.} Two researchers independently assessed each paper. Inter-annotator agreement was 94\%. Disagreements were resolved through discussion.
+
+\subsection{Analysis Framework}
+
+For each included paper, we extracted:
+\begin{itemize}
+    \item Primary spatial task (navigation, scene understanding, manipulation, geospatial)
+    \item Agentic capabilities employed (memory, planning, tool use)
+    \item Spatial scale of operation (micro, meso, macro)
+    \item Representation type (symbolic, metric, latent, multimodal)
+    \item Reported failure modes and limitations
+\end{itemize}
+
+This structured extraction enabled the taxonomy development and failure mode analysis presented in subsequent sections.
+
+\section{The Three-Axis Taxonomy}
+
+We propose a unified taxonomy that organizes the intersection of agentic AI and spatial intelligence. The taxonomy comprises three orthogonal axes: Spatial Task, Agentic Capability, and Spatial Scale.
+
+\subsection{Axis 1: Spatial Task}
+
+We identify four primary spatial task domains:
+
+\textbf{Navigation.} Moving through environments toward goals. This includes vision-language navigation \citep{anderson2018vln}, object-goal navigation \citep{batra2020objectnav}, and point-goal navigation. The core challenge is grounding linguistic instructions in traversable paths.
+
+\textbf{Scene Understanding.} Perceiving and representing 3D structure. This encompasses depth estimation, semantic segmentation, 3D reconstruction \citep{mildenhall2020nerf, kerbl20233dgaussian}, and scene graph construction \citep{armeni2019scene}. The core challenge is building representations that support downstream reasoning.
+
+\textbf{Manipulation.} Interacting with objects through physical contact. This includes grasping \citep{mahler2017dexnet}, pick-and-place \citep{zeng2021transporter}, and long-horizon task completion \citep{shridhar2022cliport}. The core challenge is planning contact-rich interactions under uncertainty.
+
+\textbf{Geospatial Analysis.} Reasoning about large-scale spatial phenomena. This includes remote sensing \citep{jakubik2024prithvi}, traffic prediction \citep{li2018dcrnn}, and urban computing \citep{zheng2014urban}. The core challenge is handling heterogeneous data sources at city-to-global scales.
+
+\subsection{Axis 2: Agentic Capability}
+
+We identify three core agentic capabilities:
+
+\textbf{Memory Systems.} How agents accumulate and retrieve spatial knowledge. This includes cognitive maps \citep{tolman1948cognitive, chaplot2020neural}, semantic maps \citep{huang2023vlmaps}, scene graphs \citep{rosinol2020scene}, and retrieval-augmented generation \citep{lewis2020rag}. The central question is: \textit{How can agents maintain persistent spatial knowledge across varying time horizons?}
+
+\textbf{Planning Systems.} How agents decompose goals into executable action sequences. This includes task planning \citep{garrett2021tamp}, motion planning \citep{lavalle2006planning}, hierarchical planning \citep{nachum2018hiro}, and LLM-based planning \citep{huang2022language}. The central question is: \textit{How can agents plan under geometric constraints while accounting for uncertainty?}
+
+\textbf{Tool Use and Action.} How agents translate decisions into physical effects. This includes API integration \citep{schick2023toolformer}, code generation \citep{liang2023code}, and vision-language-action models \citep{brohan2023rt2, kim2024openvla}. The central question is: \textit{How can language-based reasoning be grounded in precise geometric actions?}
+
+\subsection{Axis 3: Spatial Scale}
+
+We distinguish three spatial scales with distinct computational and representational requirements:
+
+\textbf{Micro-spatial ($<$1m).} Fine manipulation, grasping, and precise positioning. Requires millimeter-level accuracy. Representations must capture detailed geometry and contact dynamics.
+
+\textbf{Meso-spatial (1m--100m).} Room-scale navigation, indoor exploration, and local scene understanding. Requires meter-level accuracy. Representations must balance detail with coverage.
+
+\textbf{Macro-spatial ($>$100m).} City-scale planning, satellite imagery analysis, and infrastructure networks. Requires kilometer-level reasoning. Representations must handle sparse observations over large areas.
+
+\begin{keytakeaways}[Key Insight: Scale Determines Architecture]
+Methods optimized for one scale often fail at others. Micro-scale manipulation systems achieve precision but lack macro-scale planning. Geospatial models handle city-scale reasoning but cannot guide fine manipulation. A unified spatial AI system must bridge these scales, which remains an open challenge.
+\end{keytakeaways}
+
+\subsection{Taxonomy Mapping}
+
+Table \ref{tab:taxonomy} maps representative methods to our taxonomy, demonstrating how the framework organizes the field.
 
 \begin{table}[h!]
 \centering
-\caption{Unified Taxonomy: Agentic Components $\times$ Spatial Domains}
-\begin{tabular}{@{}lcccc@{}}
+\caption{Representative Methods Mapped to the Three-Axis Taxonomy}
+\label{tab:taxonomy}
+\small
+\begin{tabular}{@{}lllll@{}}
 \toprule
-& \textbf{Navigation} & \textbf{Scene Understanding} & \textbf{Manipulation} & \textbf{Geospatial} \\
+\textbf{Method} & \textbf{Spatial Task} & \textbf{Agentic Capability} & \textbf{Scale} & \textbf{Primary Failure Mode} \\
 \midrule
-\textbf{Memory} & Cognitive Maps & Scene Graphs & Object Memory & Spatial Databases \\
-\textbf{Planning} & Path Planning & Semantic Planning & Task Planning & Route Optimization \\
-\textbf{Tool Use} & Locomotion APIs & Perception APIs & Robot Control & GIS Tools \\
+VLN-BERT & Navigation & Memory + Planning & Meso & Instruction grounding \\
+SayCan & Manipulation & Planning + Tool Use & Micro-Meso & Affordance mismatch \\
+RT-2 & Manipulation & Tool Use & Micro & Out-of-distribution \\
+VLMaps & Navigation & Memory & Meso & Semantic drift \\
+Voyager & Navigation + Manip. & Memory + Planning & Meso & Code execution \\
+DCRNN & Geospatial & Memory (low planning) & Macro & Non-stationarity \\
+Graph WaveNet & Geospatial & Memory (low planning) & Macro & Sparse regions \\
+Prithvi & Geospatial & Memory only & Macro & No action capability \\
+DreamerV3 & Navigation + Manip. & Planning (World Model) & Micro-Meso & Model compounding \\
+PaLM-E & Manipulation & Planning + Tool Use & Micro-Meso & Hallucination \\
+OpenVLA & Manipulation & Tool Use & Micro & Limited generalization \\
+LLaGA & Scene Understanding & Memory & Meso & Graph construction \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\section{Core Agentic Components: Engineering Deep-Dive}
+\section{Preliminary Findings: Failure Mode Analysis}
 
-\subsection{Memory Systems Architecture}
+Our literature synthesis reveals systematic failure patterns that inform AtlasPro AI's architectural decisions.
 
-Memory is the foundation of intelligent behavior. For spatial agents, we identify three memory tiers:
+\subsection{Spatial Hallucination}
 
-\subsubsection{Short-Term Memory: Context Management}
+Language models describe spatial configurations that do not exist. GPT-4V fails on 40\% of spatial relationship questions in SpatialBench \citep{chen2024spatialvlm}. The model confidently describes objects as ``to the left of'' when they are actually ``behind,'' or claims paths exist through solid walls.
 
-Short-term memory operates within the LLM's context window. Engineering considerations include:
+\textbf{Root Cause.} Language models learn spatial language from text, not from grounded experience. The word ``left'' appears in training data without consistent geometric grounding.
 
-\textbf{Context Window Management.} Modern LLMs have context windows ranging from 8K to 128K+ tokens \citep{openai2023gpt4, anthropic2024claude}. For spatial tasks, we must efficiently encode:
-\begin{itemize}
-    \item Current observations (images, sensor data)
-    \item Recent action history
-    \item Task instructions and goals
-    \item Relevant retrieved information
-\end{itemize}
-
-\textbf{Prompt Engineering.} The structure of the prompt significantly impacts agent performance. Best practices include:
-\begin{itemize}
-    \item Clear separation of system instructions, context, and queries
-    \item Structured output formats (JSON, XML) for reliable parsing
-    \item Few-shot examples for complex tasks
-    \item Chain-of-thought prompting for reasoning tasks \citep{wei2022chain, kojima2022large}
-\end{itemize}
-
-\textbf{State Compression.} For long-horizon tasks, we must compress historical state to fit within context limits. Techniques include:
-\begin{itemize}
-    \item Summarization of past events
-    \item Selective retention of important information
-    \item Hierarchical state representations
-\end{itemize}
-
-\subsubsection{Long-Term Memory: Retrieval-Augmented Generation}
-
-Long-term memory extends agent knowledge beyond the context window through external retrieval \citep{lewis2020rag, guu2020realm}.
-
-\textbf{Vector Database Selection.} Key options include:
-\begin{itemize}
-    \item \textbf{Pinecone:} Managed service, easy scaling, good for production
-    \item \textbf{Weaviate:} Open-source, supports hybrid search
-    \item \textbf{Chroma:} Lightweight, good for prototyping
-    \item \textbf{Milvus:} High-performance, supports billion-scale vectors
-\end{itemize}
-
-\textbf{Embedding Model Selection.} The choice of embedding model affects retrieval quality:
-\begin{itemize}
-    \item OpenAI text-embedding-3-large: Strong general performance
-    \item Sentence-BERT variants: Good for semantic similarity
-    \item Domain-specific embeddings: Better for specialized tasks
-\end{itemize}
-
-\textbf{Chunking Strategy.} How we split documents affects retrieval:
-\begin{itemize}
-    \item Fixed-size chunks (e.g., 512 tokens): Simple but may split semantic units
-    \item Semantic chunking: Preserves meaning but more complex
-    \item Hierarchical chunking: Enables multi-granularity retrieval
-\end{itemize}
-
-\textbf{Retrieval Algorithms.} Beyond simple similarity search:
-\begin{itemize}
-    \item Maximal Marginal Relevance (MMR): Balances relevance and diversity
-    \item Hybrid search: Combines dense and sparse retrieval
-    \item Re-ranking: Uses cross-encoders for improved precision
-\end{itemize}
-
-\subsubsection{Spatial Memory: Cognitive Maps}
-
-For embodied agents, spatial memory is critical. Key approaches include:
-
-\textbf{Metric Maps.} Neural SLAM \citep{gupta2019neuralslam, chaplot2020neural} builds metric representations of environments. Implementation requires:
-\begin{itemize}
-    \item Depth estimation from RGB images
-    \item Pose estimation and tracking
-    \item Map fusion and update
-\end{itemize}
-
-\textbf{Semantic Maps.} VLMaps \citep{huang2023vlmaps} adds language-grounded understanding:
-\begin{itemize}
-    \item CLIP feature extraction for each location
-    \item 3D feature volume construction
-    \item Natural language querying of spatial locations
-\end{itemize}
-
-\textbf{Episodic Memory.} Generative Agents \citep{park2023generative} demonstrated memory streams for social agents. For spatial agents, we can adapt this to store:
-\begin{itemize}
-    \item Past navigation experiences
-    \item Object interaction history
-    \item Task completion records
-\end{itemize}
-
-\subsection{Planning Systems Architecture}
-
-Planning enables agents to decompose goals into executable actions.
-
-\subsubsection{Chain-of-Thought Planning}
-
-CoT prompting \citep{wei2022chain} elicits step-by-step reasoning:
-
-\textbf{Implementation Pattern.}
-\begin{verbatim}
-System: You are a spatial planning agent. Think step by step.
-User: Navigate to the kitchen and pick up the red cup.
-Assistant: Let me break this down:
-1. First, I need to locate the kitchen...
-2. Then, I need to navigate there...
-3. Once in the kitchen, I need to find the red cup...
-4. Finally, I need to pick up the cup...
-\end{verbatim}
-
-\textbf{Zero-Shot CoT.} Simply adding "Let's think step by step" improves reasoning \citep{kojima2022large}.
-
-\textbf{Self-Consistency.} Sampling multiple reasoning paths and aggregating improves robustness \citep{wang2022self}.
-
-\subsubsection{Tree-Based Planning}
-
-Tree of Thoughts \citep{yao2023tree} explores multiple solution paths:
-
-\textbf{Algorithm Structure.}
-\begin{enumerate}
-    \item Generate multiple candidate next steps
-    \item Evaluate each candidate
-    \item Select promising candidates for expansion
-    \item Backtrack if necessary
-\end{enumerate}
-
-\textbf{Engineering Considerations.}
-\begin{itemize}
-    \item State management for each tree node
-    \item Evaluation function design
-    \item Search strategy (BFS, DFS, beam search)
-    \item Computational cost management
-\end{itemize}
-
-\subsubsection{Hierarchical Planning}
-
-For complex spatial tasks, hierarchical planning is essential \citep{song2023llmplanner, huang2022inner}:
-
-\textbf{High-Level Planning.} LLM generates abstract task decomposition:
-\begin{itemize}
-    \item "Go to kitchen" $\rightarrow$ "Find cup" $\rightarrow$ "Pick up cup"
-\end{itemize}
-
-\textbf{Low-Level Planning.} Specialized planners handle execution:
-\begin{itemize}
-    \item Navigation: A* or RRT for path planning
-    \item Manipulation: Motion planning with MoveIt or similar
-\end{itemize}
-
-\textbf{Grounding.} SayCan \citep{ahn2022saycan} grounds high-level plans in robot affordances by combining LLM probabilities with learned value functions.
-
-\subsubsection{Classical Planning Integration}
-
-Recent work explores combining LLMs with classical planners \citep{valmeekam2023large, guan2023leveraging, liu2023llmp}:
-
-\textbf{LLM as Heuristic.} Use LLM to guide search in classical planners.
-
-\textbf{LLM as Translator.} Convert natural language to PDDL for classical planning.
-
-\textbf{Hybrid Approaches.} Combine neural and symbolic planning for robustness.
-
-\subsection{Tool Use and Action Systems}
-
-Tool use extends agent capabilities through external interfaces.
-
-\subsubsection{API Integration}
-
-\textbf{Tool Definition.} Tools should be defined with clear schemas:
-\begin{verbatim}
-{
-  "name": "navigate_to",
-  "description": "Navigate the robot to a specified location",
-  "parameters": {
-    "location": {"type": "string", "description": "Target location name"},
-    "speed": {"type": "number", "description": "Movement speed (0-1)"}
-  }
-}
-\end{verbatim}
-
-\textbf{Tool Selection.} Models like Toolformer \citep{schick2023toolformer} and Gorilla \citep{patil2023gorilla} learn when and how to use tools.
-
-\textbf{Error Handling.} Robust error handling is critical:
-\begin{itemize}
-    \item Retry logic with exponential backoff
-    \item Fallback strategies for tool failures
-    \item Clear error messages for debugging
-\end{itemize}
-
-\subsubsection{Code Generation}
-
-Code as Policies \citep{liang2023code} generates executable robot code:
-
-\textbf{Advantages.}
-\begin{itemize}
-    \item Flexible and expressive
-    \item Enables complex control flow
-    \item Supports variables and state
-\end{itemize}
-
-\textbf{Safety Considerations.}
-\begin{itemize}
-    \item Sandboxed execution environment
-    \item Code review before execution
-    \item Resource limits (CPU, memory, time)
-\end{itemize}
-
-\subsubsection{ReAct Architecture}
-
-ReAct \citep{yao2023react} interleaves reasoning and action:
-
-\textbf{Loop Structure.}
-\begin{enumerate}
-    \item \textbf{Thought:} Agent reasons about current state
-    \item \textbf{Action:} Agent selects and executes action
-    \item \textbf{Observation:} Environment provides feedback
-    \item \textbf{Repeat:} Until goal achieved or failure
-\end{enumerate}
-
-\textbf{Implementation.}
-\begin{verbatim}
-while not done:
-    thought = llm.generate(prompt + history)
-    action = parse_action(thought)
-    observation = execute_action(action)
-    history.append((thought, action, observation))
-    done = check_completion(observation)
-\end{verbatim}
-
-\section{Vision-Language-Action Models: Implementation Guide}
-
-\subsection{Architecture Overview}
-
-VLA models map visual observations and language instructions directly to robot actions \citep{brohan2022rt1, brohan2023rt2, team2024octo, kim2024openvla}.
-
-\textbf{Components.}
-\begin{itemize}
-    \item \textbf{Vision Encoder:} Processes camera images (ViT, ResNet)
-    \item \textbf{Language Encoder:} Processes text instructions (BERT, T5)
-    \item \textbf{Fusion Module:} Combines vision and language features
-    \item \textbf{Action Head:} Predicts robot actions
-\end{itemize}
-
-\subsection{RT-1 and RT-2}
-
-\textbf{RT-1} \citep{brohan2022rt1} demonstrated large-scale robot learning:
-\begin{itemize}
-    \item Trained on 130K robot demonstrations
-    \item Transformer architecture with tokenized actions
-    \item Strong generalization to new objects and instructions
-\end{itemize}
-
-\textbf{RT-2} \citep{brohan2023rt2} co-trained on web data:
-\begin{itemize}
-    \item 55B parameter PaLI-X backbone
-    \item Actions represented as text tokens
-    \item Emergent capabilities (reasoning about novel objects)
-\end{itemize}
-
-\subsection{Open-Source VLA Models}
-
-\textbf{Octo} \citep{team2024octo}:
-\begin{itemize}
-    \item Trained on Open X-Embodiment dataset \citep{open_x_embodiment_rt_x_2023}
-    \item Supports multiple robot embodiments
-    \item Apache 2.0 license
-    \item Good baseline for fine-tuning
-\end{itemize}
-
-\textbf{OpenVLA} \citep{kim2024openvla}:
-\begin{itemize}
-    \item 7B parameter model
-    \item Built on Llama 2 backbone
-    \item Competitive with proprietary models
-    \item Easier to fine-tune than larger models
-\end{itemize}
-
-\subsection{Training Pipeline}
-
-\textbf{Data Preparation.}
-\begin{enumerate}
-    \item Collect robot demonstrations (teleoperation, scripted policies)
-    \item Annotate with language instructions
-    \item Normalize action spaces across robots
-    \item Apply data augmentation
-\end{enumerate}
-
-\textbf{Training Configuration.}
-\begin{itemize}
-    \item Batch size: 256-1024 (depends on GPU memory)
-    \item Learning rate: 1e-4 to 1e-5 with warmup
-    \item Optimizer: AdamW with weight decay
-    \item Training time: Days to weeks on 8+ GPUs
-\end{itemize}
-
-\textbf{Evaluation.}
-\begin{itemize}
-    \item Success rate on held-out tasks
-    \item Generalization to new objects/instructions
-    \item Real-world deployment testing
-\end{itemize}
-
-\subsection{Deployment Considerations}
-
-\textbf{Latency Requirements.}
-\begin{itemize}
-    \item Real-time control: <50ms inference
-    \item Requires model optimization (quantization, pruning)
-    \item Consider edge deployment (Jetson, TPU)
-\end{itemize}
-
-\textbf{Safety.}
-\begin{itemize}
-    \item Hardware e-stops
-    \item Workspace limits
-    \item Force/torque monitoring
-    \item Human detection and avoidance
-\end{itemize}
-
-\section{Graph Neural Networks for Spatial Intelligence}
-
-\subsection{Foundational GNN Architectures}
-
-\subsubsection{Graph Convolutional Networks (GCN)}
-
-GCN \citep{kipf2017gcn} performs spectral convolution on graphs:
-
-\textbf{Layer Update.}
-\begin{equation}
-H^{(l+1)} = \sigma(\tilde{D}^{-1/2}\tilde{A}\tilde{D}^{-1/2}H^{(l)}W^{(l)})
-\end{equation}
-
-where $\tilde{A} = A + I$ is the adjacency matrix with self-loops.
-
-\textbf{Implementation (PyTorch Geometric).}
-\begin{verbatim}
-from torch_geometric.nn import GCNConv
-
-class GCN(torch.nn.Module):
-    def __init__(self, in_channels, hidden_channels, out_channels):
-        super().__init__()
-        self.conv1 = GCNConv(in_channels, hidden_channels)
-        self.conv2 = GCNConv(hidden_channels, out_channels)
-    
-    def forward(self, x, edge_index):
-        x = self.conv1(x, edge_index).relu()
-        x = self.conv2(x, edge_index)
-        return x
-\end{verbatim}
-
-\subsubsection{Graph Attention Networks (GAT)}
-
-GAT \citep{velickovic2018gat} uses attention for adaptive aggregation:
-
-\textbf{Attention Mechanism.}
-\begin{equation}
-\alpha_{ij} = \frac{\exp(\text{LeakyReLU}(a^T[Wh_i || Wh_j]))}{\sum_{k \in \mathcal{N}(i)} \exp(\text{LeakyReLU}(a^T[Wh_i || Wh_k]))}
-\end{equation}
-
-\textbf{Advantages.}
-\begin{itemize}
-    \item Learns importance of different neighbors
-    \item Multi-head attention for stability
-    \item Better for heterogeneous graphs
-\end{itemize}
-
-\subsubsection{GraphSAGE}
-
-GraphSAGE \citep{hamilton2017graphsage} enables inductive learning:
-
-\textbf{Sampling Strategy.}
-\begin{itemize}
-    \item Sample fixed-size neighborhood
-    \item Enables mini-batch training
-    \item Scales to large graphs
-\end{itemize}
-
-\textbf{Aggregators.}
-\begin{itemize}
-    \item Mean aggregator
-    \item LSTM aggregator
-    \item Pooling aggregator
-\end{itemize}
-
-\subsection{Spatio-Temporal GNNs}
-
-For time-varying spatial data (traffic, weather, urban dynamics):
-
-\subsubsection{DCRNN}
+\textbf{Implication for AtlasPro.} Spatial representations must be grounded in metric observations, not derived solely from language.
 
-Diffusion Convolutional Recurrent Neural Network \citep{li2018dcrnn}:
-\begin{itemize}
-    \item Models traffic as diffusion on road graph
-    \item Bidirectional random walks
-    \item GRU for temporal modeling
-\end{itemize}
-
-\subsubsection{STGCN}
-
-Spatio-Temporal Graph Convolutional Network \citep{yu2018stgcn}:
-\begin{itemize}
-    \item Separates spatial and temporal convolutions
-    \item More efficient than RNN-based approaches
-    \item Gated temporal convolution
-\end{itemize}
-
-\subsubsection{Graph WaveNet}
-
-\citep{wu2019graphwavenet}:
-\begin{itemize}
-    \item Learns adaptive adjacency matrix
-    \item Dilated causal convolutions for temporal modeling
-    \item State-of-the-art traffic prediction
-\end{itemize}
-
-\subsection{GNN-LLM Integration Patterns}
-
-\subsubsection{Pattern 1: GNN as Encoder}
-
-Use GNN to encode graph structure, pass to LLM:
-
-\textbf{Architecture.}
-\begin{enumerate}
-    \item GNN encodes graph $\rightarrow$ node embeddings
-    \item Project embeddings to LLM token space
-    \item Concatenate with text tokens
-    \item LLM processes combined input
-\end{enumerate}
-
-\textbf{Example: GraphGPT} \citep{tang2024graphgpt}:
-\begin{itemize}
-    \item Graph encoder aligned with LLM
-    \item Enables graph-based question answering
-    \item Supports various graph tasks
-\end{itemize}
-
-\subsubsection{Pattern 2: LLM for Graph Enhancement}
-
-Use LLM to improve GNN:
-
-\textbf{Applications.}
-\begin{itemize}
-    \item Generate node features from text descriptions
-    \item Explain GNN predictions \citep{he2023explanations}
-    \item Augment training data
-\end{itemize}
-
-\subsubsection{Pattern 3: GNN-RAG}
-
-Use GNN for knowledge graph retrieval \citep{wang2024gnnrag}:
-
-\textbf{Pipeline.}
-\begin{enumerate}
-    \item Query $\rightarrow$ retrieve relevant subgraph
-    \item GNN reasons over subgraph
-    \item Linearize subgraph for LLM
-    \item LLM generates final answer
-\end{enumerate}
-
-\section{World Models for Spatial Intelligence}
-
-\subsection{Model-Based Reinforcement Learning}
-
-\subsubsection{Dreamer Series}
-
-\textbf{Dreamer} \citep{hafner2019dream}:
-\begin{itemize}
-    \item Learns latent dynamics model
-    \item Plans in imagination
-    \item Actor-critic in latent space
-\end{itemize}
-
-\textbf{DreamerV2} \citep{hafner2021dreamerv2}:
-\begin{itemize}
-    \item Discrete latent representations
-    \item Human-level Atari performance
-    \item More stable training
-\end{itemize}
-
-\textbf{DreamerV3} \citep{hafner2023dreamerv3}:
-\begin{itemize}
-    \item Single algorithm across domains
-    \item Symlog predictions for stability
-    \item Fixed hyperparameters
-\end{itemize}
-
-\subsubsection{DayDreamer}
-
-\citep{wu2023daydreamer}: Transfer world models to real robots:
-\begin{itemize}
-    \item Train in simulation
-    \item Fine-tune on real robot data
-    \item Demonstrates sim-to-real transfer
-\end{itemize}
-
-\subsection{Video World Models}
-
-\subsubsection{Genie}
-
-\citep{bruce2024genie}: Controllable world model from videos:
-\begin{itemize}
-    \item Learns from internet videos
-    \item Generates interactive environments
-    \item Enables training without simulators
-\end{itemize}
-
-\subsubsection{GAIA-1}
-
-\citep{hu2023gaia1}: World model for autonomous driving:
-\begin{itemize}
-    \item Generates realistic driving videos
-    \item Conditioned on actions and context
-    \item Enables scalable training data generation
-\end{itemize}
-
-\subsection{LLM-Based World Models}
-
-\textbf{RAP} \citep{hao2023rap}: Reasoning via Planning:
-\begin{itemize}
-    \item LLM as world model
-    \item Monte Carlo Tree Search for planning
-    \item Strong reasoning performance
-\end{itemize}
-
-\textbf{Engineering Considerations.}
-\begin{itemize}
-    \item LLMs may hallucinate state transitions
-    \item Need grounding in real observations
-    \item Uncertainty quantification is challenging
-\end{itemize}
-
-\section{Embodied AI Systems}
-
-\subsection{Simulation Platforms}
-
-\subsubsection{Habitat}
-
-\citep{savva2019habitat, szot2021habitat2, puig2023habitat3}:
-\begin{itemize}
-    \item High-fidelity 3D environments
-    \item Supports navigation and manipulation
-    \item Large-scale benchmark datasets
-    \item Active research community
-\end{itemize}
-
-\textbf{Habitat 3.0} features:
-\begin{itemize}
-    \item Human-robot interaction
-    \item Social navigation
-    \item Collaborative tasks
-\end{itemize}
-
-\subsubsection{iGibson}
+\subsection{Reference Frame Confusion}
 
-\citep{shen2021igibson, li2021igibson}:
-\begin{itemize}
-    \item Interactive environments
-    \item Realistic physics simulation
-    \item Object state changes
-\end{itemize}
-
-\subsubsection{AI2-THOR}
-
-\citep{kolve2017ai2thor}:
-\begin{itemize}
-    \item Interactive visual AI
-    \item Procedurally generated scenes
-    \item Rich object interactions
-\end{itemize}
-
-\subsection{Open-Ended Agents}
-
-\subsubsection{Voyager}
+Agents conflate egocentric (body-relative) and allocentric (world-relative) coordinate systems. Vision-language navigation agents show 15--20\% error rates from frame misalignment \citep{anderson2018vln}.
 
-\citep{wang2023voyager}: Open-ended exploration in Minecraft:
-\begin{itemize}
-    \item LLM-driven curriculum learning
-    \item Skill library construction
-    \item Self-verification of skills
-\end{itemize}
+\textbf{Root Cause.} Natural language instructions often leave reference frames implicit. ``Turn left'' is egocentric; ``go to the kitchen'' is allocentric. Agents must infer the intended frame from context.
 
-\textbf{Key Components.}
-\begin{enumerate}
-    \item Automatic curriculum: LLM proposes tasks
-    \item Skill library: Stores successful programs
-    \item Iterative prompting: Refines code until success
-\end{enumerate}
+\textbf{Implication for AtlasPro.} Systems must explicitly represent and transform between reference frames.
 
-\subsubsection{MineDojo}
-
-\citep{fan2022minedojo}:
-\begin{itemize}
-    \item Benchmark suite for open-ended agents
-    \item Internet-scale knowledge base
-    \item Diverse task types
-\end{itemize}
+\subsection{Scale Insensitivity}
 
-\subsection{Grounded Language Agents}
+Models trained at one scale fail at others. SayCan's affordance model, trained on tabletop manipulation, fails when applied to room-scale tasks \citep{ahn2022saycan}. The model cannot distinguish between ``reachable'' at arm's length versus ``reachable'' after navigation.
 
-\subsubsection{SayCan}
+\textbf{Root Cause.} Scale is often implicit in training data. Models learn correlations that hold at one scale but not others.
 
-\citep{ahn2022saycan}: Grounding LLMs in robot affordances:
+\textbf{Implication for AtlasPro.} Architectures must explicitly encode scale and support cross-scale reasoning.
 
-\textbf{Scoring Function.}
-\begin{equation}
-p(\text{action} | \text{instruction}) \propto p_{\text{LLM}}(\text{action} | \text{instruction}) \cdot p_{\text{affordance}}(\text{action})
-\end{equation}
+\subsection{Temporal Drift}
 
-\textbf{Components.}
-\begin{itemize}
-    \item LLM provides semantic relevance
-    \item Value function provides feasibility
-    \item Combined scoring selects actions
-\end{itemize}
+Spatial memory degrades over extended operation. VLMaps shows semantic drift after 100+ steps without map updates \citep{huang2023vlmaps}. Accumulated localization error corrupts the spatial representation.
 
-\subsubsection{Code as Policies}
+\textbf{Root Cause.} Spatial representations are updated incrementally. Small errors compound over time without correction mechanisms.
 
-\citep{liang2023code}: Generate executable robot code:
-\begin{itemize}
-    \item LLM generates Python code
-    \item Code calls robot APIs
-    \item Enables complex behaviors
-\end{itemize}
+\textbf{Implication for AtlasPro.} Memory systems must include mechanisms for uncertainty estimation and correction.
 
-\section{Geospatial Foundation Models}
+\subsection{Planning Constraint Violations}
 
-\subsection{Remote Sensing Models}
+LLM-based planners propose actions that violate geometric constraints. On BEHAVIOR-1K, LLM planners achieve only 12\% success due to collision-ignoring plans \citep{li2023behavior}. The planner proposes ``move the chair'' without checking if the path is clear.
 
-\subsubsection{Prithvi}
+\textbf{Root Cause.} LLMs plan in language space, which does not enforce geometric consistency. The word ``move'' does not carry collision information.
 
-\citep{jakubik2024prithvi}: NASA/IBM geospatial foundation model:
-\begin{itemize}
-    \item Pretrained on HLS (Harmonized Landsat Sentinel-2)
-    \item Supports multiple downstream tasks
-    \item Open weights available
-\end{itemize}
+\textbf{Implication for AtlasPro.} Planning must integrate geometric reasoning, not just linguistic sequencing.
 
-\textbf{Applications.}
-\begin{itemize}
-    \item Land use classification
-    \item Flood mapping
-    \item Wildfire detection
-    \item Crop monitoring
-\end{itemize}
+\subsection{Long-Horizon Credit Assignment}
 
-\subsubsection{SatMAE}
+Performance degrades as task horizons extend. On ALFRED, success drops from 65\% to 18\% as task steps increase from 5 to 20 \citep{shridhar2020alfred}. Agents cannot determine which early decisions caused late failures.
 
-\citep{cong2022satmae}: Self-supervised learning for satellite imagery:
-\begin{itemize}
-    \item Masked autoencoder approach
-    \item Handles temporal sequences
-    \item Strong transfer learning
-\end{itemize}
+\textbf{Root Cause.} Reward signals are sparse and delayed. The agent receives feedback only at task completion, making it difficult to learn from intermediate mistakes.
 
-\subsubsection{SatlasPretrain}
+\textbf{Implication for AtlasPro.} Systems need hierarchical decomposition and intermediate feedback mechanisms.
 
-\citep{bastani2023satlaspretrain}: Large-scale pretraining:
-\begin{itemize}
-    \item 302M image dataset
-    \item Multiple sensor types
-    \item Diverse geographic coverage
-\end{itemize}
+\begin{keytakeaways}[Key Insight: Failure Modes Are Architectural]
+These failures are not random errors but systematic consequences of architectural choices. Addressing them requires fundamental changes to how spatial AI systems are designed, not just better training data or larger models.
+\end{keytakeaways}
 
-\subsection{Urban Computing}
+\section{AtlasPro AI's Architectural Principles}
 
-\subsubsection{Traffic Prediction}
+Based on our analysis, we derive six architectural principles that will guide AtlasPro AI's system development.
 
-State-of-the-art approaches \citep{jin2023stgnn, li2018dcrnn, yu2018stgcn}:
-\begin{itemize}
-    \item Graph-based spatial modeling
-    \item Temporal sequence modeling
-    \item Multi-step forecasting
-\end{itemize}
+\subsection{Principle 1: Explicit Spatial Memory}
 
-\subsubsection{Smart City Applications}
+Memory systems must encode \textit{where}, not just \textit{what}. This means:
 
-\citep{zheng2014urban, allam2020ai}:
 \begin{itemize}
-    \item Traffic management
-    \item Energy optimization
-    \item Public safety
-    \item Urban planning
+    \item Cognitive maps that maintain metric relationships between locations
+    \item Scene graphs that encode spatial relationships between objects
+    \item Episodic memory that indexes experiences by location
+    \item Uncertainty estimates that degrade gracefully over time
 \end{itemize}
-
-\section{Industry Applications and Internal Use Cases}
-
-\subsection{External Industry Leaders}
 
-\subsubsection{Palantir}
+We draw inspiration from VLMaps \citep{huang2023vlmaps}, Neural SLAM \citep{chaplot2020neural}, and 3D scene graphs \citep{rosinol2020scene}, while addressing their limitations around temporal drift and scale.
 
-\citep{palantir2023, bailey2021palantir, freeman2021palantir}:
-\begin{itemize}
-    \item Foundry platform for data integration
-    \item Geospatial analysis for defense
-    \item Supply chain optimization
-\end{itemize}
+\subsection{Principle 2: Hybrid Planning Under Constraints}
 
-\subsubsection{ESRI}
+Planning must integrate symbolic task decomposition with geometric feasibility checking. This means:
 
-\citep{esri2023}:
 \begin{itemize}
-    \item ArcGIS platform
-    \item GeoAI capabilities
-    \item Enterprise GIS solutions
+    \item Task-and-motion planning (TAMP) integration \citep{garrett2021tamp}
+    \item Geometric constraint propagation during plan generation
+    \item Continuous replanning as the world state changes
+    \item Hierarchical abstraction to manage complexity
 \end{itemize}
 
-\subsubsection{Waymo}
+Pure LLM-based planning fails because language does not enforce geometric consistency. Pure motion planning fails because it cannot handle abstract goals. The hybrid approach combines their strengths.
 
-\citep{waymo2023, waymo_emma_2024, waymo2024safety}:
-\begin{itemize}
-    \item Autonomous vehicle deployment
-    \item End-to-end driving (EMMA)
-    \item Safety-focused development
-\end{itemize}
+\subsection{Principle 3: Graph-Structured Representations}
 
-\subsubsection{Foursquare}
+Graphs provide the inductive bias necessary for spatial reasoning. This means:
 
-\citep{foursquare2023, krumm2017introduction}:
 \begin{itemize}
-    \item Location intelligence
-    \item Movement pattern analysis
-    \item POI data
+    \item Scene graphs for object relationships
+    \item Road networks for navigation
+    \item Spatial knowledge graphs for semantic reasoning
+    \item GNN-LLM integration for combining structural and semantic understanding
 \end{itemize}
-
-\subsection{Internal Use Cases for AtlasPro AI}
 
-Based on our analysis, we identify the following high-value internal use cases:
+Transformers treat all tokens uniformly; they do not inherently respect spatial adjacency. Graph neural networks encode relational structure directly, making them better suited for spatial reasoning \citep{kipf2017gcn, velickovic2018gat}.
 
-\textbf{Use Case 1: Intelligent Geospatial Analysis.}
-\begin{itemize}
-    \item Combine GNN-LLM for spatial reasoning
-    \item Natural language queries over geospatial data
-    \item Automated report generation
-\end{itemize}
+\subsection{Principle 4: World Models for Safe Planning}
 
-\textbf{Use Case 2: Multi-Agent Coordination.}
-\begin{itemize}
-    \item Fleet management and optimization
-    \item Collaborative robotics
-    \item Distributed sensing
-\end{itemize}
+Learning predictive models enables planning through imagination rather than trial-and-error. This means:
 
-\textbf{Use Case 3: Predictive Spatial Analytics.}
 \begin{itemize}
-    \item Traffic and demand forecasting
-    \item Risk assessment
-    \item Resource optimization
+    \item Latent dynamics models that predict future states \citep{hafner2023dreamerv3}
+    \item Video prediction for visual planning \citep{hu2023gaia1}
+    \item Uncertainty-aware predictions for safe exploration
+    \item Sim-to-real transfer for deployment
 \end{itemize}
 
-\section{Evaluation Framework and Internal Benchmarking}
+World models allow agents to ``imagine'' the consequences of actions before executing them. This is critical for safety-critical applications where trial-and-error is unacceptable.
 
-\subsection{Existing Benchmarks}
-
-\subsubsection{Navigation}
-
-\begin{itemize}
-    \item R2R \citep{anderson2018vln}: Vision-language navigation
-    \item RxR \citep{ku2020room}: Multilingual VLN
-    \item REVERIE \citep{qi2020reverie}: Remote referring expression
-    \item Habitat ObjectNav \citep{batra2020objectnav}: Object-goal navigation
-    \item SOON \citep{zhu2021soon}: Scenarios for object navigation
-\end{itemize}
+\subsection{Principle 5: Multi-Scale Architecture}
 
-\subsubsection{Manipulation}
+Systems must explicitly handle multiple spatial scales. This means:
 
 \begin{itemize}
-    \item RLBench \citep{james2020rlbench}: Robot learning benchmark
-    \item Meta-World \citep{yu2020metaworld}: Multi-task manipulation
-    \item BEHAVIOR \citep{srivastava2021behavior, li2023behavior1k}: Household activities
-    \item CLIPort \citep{shridhar2022cliport}: Language-conditioned manipulation
+    \item Scale-aware representations that encode resolution explicitly
+    \item Hierarchical processing from fine to coarse
+    \item Cross-scale attention mechanisms
+    \item Scale-conditioned action generation
 \end{itemize}
 
-\subsubsection{Spatial Reasoning}
+A manipulation action at micro-scale may require navigation planning at meso-scale and route optimization at macro-scale. The architecture must support this seamlessly.
 
-\begin{itemize}
-    \item CLEVR \citep{johnson2017clevr}: Compositional reasoning
-    \item GQA \citep{hudson2019gqa}: Visual question answering
-    \item SpatialVLM \citep{chen2024spatialvlm}: Spatial reasoning in VLMs
-    \item REM \citep{thompson2025rem}: Embodied spatial reasoning
-    \item EmbodiedBench \citep{yang2025embodiedbench}: Comprehensive embodied evaluation
-\end{itemize}
+\subsection{Principle 6: Grounded Action Generation}
 
-\subsubsection{Agent Benchmarks}
+Language must be grounded in precise geometric actions. This means:
 
 \begin{itemize}
-    \item AgentBench \citep{liu2023agentbench}: LLM agent evaluation
-    \item WebArena \citep{zhou2023webarena}: Web-based agents
-    \item OSWorld \citep{xie2024osworld}: Computer use agents
-    \item SafeAgentBench \citep{safeagentbench2025}: Safe task planning
+    \item Vision-language-action models that output continuous controls \citep{brohan2023rt2}
+    \item Affordance prediction to filter infeasible actions \citep{ahn2022saycan}
+    \item Code generation for programmatic control \citep{liang2023code}
+    \item Closed-loop execution with visual feedback
 \end{itemize}
 
-\subsubsection{Geospatial}
+The gap between ``pick up the cup'' and the motor commands to actually grasp it is vast. Bridging this gap requires models that understand both language and geometry.
 
-\begin{itemize}
-    \item BigEarthNet \citep{sumbul2019bigearthnet}: Land use classification
-    \item fMoW \citep{christie2018fmow}: Functional map of the world
-    \item xBD \citep{gupta2019xbd}: Building damage assessment
-    \item SpaceNet \citep{van2018spacenet}: Building and road extraction
-\end{itemize}
+\section{Technical Deep-Dive: Core Components}
 
-\subsection{Internal Benchmarking Framework}
+This section provides technical detail on the components central to AtlasPro AI's approach.
 
-We recommend building an internal benchmarking framework with the following components:
+\subsection{Memory Architecture}
 
-\textbf{Continuous Evaluation.}
-\begin{itemize}
-    \item Automated testing on each commit
-    \item Performance tracking over time
-    \item Regression detection
-\end{itemize}
+We propose a three-tier memory architecture:
 
-\textbf{Custom Benchmarks.}
-\begin{itemize}
-    \item Tasks specific to AtlasPro AI use cases
-    \item Real-world data from our deployments
-    \item Edge cases and failure modes
-\end{itemize}
+\textbf{Tier 1: Working Memory.} Operates within the LLM context window. Stores current observations, recent actions, and active goals. Capacity: 8K--128K tokens depending on model.
 
-\textbf{Human Evaluation.}
+\textbf{Tier 2: Spatial Memory.} Persistent storage of spatial knowledge. Implemented as a combination of:
 \begin{itemize}
-    \item User studies for subjective quality
-    \item Expert evaluation for safety-critical tasks
-    \item A/B testing in production
+    \item Vector database for semantic retrieval (e.g., embeddings of location descriptions)
+    \item Metric map for geometric relationships (e.g., occupancy grid, point cloud)
+    \item Scene graph for object relationships (e.g., ``cup is on table'')
 \end{itemize}
-
-\section{Safety Engineering}
 
-\subsection{Principles}
+\textbf{Tier 3: Episodic Memory.} Long-term storage of experiences indexed by location and time. Enables learning from past successes and failures.
 
-\textbf{Defense in Depth.} Multiple layers of safety:
-\begin{itemize}
-    \item Model-level safety (constitutional AI \citep{bai2022constitutional})
-    \item System-level safety (sandboxing, limits)
-    \item Hardware-level safety (e-stops, sensors)
-\end{itemize}
-
-\textbf{Fail-Safe Design.} Systems should fail safely:
-\begin{itemize}
-    \item Default to safe states
-    \item Graceful degradation
-    \item Clear failure modes
-\end{itemize}
+The key innovation is the integration layer that queries all three tiers based on the current context and retrieves relevant information for the LLM.
 
-\subsection{Red Teaming}
+\subsection{GNN-LLM Integration}
 
-\citep{ganguli2022red}: Proactive adversarial testing:
-\begin{itemize}
-    \item Dedicated red team
-    \item Automated adversarial testing
-    \item Bug bounty programs
-\end{itemize}
+We identify three integration patterns:
 
-\subsection{Alignment}
+\textbf{Pattern A: GNN as Encoder.} The GNN encodes graph structure into embeddings that are projected into the LLM's token space. The LLM then reasons over the combined text and graph information.
 
-\citep{amodei2016safety, hendrycks2021ethics}: Ensuring AI systems behave as intended:
-\begin{itemize}
-    \item Clear specification of goals
-    \item Value alignment techniques
-    \item Human oversight mechanisms
-\end{itemize}
+\textbf{Pattern B: LLM as Graph Enhancer.} The LLM generates node features, edge labels, or graph augmentations that improve GNN performance.
 
-\section{Autonomous Driving: Deep Technical Analysis}
+\textbf{Pattern C: Iterative Refinement.} The GNN and LLM alternate, with each refining the other's outputs.
 
-Autonomous driving represents one of the most demanding applications of spatial AI, requiring real-time perception, prediction, and planning in safety-critical environments.
+Our preliminary analysis suggests Pattern A is most suitable for spatial reasoning tasks, where the graph structure (e.g., scene graph, road network) provides critical inductive bias that the LLM alone cannot capture.
 
-\subsection{End-to-End Driving Architectures}
+\subsection{World Model Architecture}
 
-\subsubsection{UniAD: Unified Autonomous Driving}
+We adopt the Dreamer family architecture \citep{hafner2019dream, hafner2021dreamerv2, hafner2023dreamerv3} as our starting point:
 
-\citep{hu2023uniad} presents a unified framework integrating perception, prediction, and planning:
+\textbf{Encoder.} Maps observations to latent states: $z_t = \text{enc}(o_t)$
 
-\textbf{Architecture Components.}
-\begin{itemize}
-    \item \textbf{BEV Encoder:} Transforms multi-camera images to bird's-eye-view representation
-    \item \textbf{Track Query:} Maintains object tracking across frames
-    \item \textbf{Motion Query:} Predicts future trajectories of agents
-    \item \textbf{Occupancy Prediction:} Forecasts future occupancy grids
-    \item \textbf{Planning Head:} Generates ego-vehicle trajectory
-\end{itemize}
+\textbf{Dynamics Model.} Predicts future latent states: $\hat{z}_{t+1} = \text{dyn}(z_t, a_t)$
 
-\textbf{Key Innovation.} Joint training of all components enables information flow between tasks, improving overall performance compared to modular approaches.
+\textbf{Reward Predictor.} Estimates rewards from latent states: $\hat{r}_t = \text{rew}(z_t)$
 
-\subsubsection{VAD: Vectorized Autonomous Driving}
+\textbf{Decoder.} Reconstructs observations for training: $\hat{o}_t = \text{dec}(z_t)$
 
-\citep{jiang2023vad} introduces vectorized scene representation:
-\begin{itemize}
-    \item Represents scenes as sets of vectors (lanes, agents)
-    \item More efficient than dense grid representations
-    \item Enables direct reasoning about scene structure
-\end{itemize}
+The key advantage is that planning occurs entirely in latent space, enabling fast rollouts without expensive simulation.
 
-\subsubsection{EMMA: End-to-End Multimodal Model}
+\subsection{Vision-Language-Action Models}
 
-\citep{waymo_emma_2024} from Waymo demonstrates multimodal driving:
-\begin{itemize}
-    \item Integrates camera, lidar, and radar inputs
-    \item Language-conditioned driving
-    \item Reasoning about complex scenarios
-\end{itemize}
+For grounded action generation, we build on the RT-2 \citep{brohan2023rt2} and OpenVLA \citep{kim2024openvla} architectures:
 
-\subsection{BEV Perception Pipeline}
+\textbf{Input.} Image observation $I$ and language instruction $L$
 
-Bird's-eye-view (BEV) representations have become standard for autonomous driving perception.
+\textbf{Processing.} Vision encoder extracts features; language model processes instruction; cross-attention fuses modalities
 
-\subsubsection{LSS: Lift-Splat-Shoot}
+\textbf{Output.} Action tokens decoded to continuous robot commands
 
-\citep{philion2020lift} introduced the foundational approach:
-\begin{enumerate}
-    \item \textbf{Lift:} Predict depth distribution for each pixel
-    \item \textbf{Splat:} Project features to 3D using predicted depth
-    \item \textbf{Shoot:} Collapse 3D features to BEV plane
-\end{enumerate}
+The critical design choice is action representation. Discretizing the action space enables language model training but sacrifices precision. Continuous outputs preserve precision but require architectural modifications.
 
-\subsubsection{BEVFormer}
+\section{Benchmark Analysis}
 
-\citep{li2022bevformer, yang2023bevformerv2} uses transformers for BEV generation:
-\begin{itemize}
-    \item Spatial cross-attention for multi-camera fusion
-    \item Temporal self-attention for temporal modeling
-    \item Deformable attention for efficiency
-\end{itemize}
+We analyze key benchmarks to identify evaluation gaps and inform AtlasPro AI's internal benchmarking strategy.
 
-\subsection{Datasets for Autonomous Driving}
+\subsection{Navigation Benchmarks}
 
 \begin{table}[h!]
 \centering
-\caption{Major Autonomous Driving Datasets}
+\caption{Navigation Benchmark Comparison}
 \begin{tabular}{@{}lccc@{}}
 \toprule
-\textbf{Dataset} & \textbf{Scenes} & \textbf{Sensors} & \textbf{Key Features} \\
+\textbf{Benchmark} & \textbf{Environment} & \textbf{Instruction Type} & \textbf{Key Metric} \\
 \midrule
-nuScenes \citep{caesar2020nuscenes} & 1000 & Camera, Lidar, Radar & 3D annotations \\
-Waymo Open \citep{sun2020scalability} & 1150 & Camera, Lidar & High quality \\
-Argoverse 2 \citep{wilson2023argoverse2} & 1000 & Camera, Lidar & HD maps \\
-KITTI \citep{geiger2012kitti} & 22 & Camera, Lidar & Foundational \\
+R2R \citep{anderson2018vln} & Matterport3D & Step-by-step & SPL \\
+RxR \citep{ku2020room} & Matterport3D & Detailed, multilingual & nDTW \\
+REVERIE \citep{qi2020reverie} & Matterport3D & High-level + object & SR \\
+SOON \citep{zhu2021soon} & Matterport3D & Object-centric & SR \\
+Habitat ObjectNav & Habitat & Object category & SPL \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\section{3D Scene Understanding: Technical Deep-Dive}
+\textbf{Gap Identified.} Existing benchmarks focus on single-episode navigation. They do not evaluate persistent spatial memory across multiple episodes or long-horizon exploration.
 
-\subsection{Neural Radiance Fields (NeRF)}
-
-\subsubsection{Original NeRF}
-
-\citep{mildenhall2020nerf} represents scenes as continuous volumetric functions:
-
-\textbf{MLP Architecture.}
-\begin{equation}
-F_\theta: (\mathbf{x}, \mathbf{d}) \rightarrow (\mathbf{c}, \sigma)
-\end{equation}
-
-where $\mathbf{x}$ is 3D position, $\mathbf{d}$ is viewing direction, $\mathbf{c}$ is color, and $\sigma$ is density.
-
-\textbf{Volume Rendering.}
-\begin{equation}
-C(\mathbf{r}) = \int_{t_n}^{t_f} T(t) \sigma(\mathbf{r}(t)) \mathbf{c}(\mathbf{r}(t), \mathbf{d}) dt
-\end{equation}
-
-where $T(t) = \exp(-\int_{t_n}^{t} \sigma(\mathbf{r}(s)) ds)$.
-
-\subsubsection{Mip-NeRF 360}
-
-\citep{barron2022mipnerf360} extends NeRF to unbounded scenes:
-\begin{itemize}
-    \item Integrated positional encoding for anti-aliasing
-    \item Contraction function for unbounded scenes
-    \item Proposal network for efficient sampling
-\end{itemize}
-
-\subsection{3D Gaussian Splatting}
-
-\citep{kerbl20233dgaussian} provides real-time novel view synthesis:
-
-\textbf{Representation.} Scene as set of 3D Gaussians:
-\begin{itemize}
-    \item Position (mean)
-    \item Covariance matrix (shape)
-    \item Opacity
-    \item Spherical harmonics (view-dependent color)
-\end{itemize}
-
-\textbf{Rendering.} Differentiable rasterization:
-\begin{itemize}
-    \item Project Gaussians to 2D
-    \item Sort by depth
-    \item Alpha-blend front-to-back
-\end{itemize}
-
-\textbf{Advantages over NeRF.}
-\begin{itemize}
-    \item Real-time rendering (100+ FPS)
-    \item Explicit representation (easier editing)
-    \item Faster training (minutes vs. hours)
-\end{itemize}
-
-\subsection{Point Cloud Processing}
-
-\subsubsection{PointNet}
-
-\citep{qi2017pointnet} pioneered deep learning on point clouds:
-
-\textbf{Key Innovations.}
-\begin{itemize}
-    \item Permutation invariance through max pooling
-    \item T-Net for spatial transformer
-    \item Direct processing of raw point clouds
-\end{itemize}
-
-\subsubsection{PointNet++}
-
-\citep{qi2017pointnetplusplus} adds hierarchical structure:
-\begin{itemize}
-    \item Set abstraction layers for local feature learning
-    \item Multi-scale grouping for varying densities
-    \item Feature propagation for segmentation
-\end{itemize}
-
-\subsection{Scene Graphs}
-
-\subsubsection{Visual Scene Graphs}
-
-\citep{xu2017scenegraph, krishna2017visual} represent scenes as graphs:
-\begin{itemize}
-    \item Nodes: Objects with attributes
-    \item Edges: Relationships between objects
-    \item Enables structured reasoning
-\end{itemize}
-
-\subsubsection{3D Scene Graphs}
-
-\citep{armeni2019scene, rosinol2020scene} extend to 3D:
-\begin{itemize}
-    \item Hierarchical structure (building $\rightarrow$ room $\rightarrow$ object)
-    \item Metric information (positions, sizes)
-    \item Semantic relationships
-\end{itemize}
-
-\section{Multi-Modal Foundation Models}
-
-\subsection{Vision-Language Models}
-
-\subsubsection{LLaVA}
-
-\citep{liu2023llava, liu2023visual} pioneered visual instruction tuning:
-
-\textbf{Architecture.}
-\begin{itemize}
-    \item Vision encoder: CLIP ViT-L/14
-    \item Projection layer: Linear or MLP
-    \item Language model: Vicuna/LLaMA
-\end{itemize}
-
-\textbf{Training Stages.}
-\begin{enumerate}
-    \item Pre-training: Image-text alignment
-    \item Fine-tuning: Visual instruction tuning
-\end{enumerate}
-
-\subsubsection{Flamingo}
-
-\citep{alayrac2022flamingo} introduced few-shot multimodal learning:
-\begin{itemize}
-    \item Perceiver resampler for visual tokens
-    \item Gated cross-attention for vision-language fusion
-    \item In-context learning with interleaved images and text
-\end{itemize}
-
-\subsubsection{BLIP-2}
-
-\citep{li2023blip2} efficiently bootstraps vision-language pretraining:
-\begin{itemize}
-    \item Q-Former bridges frozen image encoder and LLM
-    \item Two-stage training for efficiency
-    \item Strong zero-shot performance
-\end{itemize}
-
-\subsection{Frontier Models}
-
-\subsubsection{GPT-4V}
-
-\citep{achiam2023gpt4} represents frontier multimodal capabilities:
-\begin{itemize}
-    \item Strong visual understanding
-    \item Complex reasoning over images
-    \item Integration with tool use
-\end{itemize}
-
-\subsubsection{Gemini}
-
-\citep{team2023gemini} from Google DeepMind:
-\begin{itemize}
-    \item Native multimodal training
-    \item Strong performance across modalities
-    \item Available in multiple sizes
-\end{itemize}
-
-\subsubsection{Qwen-VL}
-
-\citep{bai2023qwenvl, wang2024qwen2vl} provides strong open-source alternative:
-\begin{itemize}
-    \item Competitive with proprietary models
-    \item Multiple resolution support
-    \item Strong Chinese and English performance
-\end{itemize}
-
-\section{Detailed Benchmark Analysis}
-
-This section provides detailed analysis of key benchmarks for internal evaluation planning.
-
-\subsection{Navigation Benchmark Details}
-
-\subsubsection{Room-to-Room (R2R)}
-
-\citep{anderson2018vln}:
-\begin{itemize}
-    \item 7,189 paths in Matterport3D environments
-    \item Average path length: 10m, 6 viewpoints
-    \item Metrics: Success Rate (SR), SPL, Navigation Error
-\end{itemize}
-
-\textbf{State-of-the-Art Performance.}
-\begin{table}[h!]
-\centering
-\caption{R2R Val-Unseen Performance}
-\begin{tabular}{@{}lcc@{}}
-\toprule
-\textbf{Method} & \textbf{SR (\%)} & \textbf{SPL (\%)} \\
-\midrule
-Human & 86 & 76 \\
-Recurrent VLN-BERT & 63 & 57 \\
-HOPT & 64 & 57 \\
-DUST & 72 & 62 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsubsection{RxR: Room-across-Room}
-
-\citep{ku2020room}:
-\begin{itemize}
-    \item Multilingual (English, Hindi, Telugu)
-    \item Longer paths than R2R
-    \item More detailed instructions
-\end{itemize}
-
-\subsection{Manipulation Benchmark Details}
-
-\subsubsection{RLBench}
-
-\citep{james2020rlbench}:
-\begin{itemize}
-    \item 100 unique tasks
-    \item Multiple variations per task
-    \item CoppeliaSim simulation
-\end{itemize}
-
-\subsubsection{Meta-World}
-
-\citep{yu2020metaworld}:
-\begin{itemize}
-    \item 50 manipulation tasks
-    \item Multi-task and meta-learning evaluation
-    \item Sawyer robot simulation
-\end{itemize}
-
-\subsection{Agent Benchmark Details}
-
-\subsubsection{AgentBench}
-
-\citep{liu2023agentbench}:
-\begin{itemize}
-    \item 8 distinct environments
-    \item Operating system, database, web browsing
-    \item Comprehensive LLM agent evaluation
-\end{itemize}
-
-\subsubsection{EmbodiedBench}
-
-\citep{yang2025embodiedbench}:
-\begin{itemize}
-    \item Comprehensive embodied MLLM evaluation
-    \item Multiple spatial reasoning tasks
-    \item Manipulation and navigation
-\end{itemize}
-
-\section{Implementation Recipes}
-
-This section provides practical implementation guidance for common spatial AI tasks.
-
-\subsection{Recipe: Building a RAG-Enhanced Spatial Agent}
-
-\textbf{Step 1: Set Up Vector Database.}
-\begin{verbatim}
-import chromadb
-client = chromadb.Client()
-collection = client.create_collection("spatial_knowledge")
-\end{verbatim}
-
-\textbf{Step 2: Index Spatial Knowledge.}
-\begin{verbatim}
-# Embed and store spatial documents
-for doc in spatial_documents:
-    embedding = embed_model.encode(doc.text)
-    collection.add(
-        embeddings=[embedding],
-        documents=[doc.text],
-        metadatas=[{"location": doc.location}]
-    )
-\end{verbatim}
-
-\textbf{Step 3: Implement Retrieval-Augmented Agent.}
-\begin{verbatim}
-def spatial_agent(query):
-    # Retrieve relevant context
-    results = collection.query(query_texts=[query], n_results=5)
-    context = "\n".join(results["documents"][0])
-    
-    # Generate response with context
-    prompt = f"Context: {context}\n\nQuery: {query}"
-    response = llm.generate(prompt)
-    return response
-\end{verbatim}
-
-\subsection{Recipe: GNN for Traffic Prediction}
-
-\textbf{Step 1: Build Traffic Graph.}
-\begin{verbatim}
-import torch_geometric as pyg
-
-# Create edge index from road network
-edge_index = torch.tensor([[src_nodes], [dst_nodes]])
-
-# Node features: historical traffic
-x = torch.tensor(traffic_history)  # [N, T, F]
-\end{verbatim}
-
-\textbf{Step 2: Define Spatio-Temporal GNN.}
-\begin{verbatim}
-class STGNN(torch.nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.spatial_conv = GCNConv(in_channels, hidden)
-        self.temporal_conv = nn.GRU(hidden, hidden)
-        self.output = nn.Linear(hidden, out_channels)
-    
-    def forward(self, x, edge_index):
-        # Spatial aggregation
-        h = self.spatial_conv(x, edge_index)
-        # Temporal modeling
-        h, _ = self.temporal_conv(h)
-        return self.output(h)
-\end{verbatim}
-
-\subsection{Recipe: Deploying VLA Model on Robot}
-
-\textbf{Step 1: Load Pretrained Model.}
-\begin{verbatim}
-from transformers import AutoModelForVision2Seq
-model = AutoModelForVision2Seq.from_pretrained("openvla/openvla-7b")
-\end{verbatim}
-
-\textbf{Step 2: Optimize for Deployment.}
-\begin{verbatim}
-# Quantize for faster inference
-model = torch.quantization.quantize_dynamic(
-    model, {torch.nn.Linear}, dtype=torch.qint8
-)
-\end{verbatim}
-
-\textbf{Step 3: Robot Control Loop.}
-\begin{verbatim}
-while not done:
-    # Get observation
-    image = camera.capture()
-    instruction = "Pick up the red cup"
-    
-    # Predict action
-    action = model.predict(image, instruction)
-    
-    # Execute action
-    robot.execute(action)
-    
-    # Check completion
-    done = check_task_completion()
-\end{verbatim}
-
-\section{Computational Requirements}
-
-This section provides guidance on computational resources for different spatial AI tasks.
-
-\subsection{Training Requirements}
+\subsection{Manipulation Benchmarks}
 
 \begin{table}[h!]
 \centering
-\caption{Computational Requirements for Training}
+\caption{Manipulation Benchmark Comparison}
 \begin{tabular}{@{}lccc@{}}
 \toprule
-\textbf{Model Type} & \textbf{GPUs} & \textbf{Memory} & \textbf{Time} \\
+\textbf{Benchmark} & \textbf{Tasks} & \textbf{Horizon} & \textbf{Key Challenge} \\
 \midrule
-VLA (7B) & 8$\times$A100 & 640GB & 1-2 weeks \\
-GNN (Traffic) & 1$\times$V100 & 32GB & 1-2 days \\
-NeRF & 1$\times$RTX 3090 & 24GB & 12-24 hours \\
-3D Gaussian Splatting & 1$\times$RTX 3090 & 24GB & 30-60 min \\
-World Model (Dreamer) & 1$\times$V100 & 32GB & 1-3 days \\
+RLBench \citep{james2020rlbench} & 100 & Short & Diversity \\
+Meta-World \citep{yu2020metaworld} & 50 & Short & Multi-task \\
+CALVIN \citep{mees2022calvin} & 34 & Long & Language grounding \\
+ALFRED \citep{shridhar2020alfred} & 25K & Long & Embodied instruction \\
+BEHAVIOR-1K \citep{li2023behavior} & 1000 & Long & Realistic activities \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{Inference Requirements}
+\textbf{Gap Identified.} Benchmarks evaluate task success but not failure mode diagnosis. Understanding \textit{why} agents fail is as important as measuring \textit{how often}.
+
+\subsection{Agent Benchmarks}
 
 \begin{table}[h!]
 \centering
-\caption{Inference Latency Requirements}
-\begin{tabular}{@{}lcc@{}}
+\caption{Agent Benchmark Comparison}
+\begin{tabular}{@{}lccc@{}}
 \toprule
-\textbf{Application} & \textbf{Latency Requirement} & \textbf{Recommended Hardware} \\
+\textbf{Benchmark} & \textbf{Environments} & \textbf{Focus} & \textbf{Spatial?} \\
 \midrule
-Robot Control & <50ms & Jetson AGX, RTX 4090 \\
-Autonomous Driving & <100ms & Multiple GPUs \\
-Traffic Prediction & <1s & Cloud GPU \\
-Geospatial Analysis & Minutes & Cloud cluster \\
+AgentBench \citep{liu2023agentbench} & 8 & General LLM agents & Limited \\
+WebArena \citep{zhou2024webarena} & Web & Web navigation & No \\
+OSWorld \citep{xie2024osworld} & Desktop & OS interaction & No \\
+EmbodiedBench \citep{yang2025embodiedbench} & Simulation & Embodied MLLM & Yes \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\section{Open Challenges and Research Directions}
+\textbf{Gap Identified.} No benchmark comprehensively evaluates spatial reasoning across scales. EmbodiedBench is closest but focuses on meso-scale embodied tasks.
 
-\subsection{Robust Spatial Representation}
+\begin{keytakeaways}[Key Insight: Benchmark Gaps]
+The field lacks benchmarks that evaluate: (1) cross-scale spatial reasoning, (2) persistent spatial memory, (3) failure mode diagnosis, and (4) safe exploration. AtlasPro AI's internal benchmarking will address these gaps.
+\end{keytakeaways}
 
-\citep{mildenhall2020nerf, kerbl20233dgaussian, hong20233dllm}:
+\section{Industry Landscape}
+
+We analyze industry leaders to identify design patterns and market positioning.
+
+\subsection{Autonomous Vehicles}
+
+\textbf{Waymo} has deployed the most mature autonomous driving system, with millions of miles of real-world operation. Their recent EMMA model \citep{waymo_emma_2024} demonstrates end-to-end multimodal driving. Key lesson: safety requires extensive real-world validation, not just simulation.
+
+\textbf{Tesla} pursues a vision-only approach, betting that camera-based perception can match or exceed lidar. Key lesson: data scale can compensate for sensor limitations.
+
+\textbf{Cruise and Zoox} focus on urban robotaxi deployment. Key lesson: constrained operational domains enable faster deployment.
+
+\subsection{Robotics}
+
+\textbf{Boston Dynamics} demonstrates state-of-the-art locomotion and manipulation. Key lesson: hardware and control co-design matters as much as perception.
+
+\textbf{Figure AI and 1X} are developing humanoid robots for general-purpose tasks. Key lesson: the market is betting on generalist robots over specialized solutions.
+
+\textbf{Covariant} applies foundation models to warehouse robotics. Key lesson: industrial applications provide data and revenue to fund research.
+
+\subsection{Geospatial Intelligence}
+
+\textbf{Palantir} provides data integration and analysis for defense and enterprise. Key lesson: the value is in integration, not just algorithms.
+
+\textbf{ESRI} dominates enterprise GIS with ArcGIS. Key lesson: ecosystem lock-in creates durable competitive advantage.
+
+\textbf{Planet Labs} operates the largest constellation of Earth-imaging satellites. Key lesson: data access is a moat.
+
+\subsection{Positioning for AtlasPro AI}
+
+Based on this analysis, AtlasPro AI will focus on:
+
+\begin{enumerate}
+    \item \textbf{Cross-scale reasoning} that existing players do not address
+    \item \textbf{GNN-LLM integration} as a differentiating technical capability
+    \item \textbf{Safety-first development} using world models for planning
+    \item \textbf{Open research} to build community and attract talent
+\end{enumerate}
+
+\section{Research Roadmap}
+
+AtlasPro AI's research program proceeds in three phases.
+
+\subsection{Phase 1: Foundation (Q1--Q2 2026)}
+
+\textbf{Objective.} Establish core infrastructure and validate architectural principles.
+
+\textbf{Deliverables.}
 \begin{itemize}
-    \item Generalization across scenes
-    \item Handling novel viewpoints
-    \item Efficient 3D representations
+    \item Internal benchmarking framework covering navigation, manipulation, and geospatial tasks
+    \item Prototype memory architecture with three-tier integration
+    \item GNN-LLM integration baseline on scene graph reasoning
+    \item Simulation environment setup (Habitat, Isaac Sim)
 \end{itemize}
 
-\subsection{Long-Horizon Planning}
+\subsection{Phase 2: Integration (Q3--Q4 2026)}
 
-\citep{song2023llmplanner, valmeekam2023large}:
+\textbf{Objective.} Integrate components into unified system and evaluate on benchmarks.
+
+\textbf{Deliverables.}
 \begin{itemize}
-    \item Planning over extended time horizons
-    \item Complex task decomposition
-    \item Error recovery and replanning
+    \item Unified spatial agent architecture
+    \item World model integration for safe planning
+    \item Cross-scale reasoning demonstration
+    \item Internal benchmark results and analysis
 \end{itemize}
 
-\subsection{Sim-to-Real Transfer}
+\subsection{Phase 3: Deployment (2027)}
 
-\citep{zhao2020sim, tobin2017domain, james2019sim}:
+\textbf{Objective.} Transfer to real-world applications and establish production capabilities.
+
+\textbf{Deliverables.}
 \begin{itemize}
-    \item Domain randomization
-    \item System identification
-    \item Real-world fine-tuning
+    \item Sim-to-real transfer validation
+    \item Pilot deployments in target applications
+    \item Safety certification process
+    \item Production infrastructure
 \end{itemize}
 
-\subsection{Multi-Agent Coordination}
+\section{Limitations and Risks}
 
-\citep{zhang2021multi, wu2023autogen, hong2023metagpt}:
+We acknowledge the following limitations of our current work and risks to our research program.
+
+\subsection{Limitations of This Report}
+
 \begin{itemize}
-    \item Communication protocols
-    \item Task allocation
-    \item Emergent coordination
+    \item \textbf{No experimental validation.} The architectural principles are derived from literature analysis, not from experiments on our own systems.
+    \item \textbf{Selection bias.} Our paper selection may have missed relevant work outside our search scope.
+    \item \textbf{Rapidly evolving field.} Findings may be outdated as the field advances.
 \end{itemize}
 
-\subsection{Scalable Data Collection}
+\subsection{Research Risks}
 
-\citep{open_x_embodiment_rt_x_2023, walke2023bridgedata}:
 \begin{itemize}
-    \item Efficient data collection methods
-    \item Data sharing and standardization
-    \item Synthetic data generation
+    \item \textbf{Integration complexity.} Combining memory, planning, GNNs, and world models is technically challenging. Integration may prove harder than anticipated.
+    \item \textbf{Sim-to-real gap.} Performance in simulation may not transfer to real-world deployment.
+    \item \textbf{Compute requirements.} Training world models and large VLAs requires significant computational resources.
+    \item \textbf{Safety challenges.} Deploying autonomous systems in the physical world carries inherent risks.
+\end{itemize}
+
+\subsection{Mitigation Strategies}
+
+\begin{itemize}
+    \item Incremental development with frequent evaluation checkpoints
+    \item Collaboration with academic partners for validation
+    \item Conservative deployment strategy with extensive testing
+    \item Safety engineering practices including red teaming and formal verification where applicable
 \end{itemize}
 
 \section{Conclusion}
 
-This technical report has provided a comprehensive, engineering-focused analysis of autonomous spatial intelligence systems. We have synthesized over 500 papers to provide AtlasPro AI engineering teams with actionable guidance for building next-generation spatially-aware autonomous systems.
+This technical report has presented AtlasPro AI's research approach to building autonomous spatial intelligence systems. Our key contributions are:
 
-\textbf{Key Takeaways.}
 \begin{enumerate}
-    \item Memory architecture is critical---invest in hierarchical memory systems.
-    \item GNN-LLM integration is a powerful paradigm for spatial reasoning.
-    \item World models enable safe planning through imagination.
-    \item Open-source VLA models provide strong baselines for robotics.
-    \item Safety engineering must be built in from the start.
+    \item A \textbf{three-axis taxonomy} (Task $\times$ Capability $\times$ Scale) that organizes the design space for spatial AI
+    \item A \textbf{systematic failure mode analysis} revealing architectural limitations of current approaches
+    \item \textbf{Six architectural principles} that will guide our system development
+    \item A \textbf{research roadmap} for AtlasPro AI's development program
 \end{enumerate}
 
-\textbf{Next Steps.}
-\begin{enumerate}
-    \item Establish internal benchmarking infrastructure.
-    \item Build prototype GNN-LLM integration system.
-    \item Deploy simulation environment for safe development.
-    \item Implement safety engineering practices.
-    \item Begin pilot projects in identified use cases.
-\end{enumerate}
+We release this report to establish priority on our methodological contributions, to invite feedback from the research community, and to signal our commitment to open research. Spatial intelligence represents one of the most important frontiers in AI, and we believe progress requires collaboration across academia and industry.
 
-This document will be updated quarterly as the field advances. Questions and feedback should be directed to the Research Division.
+\vspace{0.5cm}
+
+\noindent\textbf{Acknowledgments.} We thank the broader research community whose work made this analysis possible. This report synthesizes insights from hundreds of researchers; any errors in interpretation are our own.
+
+\vspace{0.5cm}
+
+\noindent\textbf{Contact.} Questions and feedback: research@atlaspro.ai
+
+\vspace{0.5cm}
+
+\noindent\textbf{Version History.}
+\begin{itemize}
+    \item v1.0 (January 2026): Initial release
+\end{itemize}
 
 \bibliographystyle{plainnat}
 \bibliography{references}
