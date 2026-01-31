@@ -140,13 +140,13 @@ As Table~\ref{tab:survey_comparison} reveals, existing surveys cluster around ei
 
 \section{Unified Three-Axis Taxonomy}
 
-We propose a three-axis taxonomy (Figure~\ref{fig:taxonomy}) that maps agentic capabilities to spatial task requirements across spatial scales, enabling systematic analysis of existing methods and identification of research gaps.
+We propose a three-axis taxonomy (Figure~\ref{fig:taxonomy}) that maps agentic capabilities to spatial task requirements across spatial scales. To read this framework: each method occupies a position along all three axes simultaneously; the \textit{Task axis} specifies what the system does, the \textit{Capability axis} specifies how it reasons and acts, and the \textit{Scale axis} specifies the spatial granularity. This structure enables systematic comparison of methods and identification of underexplored regions in the design space.
 
 \subsection{Taxonomy Axes}
 
 \textbf{Axis 1: Spatial Task.} We identify four primary spatial task categories:
 \begin{itemize}[leftmargin=*]
-    \item \textbf{Navigation}: Goal-directed movement through environments, including point-goal \citep{anderson2018on, wijmans2019dd, savva2019habitat, ramakrishnan2021hm3d}, object-goal \citep{chaplot2020objectgoal, batra2020objectnav}, and vision-language navigation \citep{anderson2018vln, krantz2020vlnce}
+    \item \textbf{Navigation}: Goal-directed movement through environments, including indoor point-goal \citep{anderson2018on, wijmans2019dd, savva2019habitat}, object-goal \citep{chaplot2020objectgoal, batra2020objectnav}, vision-language navigation \citep{anderson2018vln, krantz2020vlnce}, and outdoor autonomous driving \citep{hu2023uniad, caesar2020nuscenes}
     \item \textbf{Scene Understanding}: Perceiving and reasoning about 3D structure, objects, and spatial relationships
     \item \textbf{Manipulation}: Physical interaction with objects, including grasping \citep{mahler2017dexnet, morrison2018closing, fang2020graspnet, ten2017grasp}, placement \citep{zeng2021transporter}, and tool use \citep{qin2023toolllm, qin2024toolllm}
     \item \textbf{Geospatial Analysis}: Large-scale spatial reasoning including satellite imagery \citep{christie2018fmow, christie2018functional, demir2018deepglobe, xia2017aid, sumbul2019bigearthnet}, urban computing \citep{zheng2014urban, yuan2020survey, zheng2015trajectory}, and geographic information systems \citep{longley2015gis, goodchild2007citizens}
@@ -155,21 +155,21 @@ We propose a three-axis taxonomy (Figure~\ref{fig:taxonomy}) that maps agentic c
 \textbf{Axis 2: Agentic Capability.} We identify three core agentic capabilities:
 \begin{itemize}[leftmargin=*]
     \item \textbf{Memory}: Short-term (in-context), long-term (retrieval-augmented), episodic, and spatial memory systems
-    \item \textbf{Planning}: Reactive, hierarchical, search-based, and world model-based planning approaches
+    \item \textbf{Planning}: Reactive, hierarchical, search-based, and world model-based planning approaches. Self-reflection \citep{shinn2023reflexion} operates as a meta-capability that spans memory (storing past failures) and planning (revising future actions)
     \item \textbf{Tool Use \& Action}: API integration, code generation, physical action primitives, and skill libraries
 \end{itemize}
 
-\textbf{Axis 3: Spatial Scale.} We distinguish three spatial scales:
+\textbf{Axis 3: Spatial Scale.} We distinguish three spatial scales with approximate boundaries:
 \begin{itemize}[leftmargin=*]
-    \item \textbf{Micro-spatial}: Pose estimation, grasping, fine manipulation (centimeter scale)
-    \item \textbf{Meso-spatial}: Room navigation, building exploration, indoor scenes (meter scale)
-    \item \textbf{Macro-spatial}: City-scale planning, satellite imagery, infrastructure networks (kilometer scale)
+    \item \textbf{Micro-spatial} ($<$1m): Pose estimation, grasping, fine manipulation at centimeter precision
+    \item \textbf{Meso-spatial} (1m--100m): Room navigation, building exploration, indoor/outdoor local scenes
+    \item \textbf{Macro-spatial} ($>$100m): City-scale planning, satellite imagery, infrastructure networks spanning kilometers
 \end{itemize}
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.9\textwidth]{taxonomy.png}
-    \caption{A unified three-axis taxonomy connecting Agentic AI capabilities (memory, planning, tool use) with Spatial Intelligence domains (navigation, scene understanding, manipulation, geospatial analysis) across spatial scales (micro, meso, macro). The intersection of these dimensions defines the design space for autonomous spatial intelligence systems.}
+    \caption{A unified three-axis taxonomy connecting Agentic AI capabilities with Spatial Intelligence domains across spatial scales. The intersection of these dimensions defines the design space for autonomous spatial intelligence systems. Key insight: methods optimized for one axis often sacrifice performance on others---e.g., micro-scale manipulation systems achieve precision but lack macro-scale planning, while geospatial models excel at scale but lack fine-grained action capabilities.}
     \label{fig:taxonomy}
 \end{figure}
 
