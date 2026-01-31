@@ -1,6 +1,6 @@
 # From Perception to Action: Spatial AI Agents and World Models
 
-[![arXiv](https://img.shields.io/badge/arXiv-2601.XXXXX-b31b1b.svg)](https://arxiv.org/)
+[![arXiv](https://img.shields.io/badge/arXiv-Pending-b31b1b.svg)](https://arxiv.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![GitHub stars](https://img.shields.io/github/stars/glo26/spatial-survey?style=social)](https://github.com/glo26/spatial-survey)
 
@@ -87,7 +87,7 @@ pdflatex main.tex
 @article{felicia2026perception,
     title={From Perception to Action: Spatial AI Agents and World Models},
     author={Felicia, Gloria and Bryant, Nolan and Putra, Handi and Gazali, Ayaan and Lobo, Eliel and Rojas, Esteban},
-    journal={arXiv preprint arXiv:2601.XXXXX},
+    journal={arXiv preprint arXiv:Pending},
     year={2026}
 }
 ```
