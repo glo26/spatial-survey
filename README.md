@@ -22,9 +22,11 @@ While large language models have become the dominant paradigm for agentic reason
 
 2. **Comprehensive Analysis**: Review of 800+ papers identifying key architectural patterns including GNN-LLM integration, vision-language-action models, and world model-based planning.
 
-3. **SpatialAgentBench**: A conceptual evaluation framework for standardizing cross-domain assessment of spatial AI agents.
+3. **Systematic Comparison**: Quantitative comparison with existing surveys demonstrating unique coverage of the agentic-spatial intersection.
 
-4. **Industry Design Patterns**: Analysis of real-world deployments from Waymo, Tesla, Palantir, ESRI, and other industry leaders, abstracted into reusable design patterns.
+4. **Forward-Looking Roadmap**: Six grand challenges and research directions, including the conceptual SpatialAgentBench framework for future unified evaluation.
+
+5. **Industry Design Patterns**: Analysis of real-world deployments from Waymo, Tesla, Palantir, ESRI, and other industry leaders, abstracted into reusable design patterns.
 
 ## Repository Structure
 
