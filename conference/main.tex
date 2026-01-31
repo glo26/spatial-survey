@@ -514,11 +514,11 @@ While existing benchmarks have advanced the field \citep{raji2021ai, liao2021we,
 
 \textbf{Metric Limitations.} Three distinct issues: (1) \textit{Optimality assumption}---SPL assumes optimal paths are known, unrealistic in novel environments; (2) \textit{Binary success}---SR ignores partial progress (an agent 1cm from goal scores 0); (3) \textit{Missing dimensions}---no standard metrics for safety, robustness, or interpretability. \textit{Gap: Metrics reward task completion but not safe, robust, or interpretable behavior.}
 
-\textbf{Long-Horizon Evaluation.} Most benchmarks evaluate short episodes (tens to hundreds of steps). Real-world tasks require sustained performance over hours or days with memory persistence and error recovery. \textit{Gap: No benchmark evaluates multi-day spatial tasks with persistent memory.}
+\textbf{Long-Horizon Evaluation.} Most benchmarks evaluate short episodes (tens to hundreds of steps). Real-world tasks require sustained performance over hours or days with memory persistence and error recovery. This is fundamentally incompatible with LLM context-window assumptions---current models cannot maintain coherent spatial state across thousands of observations. \textit{Gap: No benchmark evaluates multi-day spatial tasks with persistent memory.}
 
 \textbf{Safety-Critical Evaluation.} Benchmarks rarely evaluate failure modes, adversarial robustness, or behavior under distribution shift. Safety-critical applications require understanding of worst-case performance. \textit{Gap: Safety evaluation remains ad-hoc rather than systematic.}
 
-\textbf{Cross-Scale Evaluation.} \textit{This is the most critical gap.} Benchmarks operate at a single spatial scale, yet real applications demand seamless cross-scale reasoning. Consider a home robot: it must plan a room-level path (meso), avoid furniture (meso), and grasp a cup handle (micro)---all within one task. No existing benchmark evaluates this integration. \textit{Gap: No benchmark evaluates cross-scale spatial reasoning, despite it being essential for real-world deployment.}
+\textbf{Cross-Scale Evaluation.} \textit{This is the most critical gap---it directly violates our three-axis framework's Scale axis.} Benchmarks operate at a single spatial scale, yet real applications demand seamless cross-scale reasoning. Consider a home robot: it must plan a room-level path (meso), avoid furniture (meso), and grasp a cup handle (micro)---all within one task. No existing benchmark evaluates this integration. \textit{Gap: No benchmark evaluates cross-scale spatial reasoning, despite it being essential for real-world deployment.}
 
 \subsection{SpatialAgentBench: A Conceptual Framework for Future Research}
 
