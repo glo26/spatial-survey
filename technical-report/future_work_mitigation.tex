@@ -1,0 +1,40 @@
+
+\subsection{Future Work: A Realistic Mitigation Strategy}
+
+To translate our research vision into a robust, enterprise-grade platform, AtlasPro AI will pursue a pragmatic and resource-efficient mitigation strategy that directly addresses the limitations identified in Section~\ref{sec:limitations}. Our future work is organized around three core pillars: data strategy, model innovation, and agent safety.
+
+\subsubsection{Data Strategy: From Scarcity to Abundance}
+
+To overcome the fundamental challenge of data dependency, we will implement a two-pronged strategy focused on privacy-preserving data access and high-fidelity synthetic data generation.
+
+\begin{itemize}
+    \item \textbf{Federated Learning for GNNs:} Instead of requiring customers to transfer sensitive infrastructure data to our cloud, we will pioneer a federated learning approach. Containerized GNN training modules will be deployed directly within the customer's environment, training on local data. Only the resulting model weights, not the underlying data, are shared back to AtlasPro AI for aggregation. This approach drastically reduces security and data sovereignty concerns, making partnerships more attainable and resource-efficient by leveraging customer infrastructure.
+    
+    \item \textbf{World Models for Synthetic Data Generation:} To address the lack of public GNN-ready datasets, we will leverage our research into world models (Section~\ref{sec:world_models}) to generate large-scale, realistic synthetic infrastructure network data. These synthetic datasets will be used to pre-train our GNNs and agentic systems, allowing us to develop and validate our models before gaining access to proprietary customer data. This significantly accelerates our development cycle and reduces our dependency on initial data partnerships.
+    
+    \item \textbf{Automated Data Fitness Scorecard:} To ensure data quality, we will build an automated data validation pipeline that generates a "Data Fitness Scorecard" for any new dataset. This tool will programmatically detect and quantify issues like spatial autocorrelation, data imbalance, and out-of-distribution characteristics, providing actionable insights for data cleaning and augmentation.
+\end{itemize}
+
+\subsubsection{Model Innovation: Scalable and Expressive GNNs}
+
+To push beyond the limitations of current GNN architectures, our research will focus on novel approaches to scalability and expressiveness.
+
+\begin{itemize}
+    \item \textbf{Hierarchical Graph-of-Graphs Architecture:} Rather than attempting to train a single, monolithic GNN on a continent-scale graph, we will develop a hierarchical "Graph-of-Graphs" (GoG) architecture. Smaller, specialized GNNs will be trained on regional subgraphs, and a higher-level GNN will learn to reason about the interactions between these regions. This approach is significantly more memory-efficient and scalable than traditional methods.
+    
+    \item \textbf{Graph Transformers for Expressiveness:} We will invest in research on Graph Transformers and other higher-order GNN architectures to overcome the over-smoothing and over-squashing limitations of standard message-passing GNNs. This will enable our models to capture more complex, long-range dependencies within infrastructure networks.
+\end{itemize}
+
+\subsubsection{Agent Safety: Graduated Autonomy and Verifiable Provenance}
+
+To mitigate the risks inherent in agentic AI systems, we will build a safety framework centered on human oversight and verifiable data integrity.
+
+\begin{itemize}
+    \item \textbf{Human-in-the-Loop with Graduated Autonomy:} Our system will not be fully autonomous from day one. We will implement a "Human-in-the-Loop" (HITL) workflow where the agent *proposes* actions for critical decisions, which must be approved by a human operator. Based on performance metrics and demonstrated reliability, the level of autonomy will be gradually increased, ensuring a safe and controlled transition to full automation.
+    
+    \item \textbf{Verifiable Data Provenance:} To combat memory poisoning and ensure auditability, we will implement a blockchain-inspired data provenance system. Every piece of information in the agent's knowledge base will be cryptographically hashed and linked back to its source, creating an immutable audit trail that allows us to trace the origin of any decision.
+    
+    \item \textbf{Resource Management and Query Validation:} To prevent resource exhaustion, we will implement strict query validation and complexity estimation at the API gateway. Any query that is estimated to exceed a predefined computational budget will be rejected or require special authorization, ensuring system stability.
+\end{itemize}
+
+By pursuing these targeted research and engineering efforts, AtlasPro AI will systematically address the core challenges of building autonomous spatial intelligence systems, transforming limitations into opportunities for innovation and market leadership.

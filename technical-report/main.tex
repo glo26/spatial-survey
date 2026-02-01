@@ -33,9 +33,14 @@
 \renewcommand{\thesection}{\arabic{section}}
 \renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
 
-% Define colors
-\definecolor{atlasblue}{RGB}{0, 82, 147}
-\definecolor{keybox}{RGB}{230, 242, 255}
+% Define colors - AtlasPro AI Army Green Brand
+\definecolor{atlasgreen}{RGB}{45, 74, 34}        % Dark army green #2D4A22
+\definecolor{atlasmedium}{RGB}{74, 124, 63}      % Medium army green #4A7C3F
+\definecolor{atlaslight}{RGB}{107, 155, 90}      % Light army green #6B9B5A
+\definecolor{atlaspale}{RGB}{143, 188, 122}      % Pale army green #8FBC7A
+\definecolor{keybox}{RGB}{212, 232, 200}         % Very light green #D4E8C8
+% Legacy alias for compatibility
+\definecolor{atlasblue}{RGB}{45, 74, 34}         % Redirected to army green
 \definecolor{tablehead}{gray}{0.9}
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -66,7 +71,7 @@
 % Key Takeaways box
 \newtcolorbox{keytakeaways}[1][]{
   colback=keybox,
-  colframe=atlasblue,
+  colframe=atlasgreen,
   fonttitle=\bfseries,
   title=#1,
   boxrule=0.5pt,
@@ -826,6 +831,7 @@ Use GNN for knowledge graph retrieval \citep{wang2024gnnrag}:
 This pattern is particularly relevant for AtlasPro AI, where we retrieve relevant network subgraphs to answer user queries.
 
 \section{World Models for Safe Deployment}
+\label{sec:world_models}
 
 World models learn predictive models of environment dynamics, enabling planning through imagination rather than trial-and-error \citep{ha2018worldmodels}.
 
@@ -3862,7 +3868,9 @@ This appendix provides a comprehensive reference architecture for AtlasPro AI de
     \item Limited scalability
 \end{itemize}
 
-\section{Conclusion and Call to Action}
+\input{future_work_mitigation.tex}
+
+\section{Conclusion}
 \label{app:conclusion}
 
 This technical report has presented AtlasPro AI's comprehensive approach to building autonomous spatial intelligence systems for critical infrastructure. We have demonstrated:
