@@ -20,8 +20,14 @@
 \usepackage{algorithmic}
 \usepackage{tcolorbox}
 
-% Define colors for takeaway boxes
-\definecolor{takeawayblue}{RGB}{230,240,250}
+% Define colors - AtlasPro AI Dark Army Green Brand (minimizing light green)
+\definecolor{atlasgreen}{RGB}{26, 58, 26}        % Darkest army green #1A3A1A
+\definecolor{atlasdark}{RGB}{45, 74, 45}         % Dark army green #2D4A2D
+\definecolor{atlasmedium}{RGB}{61, 92, 61}       % Medium army green #3D5C3D
+\definecolor{atlasolive}{RGB}{74, 107, 74}       % Olive green #4A6B4A
+\definecolor{atlassage}{RGB}{90, 122, 90}        % Muted sage #5A7A5A
+\definecolor{keybox}{RGB}{248, 248, 245}         % Off-white #F8F8F5
+\definecolor{takeawayblue}{RGB}{248, 248, 245}   % Redirected to off-white for consistency
 
 \begin{document}
 
@@ -203,7 +209,7 @@ LLaGA \citep{chen2024llaga} & Scene Understanding & Memory & Meso & Multimodal &
 }
 \end{table}
 
-\begin{tcolorbox}[colback=takeawayblue,colframe=black!50,title=Key Takeaways: Taxonomy]
+\begin{tcolorbox}[colback=takeawayblue,colframe=atlasdark,title=Key Takeaways: Taxonomy]
 \begin{itemize}[leftmargin=*,nosep]
     \item The three-axis taxonomy (Task $\times$ Capability $\times$ Scale) provides a comprehensive framework for organizing spatial AI research
     \item Most methods address meso-spatial scales; micro and macro scales remain underexplored
@@ -261,7 +267,7 @@ Tool use extends agent capabilities through external interfaces and physical act
 
 \textbf{Physical Action.} For embodied agents, tool use extends to physical manipulation \citep{zeng2021transporter, brohan2022rt1, brohan2023rt2, shridhar2022cliport, shridhar2023perceiver}. Action primitives \citep{dalal2021accelerating, nasiriany2022augmenting, mandlekar2021matters} provide reusable building blocks. Skill libraries \citep{wang2023voyager, lynch2020learning, pertsch2021accelerating, singh2021parrot, xu2023xskill} enable compositional action.
 
-\begin{tcolorbox}[colback=takeawayblue,colframe=black!50,title=Key Takeaways: Agentic Components]
+\begin{tcolorbox}[colback=takeawayblue,colframe=atlasdark,title=Key Takeaways: Agentic Components]
 \begin{itemize}[leftmargin=*,nosep]
     \item Memory systems must be explicitly spatial: cognitive maps, semantic maps, and scene graphs outperform generic retrieval for spatial tasks
     \item Hierarchical planning with geometric grounding addresses the gap between high-level language goals and low-level motor commands
@@ -347,7 +353,7 @@ AGCRN \citep{bai2020agcrn, song2020spatial} introduces node-specific patterns th
 
 \textbf{Urban Computing.} Urban computing \citep{zheng2014urban, yuan2020survey, zheng2015trajectory} applies AI to city-scale challenges. ST-LLM \citep{liu2024stllm} and UniST \citep{yuan2024unist} integrate language models with spatio-temporal reasoning. Traffic prediction \citep{li2018dcrnn, yu2018stgcn, wu2019graphwavenet} and demand forecasting \citep{geng2019spatiotemporal, yao2018deep, zhang2017deep} represent key applications.
 
-\begin{tcolorbox}[colback=takeawayblue,colframe=black!50,title=Key Takeaways: Spatial Domains]
+\begin{tcolorbox}[colback=takeawayblue,colframe=atlasdark,title=Key Takeaways: Spatial Domains]
 \begin{itemize}[leftmargin=*,nosep]
     \item Navigation has progressed from point-goal to language-guided and zero-shot paradigms through vision-language integration
     \item Scene understanding benefits from neural implicit representations (NeRF, 3DGS) combined with semantic grounding
@@ -412,7 +418,7 @@ Multimodal models integrate vision, language, and action understanding, providin
 
 \textbf{3D Vision-Language Models.} 3D-LLM \citep{hong20233dllm, chen2024ll3da, zhu20233d} enables language understanding of 3D scenes. Open3D-VQA \citep{zhang2025open3dvqa} provides open-vocabulary 3D visual question answering. LLM-Grounder \citep{yang2024llmgrounder} grounds language in 3D environments. The shift to 3D representations fundamentally increases reasoning complexity, as the agent must now contend with concepts like occlusion, viewpoint changes, and volumetric properties, which are absent in 2D image-based reasoning.
 
-\begin{tcolorbox}[colback=takeawayblue,colframe=black!50,title=Key Takeaways: Enabling Technologies]
+\begin{tcolorbox}[colback=takeawayblue,colframe=atlasdark,title=Key Takeaways: Enabling Technologies]
 \begin{itemize}[leftmargin=*,nosep]
     \item GNN-LLM integration represents a paradigm shift, combining relational reasoning with semantic understanding
     \item World models enable sample-efficient learning and safe planning through imagination
@@ -472,7 +478,7 @@ This pattern deploys learned spatial policies in physical systems \citep{kober20
 
 \textbf{Robot Learning Platforms.} Open X-Embodiment \citep{open_x_embodiment_rt_x_2023} provides large-scale robot data from Google DeepMind and collaborating institutions. Bridge Data \citep{walke2023bridgedata, walke2024bridgev2} enables cross-domain transfer. The pattern: diverse data collection, foundation model training, transfer to specific embodiments.
 
-\begin{tcolorbox}[colback=takeawayblue,colframe=black!50,title=Lessons for Researchers: Industry Patterns]
+\begin{tcolorbox}[colback=takeawayblue,colframe=atlasdark,title=Lessons for Researchers: Industry Patterns]
 \begin{itemize}[leftmargin=*,nosep]
     \item \textbf{Abstract Problems to Patterns:} Industry solutions often solve recurring scientific challenges. Abstracting them into design patterns can reveal generalizable insights for the academic community.
     \item \textbf{Data as a Moat, Supervision as a Bottleneck:} Access to planetary-scale proprietary data is a key industry advantage, but the inability to label it creates a supervision bottleneck. This highlights a major opportunity for research in self-supervised and weakly supervised learning.
@@ -560,7 +566,7 @@ We identify eight \textit{research directions} for future benchmark development,
     \item \textbf{MultiAgent} (Task: All, Capability: All, Scale: Meso--Macro): Coordinated multi-agent spatial tasks.
 \end{enumerate}
 
-\begin{tcolorbox}[colback=takeawayblue,colframe=black!50,title=Key Takeaways: Evaluation]
+\begin{tcolorbox}[colback=takeawayblue,colframe=atlasdark,title=Key Takeaways: Evaluation]
 \begin{itemize}[leftmargin=*,nosep]
     \item Existing benchmarks are fragmented across domains with incompatible metrics
     \item Critical gaps exist in sim-to-real transfer, long-horizon, safety-critical, and cross-scale evaluation
@@ -649,7 +655,7 @@ Foundation models require significant compute. Edge deployment requires:
     \item Adaptive compute allocation based on task difficulty
 \end{itemize}
 
-\begin{tcolorbox}[colback=takeawayblue,colframe=black!50,title=Grand Challenges Summary]
+\begin{tcolorbox}[colback=takeawayblue,colframe=atlasdark,title=Grand Challenges Summary]
 \begin{enumerate}[leftmargin=*,nosep]
     \item \textbf{Unified Representation}: Single representation spanning micro to macro scales
     \item \textbf{Grounded Planning}: Long-horizon planning with geometric feasibility

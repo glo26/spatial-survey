@@ -15,13 +15,13 @@ import numpy as np
 fig = plt.figure(figsize=(12, 10), dpi=300)
 ax = fig.add_subplot(111, projection='3d')
 
-# Define dark army green color palette (monochromatic with contrast)
-# Following same contrast theory as B&W version
-army_dark = '#2D4A22'       # Dark army green (primary - replaces black)
-army_medium = '#4A7C3F'     # Medium army green (replaces dark gray)
-army_light = '#6B9B5A'      # Light army green (replaces medium gray)
-army_pale = '#8FBC7A'       # Pale army green (replaces light gray)
-army_lightest = '#B8D4A8'   # Lightest green for backgrounds
+# Define DARK army green color palette - minimizing light green
+army_darkest = '#1A3A1A'    # Darkest army green (primary)
+army_dark = '#2D4A2D'       # Dark army green (secondary)
+army_medium = '#3D5C3D'     # Medium army green (tertiary)
+army_olive = '#4A6B4A'      # Olive green (accent)
+army_sage = '#5A7A5A'       # Muted sage (minimal use)
+off_white = '#F5F5F0'       # Off-white for backgrounds
 black = '#000000'
 white = '#FFFFFF'
 
@@ -48,28 +48,28 @@ def draw_cube_faces(ax):
         [vertices[4], vertices[5], vertices[6], vertices[7]]   # top
     ]
     
-    # Draw faces with subtle army green shading
+    # Draw faces with subtle dark army green shading - minimal fill
     for face in faces:
-        poly = Poly3DCollection([face], alpha=0.05)
-        poly.set_facecolor(army_light)
-        poly.set_edgecolor(army_dark)
-        poly.set_linewidth(1.5)
+        poly = Poly3DCollection([face], alpha=0.03)
+        poly.set_facecolor(army_medium)
+        poly.set_edgecolor(army_darkest)
+        poly.set_linewidth(2)
         ax.add_collection3d(poly)
 
 draw_cube_faces(ax)
 
 # Draw grid lines inside the cube
 for i in range(1, 4):
-    ax.plot([i, i], [0, 0], [0, 3], color=army_medium, alpha=0.3, linewidth=0.5, linestyle='--')
-    ax.plot([i, i], [3, 3], [0, 3], color=army_medium, alpha=0.3, linewidth=0.5, linestyle='--')
+    ax.plot([i, i], [0, 0], [0, 3], color=army_dark, alpha=0.25, linewidth=0.5, linestyle='--')
+    ax.plot([i, i], [3, 3], [0, 3], color=army_dark, alpha=0.25, linewidth=0.5, linestyle='--')
 
 for i in range(1, 3):
-    ax.plot([0, 0], [i, i], [0, 3], color=army_medium, alpha=0.3, linewidth=0.5, linestyle='--')
-    ax.plot([4, 4], [i, i], [0, 3], color=army_medium, alpha=0.3, linewidth=0.5, linestyle='--')
+    ax.plot([0, 0], [i, i], [0, 3], color=army_dark, alpha=0.25, linewidth=0.5, linestyle='--')
+    ax.plot([4, 4], [i, i], [0, 3], color=army_dark, alpha=0.25, linewidth=0.5, linestyle='--')
 
 for i in range(1, 3):
-    ax.plot([0, 4], [0, 0], [i, i], color=army_medium, alpha=0.3, linewidth=0.5, linestyle='--')
-    ax.plot([0, 4], [3, 3], [i, i], color=army_medium, alpha=0.3, linewidth=0.5, linestyle='--')
+    ax.plot([0, 4], [0, 0], [i, i], color=army_dark, alpha=0.25, linewidth=0.5, linestyle='--')
+    ax.plot([0, 4], [3, 3], [i, i], color=army_dark, alpha=0.25, linewidth=0.5, linestyle='--')
 
 # Plot representative methods with distinct markers for B&W readability
 # Axis mapping:
@@ -77,41 +77,41 @@ for i in range(1, 3):
 #   y: Capability axis - 0.5=Memory, 1.5=Planning, 2.5=Tool Use
 #   z: Scale axis - 0.5=Micro (<1m), 1.5=Meso (1-100m), 2.5=Macro (>100m)
 
-# Different markers for different method categories - using army green shades
+# Different markers for different method categories - using DARK army green shades
 methods = [
     # (x, y, z, name, marker, facecolor, edgecolor, size)
-    (0.5, 0.5, 1.5, 'VLMaps', 'o', army_pale, army_dark, 200),           # Navigation, Memory, Meso
-    (2.5, 1.5, 0.5, 'SayCan', 's', army_light, army_dark, 200),          # Manipulation, Planning, Micro
-    (2.5, 2.5, 0.5, 'RT-2', '^', army_medium, army_dark, 200),           # Manipulation, Tool Use, Micro
-    (2.0, 1.5, 1.5, 'DreamerV3', 'D', army_light, army_dark, 250),       # All tasks (center), Planning, All scales
-    (3.5, 0.5, 2.5, 'Prithvi', 'p', army_pale, army_dark, 250),          # Geospatial, Memory, Macro
-    (3.2, 0.8, 2.3, 'DCRNN', 'h', army_light, army_dark, 200),           # Geospatial, Memory, Macro (offset)
-    (3.5, 1.5, 2.5, 'AtlasPro AI', '*', army_dark, 'white', 450),        # Geospatial, Planning, Macro - HIGHLIGHTED
+    (0.5, 0.5, 1.5, 'VLMaps', 'o', army_olive, army_darkest, 200),           # Navigation, Memory, Meso
+    (2.5, 1.5, 0.5, 'SayCan', 's', army_medium, army_darkest, 200),          # Manipulation, Planning, Micro
+    (2.5, 2.5, 0.5, 'RT-2', '^', army_dark, army_darkest, 200),              # Manipulation, Tool Use, Micro
+    (2.0, 1.5, 1.5, 'DreamerV3', 'D', army_medium, army_darkest, 250),       # All tasks (center), Planning, All scales
+    (3.5, 0.5, 2.5, 'Prithvi', 'p', army_olive, army_darkest, 250),          # Geospatial, Memory, Macro
+    (3.2, 0.8, 2.3, 'DCRNN', 'h', army_medium, army_darkest, 200),           # Geospatial, Memory, Macro (offset)
+    (3.5, 1.5, 2.5, 'AtlasPro AI', '*', army_darkest, 'white', 500),         # Geospatial, Planning, Macro - HIGHLIGHTED
 ]
 
 for x, y, z, name, marker, facecolor, edgecolor, size in methods:
     if name == 'AtlasPro AI':
-        # Special styling for AtlasPro AI - large dark army green star with white edge
-        ax.scatter([x], [y], [z], c=facecolor, s=size, marker=marker, edgecolors=edgecolor, linewidths=2, zorder=10)
-        ax.text(x+0.15, y+0.15, z+0.25, name, fontsize=10, fontweight='bold', color=army_dark,
+        # Special styling for AtlasPro AI - large darkest army green star with white edge
+        ax.scatter([x], [y], [z], c=facecolor, s=size, marker=marker, edgecolors=edgecolor, linewidths=2.5, zorder=10)
+        ax.text(x+0.15, y+0.15, z+0.25, name, fontsize=11, fontweight='bold', color=army_darkest,
                 ha='left', va='bottom',
-                bbox=dict(boxstyle='round,pad=0.2', facecolor='white', edgecolor=army_dark, alpha=0.9))
+                bbox=dict(boxstyle='round,pad=0.2', facecolor='white', edgecolor=army_darkest, linewidth=1.5, alpha=0.95))
     else:
         ax.scatter([x], [y], [z], c=facecolor, s=size, marker=marker, edgecolors=edgecolor, linewidths=1.5, zorder=5)
-        ax.text(x+0.1, y+0.1, z+0.15, name, fontsize=8, color=army_dark, ha='left', va='bottom')
+        ax.text(x+0.1, y+0.1, z+0.15, name, fontsize=8, color=army_darkest, ha='left', va='bottom')
 
 # Set axis labels with proper positioning
-ax.set_xlabel('Spatial Task', fontsize=12, fontweight='bold', labelpad=15, color=army_dark)
-ax.set_ylabel('Agentic Capability', fontsize=12, fontweight='bold', labelpad=15, color=army_dark)
-ax.set_zlabel('Spatial Scale', fontsize=12, fontweight='bold', labelpad=15, color=army_dark)
+ax.set_xlabel('Spatial Task', fontsize=12, fontweight='bold', labelpad=15, color=army_darkest)
+ax.set_ylabel('Agentic Capability', fontsize=12, fontweight='bold', labelpad=15, color=army_darkest)
+ax.set_zlabel('Spatial Scale', fontsize=12, fontweight='bold', labelpad=15, color=army_darkest)
 
 # Set tick labels
 ax.set_xticks([0.5, 1.5, 2.5, 3.5])
-ax.set_xticklabels(task_labels, fontsize=8, ha='center', color=army_dark)
+ax.set_xticklabels(task_labels, fontsize=8, ha='center', color=army_darkest)
 ax.set_yticks([0.5, 1.5, 2.5])
-ax.set_yticklabels(capability_labels, fontsize=9, color=army_dark)
+ax.set_yticklabels(capability_labels, fontsize=9, color=army_darkest)
 ax.set_zticks([0.5, 1.5, 2.5])
-ax.set_zticklabels(scale_labels, fontsize=9, color=army_dark)
+ax.set_zticklabels(scale_labels, fontsize=9, color=army_darkest)
 
 # Set axis limits
 ax.set_xlim(0, 4)
@@ -123,30 +123,31 @@ ax.view_init(elev=20, azim=45)
 
 # Add title
 plt.title('Three-Axis Taxonomy: Task × Capability × Scale\nfor Spatial Intelligence Systems', 
-          fontsize=14, fontweight='bold', color=army_dark, pad=20)
+          fontsize=14, fontweight='bold', color=army_darkest, pad=20)
 
-# Create legend with distinct markers (army green palette)
+# Create legend with distinct markers (dark army green palette)
 legend_elements = [
-    plt.Line2D([0], [0], marker='o', color='w', markerfacecolor=army_pale, markeredgecolor=army_dark, 
+    plt.Line2D([0], [0], marker='o', color='w', markerfacecolor=army_olive, markeredgecolor=army_darkest, 
                markersize=10, label='Navigation/Memory'),
-    plt.Line2D([0], [0], marker='s', color='w', markerfacecolor=army_light, markeredgecolor=army_dark, 
+    plt.Line2D([0], [0], marker='s', color='w', markerfacecolor=army_medium, markeredgecolor=army_darkest, 
                markersize=10, label='Planning Methods'),
-    plt.Line2D([0], [0], marker='^', color='w', markerfacecolor=army_medium, markeredgecolor=army_dark, 
+    plt.Line2D([0], [0], marker='^', color='w', markerfacecolor=army_dark, markeredgecolor=army_darkest, 
                markersize=10, label='Tool Use Methods'),
-    plt.Line2D([0], [0], marker='D', color='w', markerfacecolor=army_light, markeredgecolor=army_dark, 
+    plt.Line2D([0], [0], marker='D', color='w', markerfacecolor=army_medium, markeredgecolor=army_darkest, 
                markersize=10, label='World Models'),
-    plt.Line2D([0], [0], marker='*', color='w', markerfacecolor=army_dark, markeredgecolor='white', 
-               markersize=15, label='AtlasPro AI'),
+    plt.Line2D([0], [0], marker='*', color='w', markerfacecolor=army_darkest, markeredgecolor='white', 
+               markersize=18, label='AtlasPro AI'),
 ]
-ax.legend(handles=legend_elements, loc='upper left', fontsize=9, framealpha=0.95)
+ax.legend(handles=legend_elements, loc='upper left', fontsize=9, framealpha=0.98, 
+          edgecolor=army_dark, fancybox=False)
 
-# Remove background panes for cleaner look
+# Remove background panes for cleaner look - use off-white instead of light green
 ax.xaxis.pane.fill = False
 ax.yaxis.pane.fill = False
 ax.zaxis.pane.fill = False
-ax.xaxis.pane.set_edgecolor(army_lightest)
-ax.yaxis.pane.set_edgecolor(army_lightest)
-ax.zaxis.pane.set_edgecolor(army_lightest)
+ax.xaxis.pane.set_edgecolor(army_sage)
+ax.yaxis.pane.set_edgecolor(army_sage)
+ax.zaxis.pane.set_edgecolor(army_sage)
 
 plt.tight_layout()
 
