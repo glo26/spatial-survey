@@ -29,6 +29,8 @@
 \usepackage{multirow}
 \usepackage{alphalph}
 \renewcommand{\theHsection}{\arabic{section}}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
 
 % Define colors
 \definecolor{atlasblue}{RGB}{0, 82, 147}
@@ -1133,13 +1135,15 @@ We release this report to establish priority on our methodological contributions
 
 \noindent\textbf{Acknowledgments.} We thank our advisors, investors, and early customers for their support and feedback. We also thank the broader research community whose work forms the foundation of this report.
 
-\bibliographystyle{plainnat}
-\bibliography{references}
 
 %==============================================================================
 % APPENDICES
 %==============================================================================
 \appendix
+\renewcommand{\thesection}{\Alph{section}}
+\makeatletter
+\renewcommand{\thesection}{\@arabic\c@section}
+\makeatother
 
 \part*{Appendices}
 \addcontentsline{toc}{part}{Appendices}
@@ -3716,6 +3720,9 @@ AtlasPro AI is committed to advancing this frontier, with an initial focus on th
     \item \textbf{Talent:} To join our team and help build the future of infrastructure AI
 \end{itemize}
 
-For more information, please contact us at [contact information to be added].
+For more information, please contact us at \texttt{research@atlaspro.ai}.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
 
 \end{document}
