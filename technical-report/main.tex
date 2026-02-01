@@ -269,6 +269,13 @@ DCRNN \citep{li2018dcrnn} & Geospatial & Memory & Macro & Spatio-temporal GNN \\
 \end{tabular}
 \end{table}
 
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/taxonomy_cube.pdf}
+\caption{Three-Axis Taxonomy Visualization: The intersection of Spatial Task, Agentic Capability, and Spatial Scale. Representative methods are positioned within the taxonomy space, with AtlasPro AI (red star) targeting the Geospatial Analysis $\times$ Planning $\times$ Macro-spatial intersection.}
+\label{fig:taxonomy_cube}
+\end{figure}
+
 \begin{keytakeaways}[Key Insight: Scale Determines Architecture]
 Methods optimized for one scale often fail at others. A unified spatial AI system must bridge these scales, which remains an open challenge. AtlasPro AI focuses primarily on the macro-spatial scale, where GNNs provide a significant advantage in modeling network topologies, while maintaining awareness of cross-scale requirements for complete solutions.
 \end{keytakeaways}
@@ -715,6 +722,13 @@ For research integrity, we must acknowledge that GNNs are not universally superi
 GNNs are the optimal choice for AtlasPro AI's target domain (network topology data with irregular structure and rich relational information). They are not optimal for regular grid data, extremely large graphs without specialized architectures, or highly dynamic networks without temporal extensions. Our system design accounts for these boundary conditions.
 \end{keytakeaways}
 
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/gnn_network.pdf}
+\caption{Graph Neural Networks for Infrastructure Networks. \textbf{Left:} A fiber optic network represented as a graph, with nodes (Central Office, Fiber Distribution Hubs, Splice Points) and edges (fiber connections) of varying capacity. \textbf{Right:} The GNN message passing mechanism, where each node aggregates features from its neighbors using learned attention weights to produce updated representations.}
+\label{fig:gnn_network}
+\end{figure}
+
 Telecommunication and utility networks are fundamentally graphs. Nodes represent connection points (e.g., splice closures, utility poles, substations) and edges represent physical connections (e.g., fiber optic cables, power lines). GNNs allow us to:
 
 \begin{itemize}
@@ -907,6 +921,13 @@ Based on our analysis of over 800 papers and the competitive landscape, we estab
 \textbf{Principle 5: Safety through World Models.} Predictive world models are essential for safe planning and decision-making. Before recommending a network change, we should simulate its effects.
 
 \textbf{Principle 6: Continuous Evaluation.} Internal benchmarking and red teaming are integral to the development process, not an afterthought.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/system_architecture.pdf}
+\caption{AtlasPro AI System Architecture: A layered architecture comprising User Interface, Agentic Orchestration (ReAct reasoning, memory, planning, tool selection, safety), Model Context Protocol (MCP) for tool integration, Core AI Backend (GNN engine, spatio-temporal models, world models, LLM integration), and Data Platform (graph database, vector store, geospatial data, time series).}
+\label{fig:system_architecture}
+\end{figure}
 
 \section{GNN Architecture for Network Intelligence}
 
@@ -1110,6 +1131,13 @@ Our research identified six systematic failure modes that plague existing spatia
 \input{expanded_future_work.tex}
 
 \section{Three-Phase Research Roadmap}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/research_roadmap.pdf}
+\caption{AtlasPro AI Research Roadmap 2026-2027: A three-phase development plan progressing from Foundation (Q1-Q2 2026) through Capability Expansion (Q3-Q4 2026) to Scale and Productization (2027), with key deliverables and success metrics for each phase.}
+\label{fig:research_roadmap}
+\end{figure}
 
 \subsection{Phase 1: Foundation (Q1-Q2 2026)}
 
