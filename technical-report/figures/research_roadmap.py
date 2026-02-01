@@ -2,6 +2,7 @@
 """
 Research Roadmap Timeline for AtlasPro AI Technical Report
 Shows the three-phase development plan with milestones
+B&W-friendly version with high contrast and distinct patterns
 """
 
 import matplotlib.pyplot as plt
@@ -12,19 +13,14 @@ import numpy as np
 # Set up the figure with high DPI for publication quality
 fig, ax = plt.subplots(figsize=(14, 8), dpi=300)
 
-# Define color palette - navy blue monochromatic with accent colors
-navy_dark = '#003366'
-navy_medium = '#005599'
-navy_light = '#0077CC'
-accent_red = '#E63946'
-accent_gold = '#F4A261'
-accent_teal = '#2A9D8F'
-light_blue = '#E8F4FC'
-light_teal = '#E8F6F5'
-light_gold = '#FDF4E8'
-light_red = '#FCE8E9'
+# Define B&W-friendly color palette
+black = '#000000'
+dark_gray = '#333333'
+medium_gray = '#666666'
+light_gray = '#999999'
+very_light_gray = '#CCCCCC'
+lightest_gray = '#E8E8E8'
 white = '#FFFFFF'
-gray = '#F5F5F5'
 
 # Set axis limits and remove axes
 ax.set_xlim(0, 14)
@@ -33,21 +29,22 @@ ax.axis('off')
 
 # Title
 ax.text(7, 7.6, 'AtlasPro AI Research Roadmap: 2026-2027', ha='center', va='center',
-        fontsize=16, fontweight='bold', color=navy_dark)
+        fontsize=16, fontweight='bold', color=black)
 
 # Timeline base
 timeline_y = 4.0
-ax.plot([1, 13], [timeline_y, timeline_y], color=navy_dark, linewidth=3, zorder=1)
+ax.plot([1, 13], [timeline_y, timeline_y], color=black, linewidth=3, zorder=1)
 
-# Phase definitions
+# Phase definitions with distinct grayscale shades
 phases = [
     {
         'name': 'Phase 1: Foundation',
         'period': 'Q1-Q2 2026',
         'x_start': 1,
         'x_end': 4.5,
-        'color': light_blue,
-        'edge_color': navy_medium,
+        'color': lightest_gray,
+        'edge_color': dark_gray,
+        'marker_fill': light_gray,
         'deliverables': [
             'Graph database infrastructure',
             'Baseline GNN models',
@@ -65,8 +62,9 @@ phases = [
         'period': 'Q3-Q4 2026',
         'x_start': 4.5,
         'x_end': 8.5,
-        'color': light_gold,
-        'edge_color': accent_gold,
+        'color': very_light_gray,
+        'edge_color': medium_gray,
+        'marker_fill': medium_gray,
         'deliverables': [
             'Spatio-temporal GNN',
             'World model for simulation',
@@ -84,8 +82,9 @@ phases = [
         'period': '2027',
         'x_start': 8.5,
         'x_end': 13,
-        'color': light_red,
-        'edge_color': accent_red,
+        'color': light_gray,
+        'edge_color': black,
+        'marker_fill': black,
         'deliverables': [
             'Production platform',
             'Self-improving system',
@@ -117,23 +116,23 @@ for phase in phases:
     # Phase name
     ax.text((phase['x_start'] + phase['x_end']) / 2, timeline_y + 3.0, 
             phase['name'], ha='center', va='center',
-            fontsize=11, fontweight='bold', color=navy_dark)
+            fontsize=11, fontweight='bold', color=black)
     
     # Period
     ax.text((phase['x_start'] + phase['x_end']) / 2, timeline_y + 2.6, 
             phase['period'], ha='center', va='center',
-            fontsize=9, color=navy_dark, style='italic')
+            fontsize=9, color=dark_gray, style='italic')
     
     # Deliverables
     deliverable_y = timeline_y + 2.1
     for i, deliverable in enumerate(phase['deliverables']):
         ax.text(phase['x_start'] + 0.2, deliverable_y - i * 0.35, 
                 f'• {deliverable}', ha='left', va='center',
-                fontsize=8, color=navy_dark)
+                fontsize=8, color=black)
     
-    # Timeline markers
+    # Timeline markers with distinct fills
     marker_x = (phase['x_start'] + phase['x_end']) / 2
-    ax.scatter([marker_x], [timeline_y], c=phase['edge_color'], s=150, 
+    ax.scatter([marker_x], [timeline_y], c=phase['marker_fill'], s=150, 
                edgecolors='white', linewidths=2, zorder=5)
     
     # Metrics box (below timeline)
@@ -152,20 +151,20 @@ for phase in phases:
     # Metrics title
     ax.text((phase['x_start'] + phase['x_end']) / 2, timeline_y - 0.7, 
             'Success Metrics', ha='center', va='center',
-            fontsize=9, fontweight='bold', color=phase['edge_color'])
+            fontsize=9, fontweight='bold', color=dark_gray)
     
     # Metrics
     metric_y = timeline_y - 1.1
     for i, metric in enumerate(phase['metrics']):
         ax.text(phase['x_start'] + 0.2, metric_y - i * 0.35, 
                 f'✓ {metric}', ha='left', va='center',
-                fontsize=8, color=navy_dark)
+                fontsize=8, color=black)
 
 # Draw arrows between phases
 for i in range(len(phases) - 1):
     arrow_x = phases[i]['x_end'] - 0.05
     ax.annotate('', xy=(arrow_x + 0.1, timeline_y), xytext=(arrow_x - 0.2, timeline_y),
-                arrowprops=dict(arrowstyle='->', color=navy_dark, lw=2))
+                arrowprops=dict(arrowstyle='->', color=black, lw=2))
 
 # Add year markers on timeline
 year_markers = [
@@ -176,21 +175,21 @@ year_markers = [
     (10.0, '2027')
 ]
 for x, label in year_markers:
-    ax.plot([x, x], [timeline_y - 0.15, timeline_y + 0.15], color=navy_dark, linewidth=2)
-    ax.text(x, timeline_y - 0.35, label, ha='center', va='top', fontsize=8, color=navy_dark)
+    ax.plot([x, x], [timeline_y - 0.15, timeline_y + 0.15], color=black, linewidth=2)
+    ax.text(x, timeline_y - 0.35, label, ha='center', va='top', fontsize=8, color=black)
 
-# Add legend
+# Add legend with distinct patterns
 legend_elements = [
-    mpatches.Patch(facecolor=light_blue, edgecolor=navy_medium, linewidth=2, label='Phase 1: Foundation'),
-    mpatches.Patch(facecolor=light_gold, edgecolor=accent_gold, linewidth=2, label='Phase 2: Capability Expansion'),
-    mpatches.Patch(facecolor=light_red, edgecolor=accent_red, linewidth=2, label='Phase 3: Scale & Productization'),
+    mpatches.Patch(facecolor=lightest_gray, edgecolor=dark_gray, linewidth=2, label='Phase 1: Foundation'),
+    mpatches.Patch(facecolor=very_light_gray, edgecolor=medium_gray, linewidth=2, label='Phase 2: Capability Expansion'),
+    mpatches.Patch(facecolor=light_gray, edgecolor=black, linewidth=2, label='Phase 3: Scale & Productization'),
 ]
 ax.legend(handles=legend_elements, loc='lower center', fontsize=9, framealpha=0.95,
           ncol=3, bbox_to_anchor=(0.5, -0.02))
 
 # Add "2026" label
 ax.text(0.5, timeline_y, '2026', ha='right', va='center', fontsize=10, 
-        fontweight='bold', color=navy_dark)
+        fontweight='bold', color=black)
 
 plt.tight_layout()
 

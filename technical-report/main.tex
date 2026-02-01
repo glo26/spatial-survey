@@ -27,6 +27,7 @@
 \usepackage{algorithmic}
 \usepackage{listings}
 \usepackage{multirow}
+\usepackage{wasysym}
 \usepackage{alphalph}
 \renewcommand{\theHsection}{\arabic{section}}
 \renewcommand{\thesection}{\arabic{section}}
@@ -467,16 +468,16 @@ For a seasoned deep tech investor, defensibility is not a feature but a multi-la
 
 \begin{table}[h!]
 \centering
-\caption{Competitive Differentiation Comparison}
+\caption{Competitive Differentiation Comparison. Legend: $\bullet$ = Full support, $\LEFTcircle$ = Partial support, $\circ$ = No support.}
 \begin{tabular}{@{}p{3cm}ccccc@{}}
 \toprule
 \textbf{Capability} & \textbf{Esri} & \textbf{IQGeo} & \textbf{Neo4j} & \textbf{World Labs} & \textbf{AtlasPro} \\
 \midrule
-GNN-based reasoning & \textcolor{red}{No} & \textcolor{red}{No} & \textcolor{orange}{Partial} & \textcolor{red}{No} & \textcolor{green}{Yes} \\
-Agentic workflows & \textcolor{red}{No} & \textcolor{red}{No} & \textcolor{red}{No} & \textcolor{orange}{Partial} & \textcolor{green}{Yes} \\
-MCP integration & \textcolor{red}{No} & \textcolor{red}{No} & \textcolor{red}{No} & \textcolor{red}{No} & \textcolor{green}{Yes} \\
-Telecom expertise & \textcolor{orange}{Partial} & \textcolor{green}{Yes} & \textcolor{red}{No} & \textcolor{red}{No} & \textcolor{green}{Yes} \\
-Predictive analytics & \textcolor{orange}{Partial} & \textcolor{red}{No} & \textcolor{orange}{Partial} & \textcolor{red}{No} & \textcolor{green}{Yes} \\
+GNN-based reasoning & $\circ$ & $\circ$ & $\LEFTcircle$ & $\circ$ & $\bullet$ \\
+Agentic workflows & $\circ$ & $\circ$ & $\circ$ & $\LEFTcircle$ & $\bullet$ \\
+MCP integration & $\circ$ & $\circ$ & $\circ$ & $\circ$ & $\bullet$ \\
+Telecom expertise & $\LEFTcircle$ & $\bullet$ & $\circ$ & $\circ$ & $\bullet$ \\
+Predictive analytics & $\LEFTcircle$ & $\circ$ & $\LEFTcircle$ & $\circ$ & $\bullet$ \\
 \bottomrule
 \end{tabular}
 \end{table}

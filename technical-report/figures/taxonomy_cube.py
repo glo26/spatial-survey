@@ -2,6 +2,7 @@
 """
 Three-Axis Taxonomy Cube for AtlasPro AI Technical Report
 Visualizes Task × Capability × Scale taxonomy with representative methods
+B&W-friendly version with distinct markers and high contrast
 """
 
 import matplotlib.pyplot as plt
@@ -14,14 +15,12 @@ import numpy as np
 fig = plt.figure(figsize=(12, 10), dpi=300)
 ax = fig.add_subplot(111, projection='3d')
 
-# Define color palette - navy blue monochromatic with accent colors
-navy_dark = '#003366'
-navy_medium = '#005599'
-navy_light = '#0077CC'
-accent_red = '#E63946'
-accent_gold = '#F4A261'
-accent_teal = '#2A9D8F'
-light_gray = '#E8E8E8'
+# Define B&W-friendly color palette - high contrast grayscale with one accent
+black = '#000000'
+dark_gray = '#333333'
+medium_gray = '#666666'
+light_gray = '#999999'
+accent_black = '#000000'  # AtlasPro AI highlight
 
 # Axis labels and positions
 task_labels = ['Navigation', 'Scene\nUnderstanding', 'Manipulation', 'Geospatial\nAnalysis']
@@ -46,20 +45,11 @@ def draw_cube_faces(ax):
         [vertices[4], vertices[5], vertices[6], vertices[7]]   # top
     ]
     
-    # Draw faces with different colors for each axis plane
-    face_colors = [
-        (0, 0.3, 0.6, 0.08),  # front - blue tint
-        (0, 0.3, 0.6, 0.08),  # back
-        (0.1, 0.5, 0.4, 0.08),  # left - teal tint
-        (0.1, 0.5, 0.4, 0.08),  # right
-        (0.9, 0.6, 0.3, 0.08),  # bottom - gold tint
-        (0.9, 0.6, 0.3, 0.08)   # top
-    ]
-    
-    for face, color in zip(faces, face_colors):
-        poly = Poly3DCollection([face], alpha=color[3])
-        poly.set_facecolor(color[:3])
-        poly.set_edgecolor(navy_dark)
+    # Draw faces with subtle grayscale shading
+    for face in faces:
+        poly = Poly3DCollection([face], alpha=0.05)
+        poly.set_facecolor('#888888')
+        poly.set_edgecolor(black)
         poly.set_linewidth(1.5)
         ax.add_collection3d(poly)
 
@@ -67,50 +57,50 @@ draw_cube_faces(ax)
 
 # Draw grid lines inside the cube
 for i in range(1, 4):
-    # Vertical lines along Task axis
-    ax.plot([i, i], [0, 0], [0, 3], color=navy_dark, alpha=0.3, linewidth=0.5, linestyle='--')
-    ax.plot([i, i], [3, 3], [0, 3], color=navy_dark, alpha=0.3, linewidth=0.5, linestyle='--')
+    ax.plot([i, i], [0, 0], [0, 3], color=dark_gray, alpha=0.3, linewidth=0.5, linestyle='--')
+    ax.plot([i, i], [3, 3], [0, 3], color=dark_gray, alpha=0.3, linewidth=0.5, linestyle='--')
 
 for i in range(1, 3):
-    # Vertical lines along Capability axis
-    ax.plot([0, 0], [i, i], [0, 3], color=navy_dark, alpha=0.3, linewidth=0.5, linestyle='--')
-    ax.plot([4, 4], [i, i], [0, 3], color=navy_dark, alpha=0.3, linewidth=0.5, linestyle='--')
+    ax.plot([0, 0], [i, i], [0, 3], color=dark_gray, alpha=0.3, linewidth=0.5, linestyle='--')
+    ax.plot([4, 4], [i, i], [0, 3], color=dark_gray, alpha=0.3, linewidth=0.5, linestyle='--')
 
 for i in range(1, 3):
-    # Horizontal lines along Scale axis
-    ax.plot([0, 4], [0, 0], [i, i], color=navy_dark, alpha=0.3, linewidth=0.5, linestyle='--')
-    ax.plot([0, 4], [3, 3], [i, i], color=navy_dark, alpha=0.3, linewidth=0.5, linestyle='--')
+    ax.plot([0, 4], [0, 0], [i, i], color=dark_gray, alpha=0.3, linewidth=0.5, linestyle='--')
+    ax.plot([0, 4], [3, 3], [i, i], color=dark_gray, alpha=0.3, linewidth=0.5, linestyle='--')
 
-# Plot representative methods as colored spheres
+# Plot representative methods with distinct markers for B&W readability
 # Axis mapping:
 #   x: Task axis - 0.5=Navigation, 1.5=Scene Understanding, 2.5=Manipulation, 3.5=Geospatial Analysis
 #   y: Capability axis - 0.5=Memory, 1.5=Planning, 2.5=Tool Use
 #   z: Scale axis - 0.5=Micro (<1m), 1.5=Meso (1-100m), 2.5=Macro (>100m)
+
+# Different markers for different method categories
 methods = [
-    # (x, y, z, name, color, size)
-    (0.5, 0.5, 1.5, 'VLMaps', navy_light, 200),           # Navigation, Memory, Meso - CORRECT per table
-    (2.5, 1.5, 0.5, 'SayCan', accent_teal, 200),          # Manipulation, Planning, Micro - CORRECT per table
-    (2.5, 2.5, 0.5, 'RT-2', accent_gold, 200),            # Manipulation, Tool Use, Micro - CORRECT per table
-    (2.0, 1.5, 1.5, 'DreamerV3', navy_medium, 250),       # All tasks (center), Planning, All scales (center)
-    (3.5, 0.5, 2.5, 'Prithvi', accent_teal, 200),         # Geospatial, Memory, Macro - CORRECT per table
-    (3.2, 0.8, 2.3, 'DCRNN', navy_light, 180),            # Geospatial, Memory, Macro (offset to avoid overlap)
-    (3.5, 1.5, 2.5, 'AtlasPro AI', accent_red, 350),      # Geospatial, Planning, Macro - HIGHLIGHTED
+    # (x, y, z, name, marker, facecolor, edgecolor, size)
+    (0.5, 0.5, 1.5, 'VLMaps', 'o', light_gray, black, 200),           # Navigation, Memory, Meso
+    (2.5, 1.5, 0.5, 'SayCan', 's', medium_gray, black, 200),          # Manipulation, Planning, Micro
+    (2.5, 2.5, 0.5, 'RT-2', '^', dark_gray, black, 200),              # Manipulation, Tool Use, Micro
+    (2.0, 1.5, 1.5, 'DreamerV3', 'D', medium_gray, black, 250),       # All tasks (center), Planning, All scales
+    (3.5, 0.5, 2.5, 'Prithvi', 'p', light_gray, black, 250),          # Geospatial, Memory, Macro
+    (3.2, 0.8, 2.3, 'DCRNN', 'h', medium_gray, black, 200),           # Geospatial, Memory, Macro (offset)
+    (3.5, 1.5, 2.5, 'AtlasPro AI', '*', black, 'white', 450),         # Geospatial, Planning, Macro - HIGHLIGHTED
 ]
 
-for x, y, z, name, color, size in methods:
+for x, y, z, name, marker, facecolor, edgecolor, size in methods:
     if name == 'AtlasPro AI':
-        # Special styling for AtlasPro AI - star marker
-        ax.scatter([x], [y], [z], c=color, s=size, marker='*', edgecolors='white', linewidths=2, zorder=10)
-        ax.text(x+0.15, y+0.15, z+0.25, name, fontsize=10, fontweight='bold', color=accent_red,
-                ha='left', va='bottom')
+        # Special styling for AtlasPro AI - large black star with white edge
+        ax.scatter([x], [y], [z], c=facecolor, s=size, marker=marker, edgecolors=edgecolor, linewidths=2, zorder=10)
+        ax.text(x+0.15, y+0.15, z+0.25, name, fontsize=10, fontweight='bold', color=black,
+                ha='left', va='bottom',
+                bbox=dict(boxstyle='round,pad=0.2', facecolor='white', edgecolor=black, alpha=0.9))
     else:
-        ax.scatter([x], [y], [z], c=color, s=size, marker='o', edgecolors='white', linewidths=1.5, zorder=5)
-        ax.text(x+0.1, y+0.1, z+0.15, name, fontsize=8, color=navy_dark, ha='left', va='bottom')
+        ax.scatter([x], [y], [z], c=facecolor, s=size, marker=marker, edgecolors=edgecolor, linewidths=1.5, zorder=5)
+        ax.text(x+0.1, y+0.1, z+0.15, name, fontsize=8, color=black, ha='left', va='bottom')
 
 # Set axis labels with proper positioning
-ax.set_xlabel('Spatial Task', fontsize=12, fontweight='bold', labelpad=15, color=navy_dark)
-ax.set_ylabel('Agentic Capability', fontsize=12, fontweight='bold', labelpad=15, color=navy_dark)
-ax.set_zlabel('Spatial Scale', fontsize=12, fontweight='bold', labelpad=15, color=navy_dark)
+ax.set_xlabel('Spatial Task', fontsize=12, fontweight='bold', labelpad=15, color=black)
+ax.set_ylabel('Agentic Capability', fontsize=12, fontweight='bold', labelpad=15, color=black)
+ax.set_zlabel('Spatial Scale', fontsize=12, fontweight='bold', labelpad=15, color=black)
 
 # Set tick labels
 ax.set_xticks([0.5, 1.5, 2.5, 3.5])
@@ -130,16 +120,22 @@ ax.view_init(elev=20, azim=45)
 
 # Add title
 plt.title('Three-Axis Taxonomy: Task × Capability × Scale\nfor Spatial Intelligence Systems', 
-          fontsize=14, fontweight='bold', color=navy_dark, pad=20)
+          fontsize=14, fontweight='bold', color=black, pad=20)
 
-# Create legend
+# Create legend with distinct markers (B&W friendly)
 legend_elements = [
-    mpatches.Patch(facecolor=navy_light, edgecolor='white', label='Navigation/Memory Methods'),
-    mpatches.Patch(facecolor=accent_teal, edgecolor='white', label='Manipulation/Geospatial Methods'),
-    mpatches.Patch(facecolor=accent_gold, edgecolor='white', label='Vision-Language-Action Models'),
-    mpatches.Patch(facecolor=accent_red, edgecolor='white', label='AtlasPro AI (Target Position)'),
+    plt.Line2D([0], [0], marker='o', color='w', markerfacecolor=light_gray, markeredgecolor=black, 
+               markersize=10, label='Navigation/Memory'),
+    plt.Line2D([0], [0], marker='s', color='w', markerfacecolor=medium_gray, markeredgecolor=black, 
+               markersize=10, label='Planning Methods'),
+    plt.Line2D([0], [0], marker='^', color='w', markerfacecolor=dark_gray, markeredgecolor=black, 
+               markersize=10, label='Tool Use Methods'),
+    plt.Line2D([0], [0], marker='D', color='w', markerfacecolor=medium_gray, markeredgecolor=black, 
+               markersize=10, label='World Models'),
+    plt.Line2D([0], [0], marker='*', color='w', markerfacecolor=black, markeredgecolor='white', 
+               markersize=15, label='AtlasPro AI'),
 ]
-ax.legend(handles=legend_elements, loc='upper left', fontsize=9, framealpha=0.9)
+ax.legend(handles=legend_elements, loc='upper left', fontsize=9, framealpha=0.95)
 
 # Remove background panes for cleaner look
 ax.xaxis.pane.fill = False
