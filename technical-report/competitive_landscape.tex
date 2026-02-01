@@ -19,7 +19,7 @@ The second category includes companies that provide niche monitoring solutions f
 
 \subsection{GNN for Network Optimization}
 
-The third category, and the one most closely related to our technical approach, consists of companies and research groups using GNNs for network optimization. As our research has shown, this is an active area of development, with players like \textbf{Ericsson} and \textbf{AWS} exploring GNNs for telecom network management, and academic research at institutions like the \textbf{University of Utah} and \textbf{Stanford} applying GNNs to power grid optimization. 
+The third category, and the one most closely related to our technical approach, consists of companies and research groups using GNNs for network optimization. As our research has shown, this is an active area of development, with players like \textbf{Ericsson} and \textbf{AWS} exploring GNNs for telecom network management, and academic research applying GNNs to power grid optimization \cite{liu2025evaluating, zhang2025power, suri2025topology}. 
 
 However, these efforts are still in their early stages and are focused on narrow optimization tasks, such as uplink interference or optimal breaker settings. They are not building comprehensive, agentic systems that can perform long-horizon planning or reason across multiple scales. Furthermore, their approaches are typically offline and do not involve real-time interaction with the network. In contrast, AtlasPro AI is building a closed-loop system where the agent can not only reason about the network but also take actions and observe the results.
 
@@ -49,7 +49,7 @@ The concept of "world models," recently popularized by leading AI researchers li
 
 The field of world models is still nascent, but we are seeing rapid progress from major research labs. \textbf{Google DeepMind's Genie 3} and \textbf{Runway's GWM-1} are examples of general-purpose world models that can generate interactive, simulated environments from text or image prompts. \textbf{NVIDIA's Cosmos-Predict2.5} is another example, focused on building world foundation models for physical AI. These models are still in the research phase, but they demonstrate the potential of this technology.
 
-Dr. Li, in her seminal essay on the topic, defines three essential capabilities for world models: they must be \textit{generative}, \textit{multimodal}, and \textit{interactive}. This aligns perfectly with our vision for AtlasPro AI. We envision a future where our agents can use world models to simulate the consequences of their actions before taking them in the real world, enabling safer and more effective planning.
+Dr. Li, in her seminal essay on the topic, defines three essential capabilities for world models: they must be \textit{generative}, \textit{multimodal}, and \textit{interactive}. This aligns perfectly with our vision for AtlasPro AI. We envision a future where our agents can use world models to simulate the consequences of their actions before taking them in the real world, enabling safer and more effective planning \cite{moshood2024infrastructure, avireneni2023digital}.
 
 \subsection{Applicability to AtlasPro AI}
 
@@ -62,4 +62,4 @@ While current world models are primarily focused on visual and 3D environments, 
     \item \textbf{Agent Training:} Our agents can be trained in a simulated world model environment, allowing them to learn from a wide range of experiences without any risk to real-world infrastructure.
 \end{itemize}
 
-We recognize that there are significant research challenges to overcome, particularly in adapting world models to the unique physics and dynamics of infrastructure networks. However, we believe that a hybrid approach, combining the visualization power of traditional world models with the network reasoning capabilities of GNNs, is a promising direction. This is a key part of our long-term research roadmap.
+We recognize that there are significant research challenges to overcome, particularly in adapting world models to the unique physics and dynamics of infrastructure networks. However, we believe that a hybrid approach, combining the visualization power of traditional world models with the network reasoning capabilities of GNNs, is a promising direction. This is a key part of our long-term research roadmap \cite{jakubik2023foundation, de2023graph}.

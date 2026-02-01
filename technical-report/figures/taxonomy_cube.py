@@ -82,20 +82,20 @@ for i in range(1, 3):
     ax.plot([0, 4], [3, 3], [i, i], color=navy_dark, alpha=0.3, linewidth=0.5, linestyle='--')
 
 # Plot representative methods as colored spheres
+# Axis mapping:
+#   x: Task axis - 0.5=Navigation, 1.5=Scene Understanding, 2.5=Manipulation, 3.5=Geospatial Analysis
+#   y: Capability axis - 0.5=Memory, 1.5=Planning, 2.5=Tool Use
+#   z: Scale axis - 0.5=Micro (<1m), 1.5=Meso (1-100m), 2.5=Macro (>100m)
 methods = [
     # (x, y, z, name, color, size)
-    # x: Task (0-4), y: Capability (0-3), z: Scale (0-3)
-    (0.5, 0.5, 1.5, 'VLMaps', navy_light, 200),           # Navigation, Memory, Meso
-    (2.5, 1.5, 0.5, 'SayCan', accent_teal, 200),          # Manipulation, Planning, Micro
-    (2.5, 2.5, 0.5, 'RT-2', accent_gold, 200),            # Manipulation, Tool Use, Micro
-    (1.5, 1.5, 1.5, 'DreamerV3', navy_medium, 250),       # Scene Understanding, Planning, Meso
-    (3.5, 0.5, 2.5, 'Prithvi', accent_teal, 200),         # Geospatial, Memory, Macro
-    (3.5, 0.5, 2.5, 'DCRNN', navy_light, 180),            # Geospatial, Memory, Macro (offset)
+    (0.5, 0.5, 1.5, 'VLMaps', navy_light, 200),           # Navigation, Memory, Meso - CORRECT per table
+    (2.5, 1.5, 0.5, 'SayCan', accent_teal, 200),          # Manipulation, Planning, Micro - CORRECT per table
+    (2.5, 2.5, 0.5, 'RT-2', accent_gold, 200),            # Manipulation, Tool Use, Micro - CORRECT per table
+    (2.0, 1.5, 1.5, 'DreamerV3', navy_medium, 250),       # All tasks (center), Planning, All scales (center)
+    (3.5, 0.5, 2.5, 'Prithvi', accent_teal, 200),         # Geospatial, Memory, Macro - CORRECT per table
+    (3.2, 0.8, 2.3, 'DCRNN', navy_light, 180),            # Geospatial, Memory, Macro (offset to avoid overlap)
     (3.5, 1.5, 2.5, 'AtlasPro AI', accent_red, 350),      # Geospatial, Planning, Macro - HIGHLIGHTED
 ]
-
-# Offset DCRNN slightly to avoid overlap
-methods[5] = (3.2, 0.8, 2.3, 'DCRNN', navy_light, 180)
 
 for x, y, z, name, color, size in methods:
     if name == 'AtlasPro AI':
