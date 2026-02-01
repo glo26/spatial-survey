@@ -1,0 +1,66 @@
+\section{Limitations, Dependencies, and Future Work}
+\label{sec:limitations}
+
+This report has presented a research direction for AtlasPro AI. We acknowledge several fundamental limitations and dependencies that must be addressed for this vision to be realized. This section provides a comprehensive, research-backed analysis of these challenges, which also serve as a roadmap for future research for both AtlasPro AI and the broader spatial intelligence community.
+
+\subsection{Data Dependencies and Availability}
+The success of AtlasPro AI's approach is fundamentally dependent on the availability of high-quality, large-scale geospatial and network infrastructure data. The performance of any machine learning system is contingent on the data it is trained on, and this is particularly acute for GNNs operating on complex, real-world networks. We identify several significant challenges in this area.
+
+\subsubsection{Proprietary Data and Access Barriers}
+A primary obstacle is that much of the critical infrastructure data required for our proposed system is proprietary and not publicly available. Telecommunication networks, power grids, and other utility networks are owned and operated by private or public-sector entities that often have strong restrictions on data sharing due to security, competitive, and regulatory concerns. As noted by Robinson et al. (2008), even when governments possess such data, they may not have the infrastructure or incentive to make it openly accessible. This creates a significant dependency on establishing partnerships with infrastructure operators to gain access to the necessary data. Without these partnerships, it is impossible to train or validate the proposed models on real-world systems.
+
+\subsubsection{Geospatial Data Quality and Fitness for Use}
+Even when data is accessible, its quality and suitability for machine learning applications are not guaranteed. A recent review in \textit{Nature Communications} highlights numerous challenges in data-driven geospatial modeling \cite{koldasbayeva2024challenges}. These include:
+\begin{itemize}
+    \item \textbf{Spatial Autocorrelation (SAC):} The tendency for values of variables to be similar at nearby locations can lead to deceptively high model performance during training, which does not generalize to new areas.
+    \item \textbf{Data Imbalance:} Observational data is often clustered in specific areas, leading to models that are biased towards those regions and perform poorly in under-sampled areas.
+    \item \textbf{Out-of-Distribution (OOD) Generalization:} Models trained on data from one geographic region may fail when applied to another due to covariate shift, where the distribution of input features changes.
+    \item \textbf{Temporal Dynamics:} Infrastructure networks are not static. Changes in topology, load, and environmental conditions over time must be captured in the training data to ensure model relevance.
+\end{itemize}
+Addressing these issues requires sophisticated data validation, cleaning, and augmentation pipelines, as well as a deep understanding of the domain to identify and correct for biases in the data.
+
+\subsubsection{Lack of GNN-Tailored Datasets}
+A third challenge is the scarcity of publicly available, large-scale datasets that are specifically designed for training GNNs on infrastructure networks. The authors of the PowerGraph benchmark dataset note that while several power grid datasets exist, they are not tailored for machine learning on graphs \cite{varbella2024powergraph}. Creating a GNN-ready dataset requires not only the raw network data but also the generation of meaningful features, labels, and graph structures. This process is time-consuming and requires significant domain expertise. The lack of such public benchmarks makes it difficult to compare different GNN architectures and pre-train models that could be fine-tuned on proprietary data.
+
+\subsection{Graph Neural Network Limitations}
+While GNNs are a cornerstone of our proposed architecture, they have inherent limitations that are active areas of research in the machine learning community.
+
+\subsubsection{Scalability and Performance}
+Training GNNs on large-scale graphs is a notoriously challenging problem. A comprehensive study at NeurIPS 2022 highlighted the GPU memory bottleneck as a primary limitation, as the entire graph adjacency matrix is often expected to be stored in memory \cite{duan2022comprehensive}. For continent-scale infrastructure networks with millions of nodes, this is not feasible with current single-GPU hardware. While techniques like graph sampling and distributed training exist, they introduce their own trade-offs in terms of model performance and system complexity. As such, significant engineering effort is required to scale GNN training to the level required for our vision.
+
+\subsubsection{Expressiveness and Generalization}
+GNNs are not without their theoretical limitations. Two well-known issues are:
+\begin{itemize}
+    \item \textbf{Over-smoothing:} As the number of GNN layers increases, the representations of nodes can become indistinguishable, limiting the ability of deep GNNs to learn complex relationships \cite{qureshi2023limits}.
+    \item \textbf{Over-squashing:} Information from distant nodes can be compressed into a fixed-size vector, leading to a loss of information and limiting the GNN's ability to capture long-range dependencies \cite{giraldo2023trade-off}.
+\end{itemize}
+Furthermore, the performance of many GNN models degrades on \textit{heterophilic} graphs, where connected nodes have different labels or features. Infrastructure networks can exhibit both homophilic and heterophilic properties, requiring GNN architectures that can handle both.
+
+\subsubsection{Data Quality Sensitivity}
+While high-quality data can enable GNNs to be trained with surprisingly few samples \cite{ziazet2023designing}, the reverse is also true: GNN performance is highly sensitive to data quality. Errors in the graph structure, noise in the node features, or incorrect labels can all lead to significant degradation in model accuracy. This underscores the importance of the data quality and validation pipelines discussed previously.
+
+\subsection{Agentic System Failure Modes}
+The use of an agentic AI system introduces a new class of potential failures beyond those of traditional software systems. A recent whitepaper from Microsoft provides a comprehensive taxonomy of these failure modes, which they categorize into safety and security failures \cite{microsoft2025taxonomy}.
+
+\subsubsection{Critical Failure Points for Spatial AI}
+Applying this taxonomy to the context of spatial AI, we identify several critical failure modes that must be addressed:
+\begin{itemize}
+    \item \textbf{Hallucination and Misinterpretation:} An agent hallucinating a non-existent network connection or misinterpreting a user's query about a critical asset could have severe consequences.
+    \item \textbf{Excessive Agency:} An agent taking unauthorized actions, such as re-routing network traffic or shutting down a substation, represents a significant risk.
+    \item \textbf{Memory Poisoning:} An attacker could deliberately feed the agent incorrect information, poisoning its knowledge base and leading to incorrect future decisions.
+    \item \textbf{Resource Exhaustion:} A malicious or poorly-formed query could cause the agent to enter a loop, consuming excessive computational resources and impacting system availability.
+    \item \textbf{Loss of Data Provenance:} The inability to trace the source of the data underlying an agent's decision undermines trust and makes it difficult to debug failures.
+\end{itemize}
+Mitigating these risks requires a multi-layered approach, including robust input and output validation, fine-grained access control, human-in-the-loop for critical decisions, and comprehensive logging and auditing.
+
+\subsection{Critical Success Factors}
+Based on the limitations and dependencies identified, we can define a set of critical success factors for AtlasPro AI:
+\begin{enumerate}
+    \item \textbf{Data Partnerships:} Establishing strong partnerships with infrastructure operators to gain access to high-quality, real-world data.
+    \item \textbf{Data Engineering Excellence:} Building and maintaining a robust data platform for ingesting, validating, and processing complex geospatial and network data.
+    \item \textbf{State-of-the-Art GNN Research:} Continuing to advance the state of the art in GNNs to address the challenges of scalability, expressiveness, and generalization.
+    \item \textbf{Agent Safety and Security:} Implementing a comprehensive safety and security framework to mitigate the risks of agentic AI systems.
+    \item \textbf{Domain Expertise:} Combining deep machine learning expertise with deep domain expertise in the target infrastructure sectors.
+\end{enumerate}
+
+This technical report is a starting point. We are committed to addressing these limitations through a rigorous research and engineering program, and we invite collaboration from the broader community to help us build the future of autonomous spatial intelligence.
