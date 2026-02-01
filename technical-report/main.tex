@@ -12,7 +12,7 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{natbib}
-\usepackage[margin=1in]{geometry}
+\usepackage[margin=1in,headheight=14pt]{geometry}
 \usepackage{enumitem}
 \usepackage{xcolor}
 \usepackage{colortbl}
@@ -255,7 +255,7 @@ We propose a unified taxonomy that organizes the intersection of agentic AI and 
 \centering
 \caption{Three-Axis Taxonomy: Representative Methods Mapped to Axes}
 \label{tab:taxonomy_mapping}
-\begin{tabular}{@{}p{2.5cm}p{2cm}p{2cm}p{2cm}p{4cm}@{}}
+\begin{tabular}{@{}p{2.2cm}p{2cm}p{2cm}p{2cm}p{4.3cm}@{}}
 \toprule
 \textbf{Method} & \textbf{Task} & \textbf{Capability} & \textbf{Scale} & \textbf{Key Innovation} \\
 \midrule
@@ -344,7 +344,7 @@ Hexagon & Public & Indirect (3/10) & AI-first approach vs. CAD/GIS legacy \\
 \end{tabular}
 \end{table}
 
-\textbf{Analysis.} Traditional GIS platforms like Esri's ArcGIS are powerful but fundamentally tool-based. Users must manually configure analyses, interpret results, and make decisions. These platforms are adding AI features (e.g., Esri's GeoAI), but the architecture is retrofitted rather than AI-native. AtlasPro AI's agentic approach enables autonomous analysis and decision-making, a paradigm shift from human-in-the-loop GIS.
+\textbf{Analysis.} Traditional GIS platforms like Esri's ArcGIS are powerful but fundamentally tool-based. Users must manually configure analyses, interpret results, and make decisions. These platforms are adding AI features (e.g., Esri's GeoAI), but the architecture is retrofitted rather than AI-native. AtlasPro AI's agentic approach enables autonomous analysis and decision-making, a fundamental departure from human-in-the-loop GIS.
 
 \subsection{Category 2: Telecom Network Planning}
 
@@ -708,7 +708,7 @@ In summary, the choice of GNNs as the core of AtlasPro AI's technical approach i
 
 For research integrity, we must acknowledge that GNNs are not universally superior for all spatial AI tasks. The following limitations inform our architectural decisions:
 
-\textbf{1. Dense Regular Grids.} For data with regular spatial structure (e.g., satellite imagery, raster maps), Convolutional Neural Networks (CNNs) typically outperform GNNs. CNNs exploit the regular grid structure through weight sharing, which GNNs cannot leverage. AtlasPro AI's focus on network topology data (inherently irregular graphs) mitigates this limitation.
+\textbf{1. Dense Regular Grids.} For data with regular spatial structure (e.g., satellite imagery, raster maps), Convolutional Neural Networks (CNNs) typically outperform GNNs. CNNs exploit the regular grid structure through weight sharing, which GNNs cannot exploit. AtlasPro AI's focus on network topology data (inherently irregular graphs) mitigates this limitation.
 
 \textbf{2. Scalability Challenges.} Standard GNN architectures struggle with graphs exceeding 10 million nodes due to memory constraints during neighborhood aggregation. Production deployment requires specialized techniques such as neighborhood sampling (GraphSAGE), graph partitioning (ClusterGCN), or hierarchical pooling. Our architecture incorporates these scalability solutions.
 
@@ -916,7 +916,7 @@ Based on our analysis of over 800 papers and the competitive landscape, we estab
 
 \textbf{Principle 3: Graph-Based Reasoning.} Graph neural networks are a core component for reasoning about spatial relationships and network structures. This is our primary technical differentiator.
 
-\textbf{Principle 4: Hierarchical Memory.} Memory systems must operate at multiple time scales, from short-term context to long-term episodic memory and persistent spatial knowledge. Network data accumulates over years; our system must leverage this history.
+\textbf{Principle 4: Hierarchical Memory.} Memory systems must operate at multiple time scales, from short-term context to long-term episodic memory and persistent spatial knowledge. Network data accumulates over years; our system must use this history effectively.
 
 \textbf{Principle 5: Safety through World Models.} Predictive world models are essential for safe planning and decision-making. Before recommending a network change, we should simulate its effects.
 
@@ -1268,13 +1268,13 @@ Applying this taxonomy to the context of spatial AI, we identify several critica
     \item \textbf{Resource Exhaustion:} A malicious or poorly-formed query could cause the agent to enter a loop, consuming excessive computational resources and impacting system availability.
     \item \textbf{Loss of Data Provenance:} The inability to trace the source of the data underlying an agent's decision undermines trust and makes it difficult to debug failures.
 \end{itemize}
-Mitigating these risks requires a multi-layered approach, including robust input and output validation, fine-grained access control, human-in-the-loop for critical decisions, and comprehensive logging and auditing.
+Mitigating these risks requires a multi-layered approach, including rigorous input and output validation, fine-grained access control, human-in-the-loop for critical decisions, and comprehensive logging and auditing.
 
 \subsection{Critical Success Factors}
 Based on the limitations and dependencies identified, we can define a set of critical success factors for AtlasPro AI:
 \begin{enumerate}
     \item \textbf{Data Partnerships:} Establishing strong partnerships with infrastructure operators to gain access to high-quality, real-world data.
-    \item \textbf{Data Engineering Excellence:} Building and maintaining a robust data platform for ingesting, validating, and processing complex geospatial and network data.
+    \item \textbf{Data Engineering Excellence:} Building and maintaining a reliable data platform for ingesting, validating, and processing complex geospatial and network data.
     \item \textbf{State-of-the-Art GNN Research:} Continuing to advance the state of the art in GNNs to address the challenges of scalability, expressiveness, and generalization.
     \item \textbf{Agent Safety and Security:} Implementing a comprehensive safety and security framework to mitigate the risks of agentic AI systems.
     \item \textbf{Domain Expertise:} Combining deep machine learning expertise with deep domain expertise in the target infrastructure sectors.
@@ -2068,7 +2068,7 @@ This appendix provides detailed analysis of risks facing AtlasPro AI and mitigat
     \item \textbf{Description:} Customer data may be incomplete, inconsistent, or inaccurate
     \item \textbf{Likelihood:} High
     \item \textbf{Impact:} Medium
-    \item \textbf{Mitigation:} Build robust data validation pipelines, develop data quality metrics, provide data cleaning tools
+    \item \textbf{Mitigation:} Build rigorous data validation pipelines, develop data quality metrics, provide data cleaning tools
 \end{itemize}
 
 \textbf{Risk 3: LLM Reliability}
@@ -2702,7 +2702,7 @@ Embodied AI focuses on agents that interact with the physical world.
 
 \textbf{Simulation Platforms.} Habitat \citep{savva2019habitat} provides photorealistic indoor simulation. Isaac Sim enables high-fidelity robot simulation. AI2-THOR focuses on interactive household environments.
 
-\textbf{Robot Learning.} RT-1 \citep{brohan2022rt1} introduced transformer architectures for robot control. RT-2 \citep{brohan2023rt2} leveraged VLM pretraining. Octo \citep{team2024octo} provided an open-source generalist policy.
+\textbf{Robot Learning.} RT-1 \citep{brohan2022rt1} introduced transformer architectures for robot control. RT-2 \citep{brohan2023rt2} used VLM pretraining. Octo \citep{team2024octo} provided an open-source generalist policy.
 
 \textbf{Manipulation.} PerAct \citep{shridhar2023peract} used 3D voxel representations. RVT \citep{goyal2023rvt} introduced efficient multi-view transformers. VoxPoser \citep{huang2023voxposer} enabled zero-shot manipulation through LLM-generated affordances.
 
@@ -2712,7 +2712,7 @@ Geospatial AI applies machine learning to geographic and spatial data.
 
 \textbf{Remote Sensing.} Prithvi \citep{jakubik2024prithvi} is NASA/IBM's geospatial foundation model. SatMAE \citep{cong2022satmae} applies masked autoencoders to satellite imagery. Clay provides open-source earth observation models.
 
-\textbf{Urban Computing.} Traffic prediction has been revolutionized by GNNs \citep{li2018dcrnn, yu2018stgcn}. Urban flow prediction enables smart city applications. Location-based services leverage spatial embeddings.
+\textbf{Urban Computing.} Traffic prediction has been revolutionized by GNNs \citep{li2018dcrnn, yu2018stgcn}. Urban flow prediction enables smart city applications. Location-based services use spatial embeddings.
 
 \textbf{GeoAI Platforms.} Esri's GeoAI tools integrate ML with ArcGIS. Google Earth Engine provides planetary-scale analysis. Microsoft's Planetary Computer offers open geospatial data.
 
