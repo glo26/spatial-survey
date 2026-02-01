@@ -1,0 +1,54 @@
+\section{System Card: AtlasPro AI}
+\label{sec:system_card}
+
+In the spirit of transparency and responsible development, this section provides a System Card for the conceptual AtlasPro AI system described in this report. This card outlines the intended use cases, potential risks, and mitigation strategies, following best practices established by leading AI research labs \citep{openai2023gpt4, anthropic2024claude}.
+
+\subsection{Intended Use Cases}
+
+The AtlasPro AI system is designed for expert human users in engineering, network operations, and infrastructure planning roles within the telecommunications and utilities sectors. The primary goal is to augment human expertise, not replace it. Intended use cases include:
+
+\begin{itemize}
+    \item \textbf{Network Planning & Design:} Assisting engineers in designing optimal fiber optic or power grid layouts by running thousands of simulations to evaluate cost, performance, and resilience trade-offs.
+    \item \textbf{Automated Damage Assessment:} Rapidly analyzing post-storm imagery (from drones or satellites) to identify and triage network damage, enabling faster and more efficient dispatch of repair crews.
+    \item \textbf{Predictive Maintenance:} Identifying network components at high risk of failure based on historical data, environmental factors, and network topology, allowing for proactive maintenance.
+    \item \textbf{Resilience & Hardening Analysis:} Simulating the impact of various climate-related or physical threats (e.g., wildfires, floods, high winds) on the network and recommending cost-effective hardening strategies.
+\end{itemize}
+
+\subsection{Out-of-Scope Use Cases}
+
+The AtlasPro AI system is explicitly \textbf{not} designed for the following applications. Any use in these domains is considered a misuse of the technology:
+
+\begin{itemize}
+    \item \textbf{Fully Autonomous Network Control:} The system is not intended to make final, binding decisions about network control or resource allocation without human oversight and approval. It is a decision-support tool, not a replacement for human operators.
+    \item \textbf{Surveillance or Monitoring of Individuals:} The system must not be used to monitor the movement or activities of individuals. Its focus is on the state of physical infrastructure, not people.
+    \item \textbf{Military or Defense Applications:} The system is designed for civilian critical infrastructure and is not intended for use in any offensive or defensive military capacity.
+    \item \textbf{Financial Trading or Market Prediction:} The system is not designed for financial applications and should not be used to predict market movements or make investment decisions.
+\end{itemize}
+
+\subsection{Risk Assessment and Mitigation}
+
+We identify several key risks and our multi-layered approach to mitigating them:
+
+\begin{table}[H]
+    \centering
+    \caption{Risk Assessment and Mitigation Strategies}
+    \begin{tabular}{p{0.25\textwidth} p{0.4\textwidth} p{0.3\textwidth}}
+        \toprule
+        \textbf{Risk Category} & \textbf{Description of Risk} & \textbf{Mitigation Strategy} \\
+        \midrule
+        \textbf{Performance \& Reliability} & Agent produces factually incorrect, suboptimal, or unsafe plans (e.g., routing fiber through a hazardous area). & Graduated Autonomy (human-in-the-loop verification); rigorous testing and evaluation in high-fidelity simulators; formal verification methods. \\
+        \addlinespace
+        \textbf{Misuse \& Dual-Use} & Malicious actors adapt the technology for unintended purposes, such as identifying critical vulnerabilities for physical attack. & Strict access controls; licensing agreements that prohibit out-of-scope use; ongoing monitoring for anomalous usage patterns. \\
+        \addlinespace
+        \textbf{Bias \& Fairness} & Model prioritizes network repair or expansion in affluent areas over underserved communities due to biases in historical training data. & Datasheet documentation for all training data; fairness-aware learning objectives; regular audits of model outputs for demographic and geographic disparities. \\
+        \addlinespace
+        \textbf{Security} & System is vulnerable to adversarial attacks, such as data poisoning or manipulation of sensor inputs, leading to incorrect decisions. & Verifiable data provenance chain; adversarial training and red teaming; anomaly detection on all input data streams. \\
+        \addlinespace
+        \textbf{Societal Impact} & Automation of planning and assessment tasks leads to job displacement for engineers and network technicians. & Focus on augmentation, not replacement; collaboration with industry partners on reskilling and training programs for the future workforce. \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Societal Impact}
+
+The primary positive societal impact of AtlasPro AI is the increased resilience and efficiency of critical infrastructure. By enabling faster storm recovery, more efficient network build-outs, and a more reliable power grid, this technology can have a significant positive effect on economic productivity and public safety. However, we recognize the potential for negative societal impacts, most notably job displacement. Our commitment is to work with our partners and the broader community to ensure that the benefits of this technology are shared broadly and that we proactively address the challenges of workforce transition in the age of AI.
