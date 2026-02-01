@@ -701,6 +701,24 @@ For AtlasPro AI's focus on dense, unstructured location data in telecommunicatio
 
 In summary, the choice of GNNs as the core of AtlasPro AI's technical approach is not arbitrary; it is a principled decision based on the fundamental alignment between the inductive biases of GNNs and the properties of spatial network data. This provides a significant and sustainable technical advantage over alternative approaches.
 
+\subsubsection{Limitations and Boundary Conditions of GNNs}
+
+For research integrity, we must acknowledge that GNNs are not universally superior for all spatial AI tasks. The following limitations inform our architectural decisions:
+
+\textbf{1. Dense Regular Grids.} For data with regular spatial structure (e.g., satellite imagery, raster maps), Convolutional Neural Networks (CNNs) typically outperform GNNs. CNNs exploit the regular grid structure through weight sharing, which GNNs cannot leverage. AtlasPro AI's focus on network topology data (inherently irregular graphs) mitigates this limitation.
+
+\textbf{2. Scalability Challenges.} Standard GNN architectures struggle with graphs exceeding 10 million nodes due to memory constraints during neighborhood aggregation. Production deployment requires specialized techniques such as neighborhood sampling (GraphSAGE), graph partitioning (ClusterGCN), or hierarchical pooling. Our architecture incorporates these scalability solutions.
+
+\textbf{3. Dynamic and Temporal Graphs.} Standard GNNs assume static graph structure. Real-world networks evolve over time (new connections, failures, capacity changes). This requires spatio-temporal GNN variants (DCRNN, STGCN, Temporal Graph Networks) that explicitly model temporal dynamics. Our research roadmap includes temporal graph modeling.
+
+\textbf{4. GNN-LLM Integration Immaturity.} The integration of GNNs with Large Language Models is an active research area without proven production-scale solutions. Current approaches (graph-to-text serialization, GNN embeddings as LLM context) have limitations in faithfully preserving graph structure. We acknowledge this as an open research challenge.
+
+\textbf{5. Over-Smoothing in Deep Networks.} GNNs with many layers tend to produce similar node representations (over-smoothing), limiting their ability to capture long-range dependencies. Techniques such as residual connections, jumping knowledge, and attention mechanisms partially address this issue.
+
+\begin{keytakeaways}[GNN Applicability]
+GNNs are the optimal choice for AtlasPro AI's target domain (network topology data with irregular structure and rich relational information). They are not optimal for regular grid data, extremely large graphs without specialized architectures, or highly dynamic networks without temporal extensions. Our system design accounts for these boundary conditions.
+\end{keytakeaways}
+
 Telecommunication and utility networks are fundamentally graphs. Nodes represent connection points (e.g., splice closures, utility poles, substations) and edges represent physical connections (e.g., fiber optic cables, power lines). GNNs allow us to:
 
 \begin{itemize}
