@@ -17,27 +17,35 @@ AtlasPro AI
 
 **Title:** From Perception to Action: Spatial AI Agents and World Models
 
-**Pages:** 58 | **Citations:** 751 | **Status:** Conference submission ready
+**Pages:** 61 | **Citations:** 742 | **Status:** Conference submission ready
 
 ### Overview
 
-This survey bridges the gap between agentic AI systems and spatial intelligence. Through a systematic review of over 800 papers from top venues (NeurIPS, ICML, CVPR, ICLR, IROS), we introduce a three-axis taxonomy connecting agentic capabilities with spatial task domains across different scales.
+This survey bridges the gap between agentic AI systems and spatial intelligence. Through a thorough review of over 2,000 papers from top venues (NeurIPS, ICML, CVPR, ICLR, IROS), we introduce a three-axis taxonomy connecting agentic capabilities with spatial task domains across different scales. Crucially, we distinguish spatial grounding (metric understanding of geometry and physics) from symbolic grounding (associating images with text), arguing that perception alone does not confer agency.
 
 ### Key Contributions
 
-1. **Three-Axis Taxonomy**: A framework organizing the intersection of agentic AI and spatial intelligence across Task (navigation, scene understanding, manipulation, geospatial analysis), Capability (memory, planning, tool use), and Scale (micro, meso, macro).
+1. **Three-Axis Taxonomy**: A framework organizing the intersection of agentic AI and spatial intelligence across Task (navigation, scene understanding, manipulation, geospatial analysis), Capability (memory, planning, tool use), and Scale (micro, meso, macro). Every method reviewed is explicitly mapped to all three axes.
 
-2. **Comprehensive Literature Analysis**: Systematic review of 800+ papers identifying architectural patterns, GNN-LLM integration approaches, and the role of world models in spatial planning.
+2. **Comprehensive Literature Analysis**: Thorough review of 2,000+ papers identifying architectural patterns, GNN-LLM integration approaches, and the role of world models in spatial planning. Key insight: 68% of methods target meso-spatial tasks, while micro-scale manipulation and macro-scale geospatial reasoning remain underexplored.
 
-3. **Industry Design Patterns**: Lessons from deployments at Waymo, Tesla, Palantir, Esri, and others, abstracted into reusable patterns.
+3. **Industry Design Patterns**: Lessons from deployments at Waymo, Tesla, Palantir, Esri, and others, abstracted into reusable design patterns with explicit contrasts (HITL vs. Agent-Assisted workflows).
 
-4. **Six Grand Challenges**: Research directions including unified spatial representation, grounded long-horizon planning, safe deployment under uncertainty, sim-to-real transfer, scalable multi-agent coordination, and efficient edge deployment.
+4. **Six Grand Challenges**: Structural barriers (not incremental improvements) including unified spatial representation, grounded long-horizon planning, safe deployment under uncertainty, sim-to-real transfer, scalable multi-agent coordination, and efficient edge deployment.
+
+5. **SpatialAgentBench Framework**: A conceptual framework for benchmark design addressing gaps in sim-to-real transfer, cross-scale reasoning, long-horizon evaluation, and safety-critical assessment.
+
+### Key Findings
+
+1. **Hierarchical Memory Systems** (Capability axis): Essential for long-horizon spatial tasks where context windows are insufficient
+2. **GNN-LLM Integration** (Task axis): Graphs serve as externalized spatial memory for LLM-based agents
+3. **World Models** (Scale axis): Essential for safe deployment across micro-to-macro spatial scales
 
 ### Topics Covered
 
 - Agentic AI (ReAct, Reflexion, Tree of Thoughts, Multi-Agent Systems)
 - Embodied AI (RT-2, PaLM-E, Octo, OpenVLA, Voyager, SayCan)
-- Navigation (VLN, Habitat, ZSON, VLMaps, VoxPoser)
+- Navigation (VLN, Habitat, ZSON, VLMaps, VoxPoser, TartanDrive)
 - Graph Neural Networks (DCRNN, STGCN, Graph WaveNet, GNN-LLM Integration)
 - 3D Understanding (ScanNet, Matterport3D, NeRF, 3D Gaussian Splatting)
 - World Models (Dreamer, DreamerV3, Genie, GAIA-1, Cosmos)
@@ -87,10 +95,10 @@ This technical report details AtlasPro AI's approach to building agentic geospat
 
 ```
 spatial-survey/
-├── conference/                    # Survey Paper (58 pages)
+├── conference/                    # Survey Paper (61 pages)
 │   ├── main.tex                   # LaTeX source
 │   ├── main.pdf                   # Compiled PDF
-│   └── references.bib             # Bibliography (751 citations)
+│   └── references.bib             # Bibliography (742 citations)
 │
 ├── technical-report/              # Technical Report (106 pages)
 │   ├── main.tex                   # LaTeX source
