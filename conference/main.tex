@@ -91,7 +91,7 @@ Despite this importance, existing surveys treat these areas in isolation, lackin
 \textbf{Contributions.} This survey makes four primary contributions:
 \begin{enumerate}[leftmargin=*]
     \item A \textbf{unified three-axis taxonomy} connecting agentic AI components (memory, planning, tool use) with spatial intelligence domains (navigation, scene understanding, manipulation, geospatial analysis) across spatial scales (micro, meso, macro). This framework enables clear identification of research gaps, guides architectural decisions for new systems, and provides a common vocabulary for cross-domain collaboration.
-    \item A \textbf{comprehensive analysis} of 750 cited works drawn from over 2,000 reviewed papers, revealing a significant scale imbalance: 68\% of methods target meso-spatial tasks (room-scale navigation), while micro-spatial manipulation and macro-spatial geospatial reasoning remain underexplored despite their commercial importance. We identify GNN-LLM integration, vision-language-action models, and world model-based planning as key architectural patterns bridging this gap.
+    \item A \textbf{comprehensive analysis} of 742 cited works drawn from over 2,000 reviewed papers, revealing a significant scale imbalance: 68\% of methods target meso-spatial tasks (room-scale navigation), while micro-spatial manipulation and macro-spatial geospatial reasoning remain underexplored despite their commercial importance. We identify GNN-LLM integration, vision-language-action models, and world model-based planning as key architectural patterns bridging this gap.
     \item A \textbf{detailed comparison} with existing surveys (Table~\ref{tab:survey_comparison}), quantifying coverage gaps and demonstrating how this work uniquely bridges agentic AI and spatial intelligence domains.
     \item A \textbf{forward-looking roadmap} identifying six grand challenges that represent structural barriers to progress, not incremental improvements: unified cross-scale representation, grounded long-horizon planning, safety guarantees, sim-to-real transfer, multi-agent coordination, and edge deployment. Addressing these challenges requires fundamental advances in how agents represent and reason about space.
 \end{enumerate}
@@ -109,7 +109,7 @@ We then applied a rigorous multi-stage filtering process:
     \item \textbf{Relevance Filtering:} We ensured papers directly addressed the intersection of agentic capabilities and spatial intelligence.
 \end{enumerate}
 
-This process resulted in a final corpus of over 2,000 papers, from which 750 are directly cited, which were carefully analyzed to derive the taxonomy, identify key trends, and synthesize the findings presented in this survey. We employed a snowball sampling technique to ensure broad coverage of related works, following citation chains both forward and backward. Two independent reviewers validated the paper selection and taxonomy development, achieving 94\% inter-annotator agreement on inclusion criteria. Disagreements fell into two categories: scope disputes (whether a paper's spatial component was sufficiently central, 4\% of cases) and taxonomy assignment (which axis a method primarily addressed, 2\% of cases). All disagreements were resolved through discussion until consensus.
+This process resulted in a final corpus of over 2,000 papers, from which 742 are directly cited, which were carefully analyzed to derive the taxonomy, identify key trends, and synthesize the findings presented in this survey. We employed a snowball sampling technique to ensure broad coverage of related works, following citation chains both forward and backward. Two independent reviewers validated the paper selection and taxonomy development, achieving 94\% inter-annotator agreement on inclusion criteria. Disagreements fell into two categories: scope disputes (whether a paper's spatial component was sufficiently central, 4\% of cases) and taxonomy assignment (which axis a method primarily addressed, 2\% of cases). All disagreements were resolved through discussion until consensus.
 
 \section{Related Work and Survey Comparison}
 
@@ -734,7 +734,7 @@ This survey has several limitations:
 
 \section{Conclusion}
 
-This survey has provided a unified three-axis taxonomy connecting Agentic AI and Spatial Intelligence across spatial scales, synthesizing insights from 750 cited works across foundational architectures, state-of-the-art methods, industry applications, and evaluation benchmarks. Our analysis reveals three key findings:
+This survey has provided a unified three-axis taxonomy connecting Agentic AI and Spatial Intelligence across spatial scales, synthesizing insights from 742 cited works across foundational architectures, state-of-the-art methods, industry applications, and evaluation benchmarks. Our analysis reveals three key findings:
 
 \begin{enumerate}
     \item \textbf{Hierarchical memory systems} are important for long-horizon spatial tasks, enabling agents to accumulate and retrieve spatial knowledge effectively. Advances in retrieval-augmented generation, episodic memory, and spatial memory representations provide foundations for persistent spatial understanding.
